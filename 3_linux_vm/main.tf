@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     azurerm = {
-      source = "hashicorp/azurerm"
+      source  = "hashicorp/azurerm"
       version = "=2.46.0"
     }
   }
@@ -9,6 +9,11 @@ terraform {
 
 provider "azurerm" {
   features {}
+
+  client_id       = var.azure_client_id
+  client_secret   = var.azure_client_secret
+  tenant_id       = var.azure_tenant_id
+  subscription_id = var.azure_subscription_id
 }
 
 resource "azurerm_resource_group" "rg" {
@@ -123,40 +128,40 @@ output "tls_private_key" {
   sensitive = true
 }
 
-#resource "azurerm_linux_virtual_machine" "vm" {
-#  name                  = "ubuntu07c"
-#  location              = "eastus"
-#  resource_group_name   = azurerm_resource_group.rg.name
-#  network_interface_ids = [azurerm_network_interface.mynic.id]
-#  size                  = "Standard_DS1_v2"
+resource "azurerm_linux_virtual_machine" "vm" {
+  name                  = "ubuntu07c"
+  location              = "eastus"
+  resource_group_name   = azurerm_resource_group.rg.name
+  network_interface_ids = [azurerm_network_interface.mynic.id]
+  size                  = "Standard_DS1_v2"
 
-#  os_disk {
-#    name                 = "osDisk"
-#    caching              = "ReadWrite"
-#    storage_account_type = "Premium_LRS"
-#  }
+  os_disk {
+    name                 = "osDisk"
+    caching              = "ReadWrite"
+    storage_account_type = "Premium_LRS"
+  }
 
-#  source_image_reference {
-#    publisher = "Canonical"
-#    offer     = "UbuntuServer"
-#    sku       = "18.04-LTS"
-#    version   = "latest"
-#  }
+  source_image_reference {
+    publisher = "Canonical"
+    offer     = "UbuntuServer"
+    sku       = "18.04-LTS"
+    version   = "latest"
+  }
 
-#  computer_name                   = "tamarindo"
-#  admin_username                  = "zala"
-#  disable_password_authentication = true
+  computer_name                   = "tamarindo"
+  admin_username                  = "zala"
+  disable_password_authentication = true
 
-#  admin_ssh_key {
-#    username   = "zala"
-#    public_key = file("/home/zala/.ssh/id_rsa.pub")
-#  }
+  admin_ssh_key {
+    username   = "zala"
+    public_key = file("/root/projects/terraform/id_rsa.pub")
+  }
 
-#  boot_diagnostics {
-#    storage_account_uri = azurerm_storage_account.mystorageaccount.primary_blob_endpoint
-#  }
+  boot_diagnostics {
+    storage_account_uri = azurerm_storage_account.mystorageaccount.primary_blob_endpoint
+  }
 
-#  tags = {
-#    environment = "Terraform"
-#  }
-#}
+  tags = {
+    environment = "Terraform"
+  }
+}
