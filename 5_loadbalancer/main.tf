@@ -36,7 +36,7 @@ resource "azurerm_subnet" "subnet" {
 }
 
 resource "azurerm_public_ip" "ip" {
-  name                = "loadbalancer-ip"
+  name                = "loadbalancer_ip"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   allocation_method   = "Static"
@@ -48,15 +48,34 @@ resource "azurerm_lb" "lb" {
   resource_group_name = azurerm_resource_group.rg.name
 
   frontend_ip_configuration {
-    name = "frontend-ip"
+    name = "frontend_ip"
     public_ip_address_id = azurerm_public_ip.ip.id
   }
 }
 
-resource "azurerm_lb_backend_address_pool" "bp" {
+resource "azurerm_lb_backend_address_pool" "lb_bp" {
   name                = "BackendAddressPool"
   resource_group_name = azurerm_resource_group.rg.name
   loadbalancer_id     = azurerm_lb.lb.id
+}
+
+resource "azurerm_lb_probe" "lb_hp" {
+  resource_group_name = azurerm_resource_group.rg.name
+  loadbalancer_id     = azurerm_lb.lb.id
+  name                = "sshHealthProbe"
+  port                = 22
+}
+
+resource "azurerm_lb_rule" "lb_rule" {
+  resource_group_name            = azurerm_resource_group.rg.name
+  loadbalancer_id                = azurerm_lb.lb.id
+  name                           = "sshRule"
+  protocol                       = "tcp"
+  frontend_port                  = 22
+  backend_port                   = 22
+  frontend_ip_configuration_name = "frontend_ip"
+  backend_address_pool_id        = azurerm_lb_backend_address_pool.lb_bp.id
+  probe_id                       = azurerm_lb_probe.lb_hp.id
 }
 
 resource "azurerm_network_interface" "nic" {
@@ -66,10 +85,17 @@ resource "azurerm_network_interface" "nic" {
   resource_group_name = azurerm_resource_group.rg.name
 
   ip_configuration {
-    name                          = "nic-ip-conf"
+    name                          = "nic_ip_conf"
     subnet_id                     = azurerm_subnet.subnet.id
     private_ip_address_allocation = "Dynamic"
   }
+}
+
+resource "azurerm_network_interface_backend_address_pool_association" "nic_bp" {
+  count                   = 2
+  network_interface_id    = element(azurerm_network_interface.nic.*.id, count.index)
+  ip_configuration_name   = "nic_ip_conf"
+  backend_address_pool_id = azurerm_lb_backend_address_pool.lb_bp.id
 }
 
 resource "azurerm_availability_set" "as" {
@@ -88,14 +114,6 @@ resource "random_id" "id" {
 
   byte_length = 8
 }
-
-#resource "azurerm_storage_account" "storage" {
-#  name                = "storage-${random_id.id.hex}"
-#  resource_group_name = azurerm_resource_group.rg.name
-#  location            = azurerm_resource_group.rg.location
-#  account_tier = "Standard"
-#  account_replication_type = "LRS"
-#}
 
 resource "tls_private_key" "ssh_key" {
   algorithm = "RSA"
@@ -137,8 +155,4 @@ resource "azurerm_linux_virtual_machine" "vm" {
     username   = "zala"
     public_key = file("/root/projects/terraform/id_rsa.pub")
   }
-
-#  boot_diagnostics {
-#    storage_account_uri = azurerm_storage_account.storage.primary_blob_endpoint
-#  }
 }
