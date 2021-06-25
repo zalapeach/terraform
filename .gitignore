@@ -7,4 +7,6 @@
 **/*.tfstate
 **/*.tfstate.*
 
+**/*.conf
+
 id_rsa.pub
