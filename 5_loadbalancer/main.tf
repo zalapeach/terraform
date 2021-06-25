@@ -42,6 +42,24 @@ resource "azurerm_public_ip" "ip" {
   allocation_method   = "Static"
 }
 
+resource "azurerm_network_security_group" "nsg" {
+  name                = "netsecgrp"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+
+  security_rule {
+    name = "sshSecurityRule"
+    priority = 1001
+    direction = "Inbound"
+    access = "Allow"
+    protocol = "TCP"
+    source_port_range = "*"
+    destination_port_range = "22"
+    source_address_prefix = "*"
+    destination_address_prefix = "*"
+  }
+}
+
 resource "azurerm_lb" "lb" {
   name                = "loadbalancer"
   location            = azurerm_resource_group.rg.location
@@ -55,7 +73,6 @@ resource "azurerm_lb" "lb" {
 
 resource "azurerm_lb_backend_address_pool" "lb_bp" {
   name                = "BackendAddressPool"
-  resource_group_name = azurerm_resource_group.rg.name
   loadbalancer_id     = azurerm_lb.lb.id
 }
 
@@ -125,6 +142,12 @@ output "tls_private_key" {
   sensitive = true
 }
 
+resource "azurerm_network_interface_security_group_association" "nsga" {
+  count                     = 2
+  network_interface_id      = element(azurerm_network_interface.nic.*.id, count.index)
+  network_security_group_id = azurerm_network_security_group.nsg.id
+}
+
 resource "azurerm_linux_virtual_machine" "vm" {
   count                 = 2
   name                  = "ubuntu07e-0${count.index}"
@@ -147,7 +170,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
     version   = "latest"
   }
 
-  computer_name                   = "linux"
+  computer_name                   = "linux-0${count.index}"
   admin_username                  = "zala"
   disable_password_authentication = true
 
