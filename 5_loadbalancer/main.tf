@@ -55,14 +55,14 @@ resource "azurerm_network_security_group" "nsg" {
   resource_group_name = azurerm_resource_group.rg.name
 
   security_rule {
-    name = "sshSecurityRule"
-    priority = 1001
-    direction = "Inbound"
-    access = "Allow"
-    protocol = "TCP"
-    source_port_range = "*"
-    destination_port_range = "22"
-    source_address_prefix = "*"
+    name                       = "sshSecurityRule"
+    priority                   = 1001
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "TCP"
+    source_port_range          = "*"
+    destination_port_range     = "22"
+    source_address_prefix      = "*"
     destination_address_prefix = "*"
   }
 }
@@ -73,14 +73,14 @@ resource "azurerm_lb" "lb" {
   resource_group_name = azurerm_resource_group.rg.name
 
   frontend_ip_configuration {
-    name = "frontend_ip"
+    name                 = "frontend_ip"
     public_ip_address_id = azurerm_public_ip.ip.id
   }
 }
 
 resource "azurerm_lb_backend_address_pool" "lb_bp" {
-  name                = "BackendAddressPool"
-  loadbalancer_id     = azurerm_lb.lb.id
+  name            = "BackendAddressPool"
+  loadbalancer_id = azurerm_lb.lb.id
 }
 
 resource "azurerm_lb_probe" "lb_hp" {
