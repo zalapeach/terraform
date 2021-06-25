@@ -5,6 +5,13 @@ terraform {
       version = "=2.46.0"
     }
   }
+
+  backend "azurerm" {
+    storage_account_name = "<check backend.conf file>"
+    container_name       = "<check backend.conf file>"
+    access_key           = "<check backend.conf file>"
+    key                  = "<check backend.conf file>"
+  }
 }
 
 provider "azurerm" {
