@@ -1,0 +1,13 @@
+trigger:
+- master
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- script: echo "Hello, world!"
+  displayName: "hello Azure pipelines"
+- script: |
+  echo "Ola k ace"
+  echo "123 tamarindo"
+  displayName: "Multiline Script"
