@@ -2,7 +2,7 @@ trigger:
 - master
 
 variables:
-  SUBSCRIPTION: $(SUBSCRIPTION)
+  subscription: $(subscription)
 
 pool:
   vmImage: ubuntu-latest
@@ -10,7 +10,7 @@ pool:
 steps:
 - task: AzureKeyVault@2
   inputs:
-    azureSubscription: $(SUBSCRIPTION)
+    azureSubscription: $(subscription)
     keyVaultName: "zalaVault"
     secretsFilter: "*"
     RunAsPreJob: false
