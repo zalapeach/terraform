@@ -1,9 +1,6 @@
 trigger:
 - master
 
-variables:
-  subscription: $(subscription)
-
 pool:
   vmImage: ubuntu-latest
 
