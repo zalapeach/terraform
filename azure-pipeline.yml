@@ -1,16 +1,22 @@
 trigger:
 - master
 
+variables:
+  mysubs: $(subscription)
+
 pool:
   vmImage: ubuntu-latest
 
 steps:
 - task: AzureKeyVault@2
   inputs:
-    azureSubscription: $(subscription)
+    azureSubscription: $(mysubs)
     keyVaultName: "zalaVault"
     secretsFilter: "*"
     RunAsPreJob: false
+- task: CmdLine@2
+  inputs:
+    script: echo $(tamarindo) > secret.txt
 - task: CopyFiles@2
   inputs:
     Contents: secret.txt
