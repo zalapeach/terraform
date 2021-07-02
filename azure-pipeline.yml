@@ -1,16 +1,13 @@
 trigger:
 - master
 
-variables:
-  mysubs: $(subscription)
-
 pool:
   vmImage: ubuntu-latest
 
 steps:
 - task: AzureKeyVault@2
   inputs:
-    azureSubscription: $(mysubs)
+    azureSubscription: vaultconnection
     keyVaultName: "zalaVault"
     secretsFilter: "*"
     RunAsPreJob: false
