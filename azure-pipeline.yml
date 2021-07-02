@@ -1,13 +1,31 @@
 trigger:
 - master
 
+variables:
+  SUBSCRIPTION: $(SUBSCRIPTION)
+
 pool:
   vmImage: ubuntu-latest
 
 steps:
-- script: "echo Hello, world!"
-  displayName: "hello Azure pipelines"
+- task: AzureKeyVault@2
+  inputs:
+    azureSubscription: $(SUBSCRIPTION)
+    keyVaultName: "zalaVault"
+    secretsFilter: "*"
+    RunAsPreJob: false
+- task: CopyFiles@2
+  inputs:
+    Contents: secret.txt
+    targetFolder: "$(Build.ArtifactStagingDirectory)"
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: "$(Build.ArtifactStagingDirectory)"
+    ArtifactName: "drop"
+    PublishLocation: "Container"
+- script: echo "Completed!"
+  displayName: "Finished"
 - script: |
-    echo "Ola k ace"
-    echo "123 tamarindo"
-  displayName: "Multiline Script"
+    echo "This should works..."
+    echo "Vault configured and using env vars"
+  displayName: "Description"
