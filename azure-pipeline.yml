@@ -7,7 +7,7 @@ pool:
 steps:
 - task: AzureKeyVault@2
   inputs:
-    azureSubscription: subscription
+    azureSubscription: azure-devops-keyvault
     keyVaultName: "zalaVault"
     secretsFilter: "*"
     RunAsPreJob: false
