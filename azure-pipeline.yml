@@ -3,6 +3,7 @@ trigger:
 
 variables:
   keySecret: $(tamarindo)
+  backKey: $(storageaccount)
 
 pool:
   vmImage: ubuntu-latest
@@ -20,7 +21,7 @@ steps:
     backendAzureRmResourceGroupName: 'vaultRG'
     backendAzureRmStorageAccountName: 'juanc'
     backendAzureRmContainerName: 'blobcontainer'
-    backendAzureRmKey: $(STORAGEACCOUNT)
+    backendAzureRmKey: $(backKey)
 - task: AzureKeyVault@2
   inputs:
     azureSubscription: azure-devops-keyvault
