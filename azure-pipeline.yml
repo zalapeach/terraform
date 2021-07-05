@@ -1,6 +1,9 @@
 trigger:
 - master
 
+variables:
+  keySecret: $(tamarindo)
+
 pool:
   vmImage: ubuntu-latest
 
@@ -13,7 +16,7 @@ steps:
     RunAsPreJob: false
 - task: CmdLine@2
   inputs:
-    script: echo $(tamarindo) > secret.txt
+    script: echo $(keySecret) > secret.txt
 - task: CopyFiles@2
   inputs:
     Contents: secret.txt
