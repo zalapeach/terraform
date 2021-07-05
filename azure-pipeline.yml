@@ -16,7 +16,6 @@ steps:
   inputs:
     provider: 'azurerm'
     command: 'init'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/7_pipeline_arch/main.tf'
     backendServiceArm: 'azure-devops-keyvault'
     backendAzureRmResourceGroupName: 'vaultRG'
     backendAzureRmStorageAccountName: 'juanc'
