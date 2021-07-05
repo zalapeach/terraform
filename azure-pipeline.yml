@@ -20,7 +20,7 @@ steps:
     backendAzureRmResourceGroupName: 'vaultRG'
     backendAzureRmStorageAccountName: 'juanc'
     backendAzureRmContainerName: 'blobcontainer'
-    backendAzureRmKey: 'states/terraform.tfstate'
+    backendAzureRmKey: $(STORAGEACCOUNT)
 - task: AzureKeyVault@2
   inputs:
     azureSubscription: azure-devops-keyvault
