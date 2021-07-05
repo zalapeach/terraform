@@ -8,6 +8,19 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
+- task: TerraformInstaller@0
+  inputs:
+    terraformVersion: '1.0.0'
+- task: TerraformTaskV2@2
+  inputs:
+    provider: 'azurerm'
+    command: 'init'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/7_pipeline_arch/main.tf'
+    backendServiceArm: 'azure-devops-keyvault'
+    backendAzureRmResourceGroupName: 'vaultRG'
+    backendAzureRmStorageAccountName: 'juanc'
+    backendAzureRmContainerName: 'blobcontainer'
+    backendAzureRmKey: 'states/terraform.tfstate'
 - task: AzureKeyVault@2
   inputs:
     azureSubscription: azure-devops-keyvault
