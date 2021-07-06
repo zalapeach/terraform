@@ -5,15 +5,30 @@ pool:
   vmImage: ubuntu-latest
 
 stages:
+- stage: GetTerraformFiles
+  jobs:
+  - job: GetTerraformFiles
+    steps:
+    - task: CopyFiles@2
+      displayName: 'Copy terraform files to artifacts'
+      inputs:
+        sourceFolder: 7_pipeline_arch
+        TargetFolder: '$(build.artifactstagingdirectory)/Terraform'
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish artifacts'
+      inputs:
+        pathToPublish: '$(build.artifactstagingdirectory)'
+
 - stage: Terraform
   jobs:
   - job: Terraform
     steps:
     - task: TerraformInstaller@0
+      displayName: 'Terraform INSTALL'
       inputs:
         terraformVersion: '1.0.0'
-      displayName: 'Terraform INSTALL'
     - task: TerraformTaskV2@2
+      displayName: 'Terraform INIT'
       inputs:
         provider: 'azurerm'
         command: 'init'
@@ -22,4 +37,3 @@ stages:
         backendAzureRmStorageAccountName: 'juanc'
         backendAzureRmContainerName: 'blobcontainer'
         backendAzureRmKey: $(storageaccount)
-      displayName: 'Terraform INIT'
