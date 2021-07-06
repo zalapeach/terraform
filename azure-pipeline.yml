@@ -47,3 +47,13 @@ stages:
         backendAzureRmStorageAccountName: 'juanc'
         backendAzureRmContainerName: 'blobcontainer'
         backendAzureRmKey: $(storageaccount)
+    - task: TerraformTaskV2@2
+      displayName: 'Terraform PLAN'
+      inputs:
+        command: 'plan'
+        workingDirectory: '$(system.defaultworkingdirectory)/artifacts/Terraform'
+        environmentServiceNameAzureRM: 'azure-devops-keyvault'
+        backendAzureRmResourceGroupName: 'vaultRG'
+        backendAzureRmStorageAccountName: 'juanc'
+        backendAzureRmContainerName: 'blobcontainer'
+        backendAzureRmKey: $(storageaccount)
