@@ -7,7 +7,7 @@ pool:
 stages:
 - stage: Terraform
   jobs:
-  - job: 'Configure Terraform'
+  - job: Terraform
     steps:
     - task: TerraformInstaller@0
       inputs:
