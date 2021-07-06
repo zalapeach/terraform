@@ -1,0 +1,53 @@
+trigger:
+- master
+
+variables:
+  keySecret: $(tamarindo)
+  backKey: $(storageaccount)
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: TerraformInstaller@0
+  inputs:
+    terraformVersion: '1.0.0'
+- task: TerraformTaskV2@2
+  inputs:
+    provider: 'azurerm'
+    command: 'init'
+    backendServiceArm: 'azure-devops-keyvault'
+    backendAzureRmResourceGroupName: 'vaultRG'
+    backendAzureRmStorageAccountName: 'juanc'
+    backendAzureRmContainerName: 'blobcontainer'
+    backendAzureRmKey: $(backKey)
+  displayName: 'Terraform init'
+- task: TerraformTaskV2@2
+  inputs:
+    command: 'validate'
+    environmentServiceNameAzureRM: 'azure-devops-keyvault'
+  displayName: 'Terraform validate'
+- task: AzureKeyVault@2
+  inputs:
+    azureSubscription: azure-devops-keyvault
+    keyVaultName: "zalaVault"
+    secretsFilter: "*"
+    RunAsPreJob: false
+- task: CmdLine@2
+  inputs:
+    script: echo $(keySecret) > secret.txt
+- task: CopyFiles@2
+  inputs:
+    Contents: secret.txt
+    targetFolder: "$(Build.ArtifactStagingDirectory)"
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: "$(Build.ArtifactStagingDirectory)"
+    ArtifactName: "drop"
+    PublishLocation: "Container"
+- script: echo "Completed!"
+  displayName: "Finished"
+- script: |
+    echo "This should works..."
+    echo "Vault configured and using env vars"
+  displayName: "Description"
