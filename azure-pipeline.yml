@@ -12,3 +12,14 @@ stages:
     - task: TerraformInstaller@0
       inputs:
         terraformVersion: '1.0.0'
+      displayName: 'Terraform INSTALL'
+    - task: TerraformTaskV2@2
+      inputs:
+        provider: 'azurerm'
+        command: 'init'
+        backendServiceArm: 'azure-devops-keyvault'
+        backendAzureRmResourceGroupName: 'vaultRG'
+        backendAzureRmStorageAccountName: 'juanc'
+        backendAzureRmContainerName: 'blobcontainer'
+        backendAzureRmKey: $(storageaccount)
+      displayName: 'Terraform INIT'
