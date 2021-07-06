@@ -32,7 +32,12 @@ stages:
         cd $(system.defaultworkingdirectory)
         pwd
         ls
+        echo '================='
         cd $(build.artifactstagingdirectory)
+        pwd
+        ls
+        echo '================='
+        cd $(system.defaultworkingdirectory)/_zalapeach.terraform/drop/Terraform'
         pwd
         ls
       displayName: 'Debug artifacts path'
