@@ -1,6 +1,9 @@
 trigger:
 - master
 
+variables:
+- group: storage_account
+
 pool:
   vmImage: ubuntu-latest
 
