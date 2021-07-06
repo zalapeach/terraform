@@ -37,6 +37,10 @@ stages:
       inputs:
         script: |
           cd $(system.defaultworkingdirectory)/artifacts/Terraform
+          echo $storage_account_name
+          echo $container_name
+          echo $access_key
+          echo $key
           echo "storage_account_name=${storage_account_name}" >> backend.conf
           echo "container_name=${container_name}" >> backend.conf
           echo "access_key=${access_key}" >> backend.conf
