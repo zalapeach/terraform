@@ -18,33 +18,20 @@ stages:
       displayName: 'Publish artifacts'
       inputs:
         pathToPublish: '$(build.artifactstagingdirectory)'
-    - script: |
-        cd $(build.artifactstagingdirectory)
-        pwd
-        ls
-      displayName: 'Debug artifacts path'
+        artifactName: artifacts
 
 - stage: Terraform
   dependsOn: GetTerraformFiles
   jobs:
   - job: Terraform
     steps:
-    - script: |
-        cd $(system.defaultworkingdirectory)
-        pwd
-        ls
-        echo '================='
-        cd $(build.artifactstagingdirectory)
-        pwd
-        ls
-        echo '================='
-        cd $(system.defaultworkingdirectory)/_zalapeach.terraform/drop/Terraform
-        pwd
-        ls
-        echo '================='
-      displayName: 'Debug artifacts path'
-    - download: current
-      artifact: kk
+    - task: DownloadBuildArtifacts@1
+      displayName: 'Download artifacts'
+      inputs:
+        builtType: 'current'
+        downloadType: 'single'
+        artifactName: artifacts
+        downloadPath: '$(system.defaultworkingdirectory)'
     - task: TerraformInstaller@0
       displayName: 'Terraform INSTALL'
       inputs:
@@ -54,7 +41,7 @@ stages:
       inputs:
         provider: 'azurerm'
         command: 'init'
-        workingDirectory: '$(system.defaultworkingdirectory)/_GetTerraformFiles/drop/Terraform'
+        workingDirectory: '$(system.defaultworkingdirectory)/artifacts/Terraform'
         backendServiceArm: 'azure-devops-keyvault'
         backendAzureRmResourceGroupName: 'vaultRG'
         backendAzureRmStorageAccountName: 'juanc'
