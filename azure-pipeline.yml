@@ -25,6 +25,7 @@ stages:
       displayName: 'Debug artifacts path'
 
 - stage: Terraform
+  dependsOn: GetTerraformFiles
   jobs:
   - job: Terraform
     steps:
@@ -40,7 +41,10 @@ stages:
         cd $(system.defaultworkingdirectory)/_zalapeach.terraform/drop/Terraform
         pwd
         ls
+        echo '================='
       displayName: 'Debug artifacts path'
+    - download: current
+      artifact: kk
     - task: TerraformInstaller@0
       displayName: 'Terraform INSTALL'
       inputs:
