@@ -25,23 +25,23 @@ stages:
   jobs:
   - job: Terraform
     steps:
+    - task: DownloadBuildArtifacts@1
+      displayName: 'Download artifacts'
+      inputs:
+        builtType: 'current'
+        downloadType: 'single'
+        artifactName: artifacts
+        downloadPath: '$(system.defaultworkingdirectory)'
     - task: CmdLine@2
       displayName: 'Creating backend.conf file'
       inputs:
         script: |
           cd $(system.defaultworkingdirectory)/artifacts/Terraform
-          echo "storage_account_name=$(storage_account_name)" > backend.conf
-          echo "container_name=$(container_name)" > backend.conf
-          echo "access_key=$(access_key)" > backend.conf
-          echo "key$=(key)" > backend.conf
+          echo "storage_account_name=${storage_account_name}" >> backend.conf
+          echo "container_name=${container_name}" >> backend.conf
+          echo "access_key=${access_key}" >> backend.conf
+          echo "key$={key}" >> backend.conf
           cat backend.conf
-    #- task: DownloadBuildArtifacts@1
-      #displayName: 'Download artifacts'
-      #inputs:
-        #builtType: 'current'
-        #downloadType: 'single'
-        #artifactName: artifacts
-        #downloadPath: '$(system.defaultworkingdirectory)'
     #- task: TerraformInstaller@0
       #displayName: 'Terraform INSTALL'
       #inputs:
