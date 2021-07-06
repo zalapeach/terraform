@@ -23,6 +23,9 @@ stages:
   jobs:
   - job: Terraform
     steps:
+    - script: |
+      cd $(system.defaultworkingdirectory)
+      ls
     - task: TerraformInstaller@0
       displayName: 'Terraform INSTALL'
       inputs:
