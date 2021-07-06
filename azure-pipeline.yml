@@ -19,7 +19,7 @@ stages:
       inputs:
         pathToPublish: '$(build.artifactstagingdirectory)'
     - script: |
-        cd $(system.defaultworkingdirectory)
+        cd $(build.artifactstagingdirectory)
         ls
       displayName: 'Debug artifacts path'
 
