@@ -40,7 +40,7 @@ stages:
           echo "storage_account_name=${storage_account_name}" >> backend.conf
           echo "container_name=${container_name}" >> backend.conf
           echo "access_key=${access_key}" >> backend.conf
-          echo "key$={key}" >> backend.conf
+          echo "key=${key}" >> backend.conf
           cat backend.conf
     #- task: TerraformInstaller@0
       #displayName: 'Terraform INSTALL'
