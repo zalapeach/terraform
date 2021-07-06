@@ -37,7 +37,7 @@ stages:
         pwd
         ls
         echo '================='
-        cd $(system.defaultworkingdirectory)/_zalapeach.terraform/drop/Terraform'
+        cd $(system.defaultworkingdirectory)/_zalapeach.terraform/drop/Terraform
         pwd
         ls
       displayName: 'Debug artifacts path'
