@@ -25,35 +25,56 @@ stages:
   jobs:
   - job: Terraform
     steps:
-    - task: DownloadBuildArtifacts@1
-      displayName: 'Download artifacts'
+    - task: CmdLine@2
+      displayName: 'Creating backend.conf file'
       inputs:
-        builtType: 'current'
-        downloadType: 'single'
-        artifactName: artifacts
-        downloadPath: '$(system.defaultworkingdirectory)'
-    - task: TerraformInstaller@0
-      displayName: 'Terraform INSTALL'
-      inputs:
-        terraformVersion: '1.0.0'
-    - task: TerraformTaskV2@2
-      displayName: 'Terraform INIT'
-      inputs:
-        provider: 'azurerm'
-        command: 'init'
-        workingDirectory: '$(system.defaultworkingdirectory)/artifacts/Terraform'
-        backendServiceArm: 'azure-devops-keyvault'
-        backendAzureRmResourceGroupName: 'vaultRG'
-        backendAzureRmStorageAccountName: 'juanc'
-        backendAzureRmContainerName: 'blobcontainer'
-        backendAzureRmKey: $(storageaccount)
-    - task: TerraformTaskV2@2
-      displayName: 'Terraform PLAN'
-      inputs:
-        command: 'plan'
-        workingDirectory: '$(system.defaultworkingdirectory)/artifacts/Terraform'
-        environmentServiceNameAzureRM: 'azure-devops-keyvault'
-        backendAzureRmResourceGroupName: 'vaultRG'
-        backendAzureRmStorageAccountName: 'juanc'
-        backendAzureRmContainerName: 'blobcontainer'
-        backendAzureRmKey: $(storageaccount)
+        script: |
+          cd $(system.defaultworkingdirectory)/artifacts/Terraform
+          echo "storage_account_name=$(storage_account_name)" > backend.conf
+          echo "container_name=$(container_name)" > backend.conf
+          echo "access_key=$(access_key)" > backend.conf
+          echo "key$=(key)" > backend.conf
+          cat backend.conf
+    #- task: DownloadBuildArtifacts@1
+      #displayName: 'Download artifacts'
+      #inputs:
+        #builtType: 'current'
+        #downloadType: 'single'
+        #artifactName: artifacts
+        #downloadPath: '$(system.defaultworkingdirectory)'
+    #- task: TerraformInstaller@0
+      #displayName: 'Terraform INSTALL'
+      #inputs:
+        #terraformVersion: '1.0.0'
+    #- task: TerraformTaskV2@2
+      #displayName: 'Terraform INIT'
+      #inputs:
+        #provider: 'azurerm'
+        #command: 'init'
+        #workingDirectory: '$(system.defaultworkingdirectory)/artifacts/Terraform'
+        #backendServiceArm: 'azure-devops-keyvault'
+        #backendAzureRmResourceGroupName: 'vaultRG'
+        #backendAzureRmStorageAccountName: 'juanc'
+        #backendAzureRmContainerName: 'blobcontainer'
+        #backendAzureRmKey: $(storageaccount)
+    #- task: TerraformTaskV2@2
+      #displayName: 'Terraform VALIDATE'
+      #inputs:
+        #provider: 'azurerm'
+        #command: 'validate'
+        #workingDirectory: '$(system.defaultworkingdirectory)/artifacts/Terraform'
+        #environmentServiceNameAzureRM: 'azure-devops-keyvault'
+        #backendAzureRmResourceGroupName: 'vaultRG'
+        #backendAzureRmStorageAccountName: 'juanc'
+        #backendAzureRmContainerName: 'blobcontainer'
+        #backendAzureRmKey: $(storageaccount)
+    #- task: TerraformTaskV2@2
+      #displayName: 'Terraform PLAN'
+      #inputs:
+        #command: 'plan'
+        #workingDirectory: '$(system.defaultworkingdirectory)/artifacts/Terraform'
+        #environmentServiceNameAzureRM: 'azure-devops-keyvault'
+        #backendAzureRmResourceGroupName: 'vaultRG'
+        #backendAzureRmStorageAccountName: 'juanc'
+        #backendAzureRmContainerName: 'blobcontainer'
+        #backendAzureRmKey: $(storageaccount)
