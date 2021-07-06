@@ -32,6 +32,7 @@ stages:
       inputs:
         provider: 'azurerm'
         command: 'init'
+        workingDirectory: '$(system.defaultworkingdirectory)/_zalapeach.terraform/drop/main.tf'
         backendServiceArm: 'azure-devops-keyvault'
         backendAzureRmResourceGroupName: 'vaultRG'
         backendAzureRmStorageAccountName: 'juanc'
