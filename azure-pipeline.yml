@@ -20,6 +20,7 @@ stages:
         pathToPublish: '$(build.artifactstagingdirectory)'
     - script: |
         cd $(build.artifactstagingdirectory)
+        pwd
         ls
       displayName: 'Debug artifacts path'
 
@@ -29,8 +30,10 @@ stages:
     steps:
     - script: |
         cd $(system.defaultworkingdirectory)
+        pwd
         ls
         cd $(build.artifactstagingdirectory)
+        pwd
         ls
       displayName: 'Debug artifacts path'
     - task: TerraformInstaller@0
