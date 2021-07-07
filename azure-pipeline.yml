@@ -7,7 +7,7 @@ pool:
 stages:
 - stage: Terraform
   jobs:
-  - jobs: BuildInfra
+  - job: BuildInfra
     steps:
     - task: AzureKeyVault@2
       displayName: 'Get secrets from vault'
@@ -16,3 +16,10 @@ stages:
         keyVaultName: 'zalaVault'
         secretsFilter: '*'
         runAsPreJob: false
+    - task: GenerateBackendFile
+      displayName: 'Generating backend.conf file'
+      inputs:
+        script: |
+          cd $(system.defaultworkingdirectory)/7_pipeline_arch/
+          echo $(storageAccountName) >> backend.conf
+          cat backend.conf
