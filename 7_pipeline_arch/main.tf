@@ -7,6 +7,10 @@ terraform {
   }
 
   backend "azurerm" {
+    storage_account_name = "juanc"
+    container_name       = "blobcontainer"
+    access_key           = "<access_key>"
+    key                  = "terraform.tfstate"
   }
 }
 

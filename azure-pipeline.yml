@@ -35,15 +35,16 @@ stages:
         downloadType: 'single'
         artifactName: artifacts
         downloadPath: '$(system.defaultworkingdirectory)'
-    #- task: CmdLine@2
-      #displayName: 'Creating backend.conf file'
-      #inputs:
-        #script: |
-          #cd '$(system.defaultworkingdirectory)/artifacts/Terraform'
-          #echo "storage_account_name=$(storage_account_name)" >> backend.conf
-          #echo "container_name=$(container_name)" >> backend.conf
-          #echo "access_key=$(access_key)" >> backend.conf
-          #echo "key=$(key)" >> backend.conf
+    - task: replacetokens@3
+      displayName: 'Replace tokens in Terraform file'
+      inputs:
+        targetFiles: '**/*tf'
+        escapeType: none
+        tokenPrefix: '<'
+        tokenSuffix: '>'
+    - task: CmdLine@2
+      displayName: 'Test main.tf'
+      script: echo (system.defaultworkingdirectory)/artifacts/Terraform/main.tf
     - task: TerraformInstaller@0
       displayName: 'Terraform INSTALL'
       inputs:
