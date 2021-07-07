@@ -1,9 +1,6 @@
 trigger:
 - master
 
-variables:
-  storage_account_name: $(storageAccountName)
-
 pool:
   vmImage: ubuntu-latest
 
@@ -24,14 +21,19 @@ stages:
       inputs:
         script: |
           cd $(system.defaultworkingdirectory)/7_pipeline_arch/
-          ls
-          echo "storage_account_name=$(storage_account_name)" >> backend.conf
+          echo "storage_account_name=$(storageAccountName)" >> backend.conf
           echo "container_name=$(containerName)" >> backend.conf
           echo "access_key=$(accessKey)" >> backend.conf
           echo "key=terraform.tfstate" >> backend.conf
+    - task: CmdLine@2
+      displayName: 'Generating terraform.tfvars'
+      inputs:
+        script: |
+          cd $(system.defaultworkingdirectory)/7_pipeline_arch/
+          echo "azure_client_id =       $(azureClientId)" >> terraform.tfvars
+          echo "azure_client_secret =   $(azureClientSecret)" >> terraform.tfvars
+          echo "azure_subscription_id = $(azureSubscriptionId)" >> terraform.tfvars
+          echo "azure_tenant_id =       $(azureTenantId)" >> terraform.tfvars
+          ls
           cat backend.conf
-          echo $(storageAccountName)
-          echo $(storage_account_name)
-          echo $(containerName)
-          echo $(accessKey)
-          echo backend.conf
+          cat terraform.tfvars

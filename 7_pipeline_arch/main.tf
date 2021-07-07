@@ -7,15 +7,20 @@ terraform {
   }
 
   backend "azurerm" {
-    storage_account_name = "juanc"
-    container_name       = "blobcontainer"
-    access_key           = "<access_key>"
-    key                  = "terraform.tfstate"
+    storage_account_name = "<check backend.conf file>"
+    container_name       = "<check backend.conf file>"
+    access_key           = "<check backend.conf file>"
+    key                  = "<check backend.conf file>"
   }
 }
 
 provider "azurerm" {
   features {}
+
+  client_id       = var.azure_client_id
+  client_secret   = var.azure_client_secret
+  tenant_id       = var.azure_tenant_id
+  subscription_id = var.azure_subscription_id
 }
 
 resource "azurerm_resource_group" "rg" {
