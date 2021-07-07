@@ -12,8 +12,8 @@ stages:
     - task: AzureKeyVault@2
       displayName: 'Get secrets from vault'
       inputs:
-        azureSubscription: azure-devops
-        keyVaultName: 'zalaVault'
+        azureSubscription: azure-devops-keyvault
+        keyVaultName: keyVaultZala
         secretsFilter: '*'
         runAsPreJob: false
     - task: CmdLine@2
