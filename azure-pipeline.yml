@@ -44,3 +44,4 @@ stages:
         command: init
         commandOptions: '-backend-config=backend.conf'
         workingDirectory: $(system.defaultworkingdirectory)/7_pipeline_arch/
+        backendServiceArm: azure-devops
