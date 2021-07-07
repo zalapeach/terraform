@@ -45,4 +45,4 @@ stages:
         commandOptions: '-backend-config=backend.conf'
         workingDirectory: $(system.defaultworkingdirectory)/7_pipeline_arch/
         backendServiceArm: azure-devops
-        #backendAzureRmStorageAccountName: $(storageAccountName)
+        backendAzureRmStorageAccountName: $(storageAccountName)
