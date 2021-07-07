@@ -39,20 +39,14 @@ stages:
       displayName: 'Creating backend.conf file'
       inputs:
         script: |
-          cd $(system.defaultworkingdirectory)/artifacts/Terraform
-          echo $storage_account_name
-          echo $container_name
-          echo $access_key
-          echo $key
           echo "storage_account_name=$(storage_account_name)" >> backend.conf
           echo "container_name=$(container_name)" >> backend.conf
           echo "access_key=$(access_key)" >> backend.conf
           echo "key=$(key)" >> backend.conf
-          cat backend.conf
-    #- task: TerraformInstaller@0
-      #displayName: 'Terraform INSTALL'
-      #inputs:
-        #terraformVersion: '1.0.0'
+    - task: TerraformInstaller@0
+      displayName: 'Terraform INSTALL'
+      inputs:
+        terraformVersion: '1.0.0'
     #- task: TerraformTaskV2@2
       #displayName: 'Terraform INIT'
       #inputs:
