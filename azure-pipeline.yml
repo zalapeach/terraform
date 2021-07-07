@@ -81,3 +81,14 @@ stages:
         backendAzureRmStorageAccountName: $(storage_account_name)
         backendAzureRmContainerName: $(container_name)
         backendAzureRmKey: $(access_key)
+    - task: TerraformTaskV2@2
+      displayName: 'Terraform APPLY'
+      inputs:
+        command: 'apply'
+        workingDirectory: '$(system.defaultworkingdirectory)/artifacts/Terraform'
+        commandOptions: '-auto-approve'
+        environmentServiceNameAzureRM: 'azure-devops-keyvault'
+        backendAzureRmResourceGroupName: 'vaultRG'
+        backendAzureRmStorageAccountName: $(storage_account_name)
+        backendAzureRmContainerName: $(container_name)
+        backendAzureRmKey: $(access_key)
