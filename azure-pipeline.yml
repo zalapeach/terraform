@@ -59,7 +59,7 @@ stages:
         backendAzureRmResourceGroupName: 'vaultRG'
         backendAzureRmStorageAccountName: $(storage_account_name)
         backendAzureRmContainerName: $(container_name)
-        backendAzureRmKey: $(access_key)
+        backendAzureRmKey: 'terraform.tfstate'
     - task: TerraformTaskV2@2
       displayName: 'Terraform VALIDATE'
       inputs:
@@ -70,7 +70,7 @@ stages:
         backendAzureRmResourceGroupName: 'vaultRG'
         backendAzureRmStorageAccountName: $(storage_account_name)
         backendAzureRmContainerName: $(container_name)
-        backendAzureRmKey: $(access_key)
+        backendAzureRmKey: 'terraform.tfstate'
     - task: TerraformTaskV2@2
       displayName: 'Terraform PLAN'
       inputs:
@@ -80,7 +80,7 @@ stages:
         backendAzureRmResourceGroupName: 'vaultRG'
         backendAzureRmStorageAccountName: $(storage_account_name)
         backendAzureRmContainerName: $(container_name)
-        backendAzureRmKey: $(access_key)
+        backendAzureRmKey: 'terraform.tfstate'
     - task: TerraformTaskV2@2
       displayName: 'Terraform APPLY'
       inputs:
@@ -91,4 +91,4 @@ stages:
         backendAzureRmResourceGroupName: 'vaultRG'
         backendAzureRmStorageAccountName: $(storage_account_name)
         backendAzureRmContainerName: $(container_name)
-        backendAzureRmKey: $(access_key)
+        backendAzureRmKey: 'terraform.tfstate'
