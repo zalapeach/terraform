@@ -30,10 +30,11 @@ stages:
       inputs:
         script: |
           cd $(system.defaultworkingdirectory)/7_pipeline_arch/
-          echo "azure_client_id =       $(azureClientId)" >> terraform.tfvars
-          echo "azure_client_secret =   $(azureClientSecret)" >> terraform.tfvars
+          echo "azure_client_id       = $(azureClientId)" >> terraform.tfvars
+          echo "azure_client_secret   = $(azureClientSecret)" >> terraform.tfvars
           echo "azure_subscription_id = $(azureSubscriptionId)" >> terraform.tfvars
-          echo "azure_tenant_id =       $(azureTenantId)" >> terraform.tfvars
-          ls
-          cat backend.conf
-          cat terraform.tfvars
+          echo "azure_tenant_id       = $(azureTenantId)" >> terraform.tfvars
+    - task: TerraformInstaller@0
+      displayName: 'Terraform INSTALL'
+      inputs:
+        terraformVersion: '1.0.0'
