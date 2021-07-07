@@ -16,7 +16,7 @@ stages:
         keyVaultName: 'zalaVault'
         secretsFilter: '*'
         runAsPreJob: false
-    - task: GenerateBackendFile
+    - task: CmdLine@2
       displayName: 'Generating backend.conf file'
       inputs:
         script: |
