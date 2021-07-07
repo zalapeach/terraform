@@ -1,6 +1,9 @@
 trigger:
 - master
 
+variables:
+  storage_account_name: $(storageAccountName)
+
 pool:
   vmImage: ubuntu-latest
 
@@ -12,7 +15,7 @@ stages:
     - task: AzureKeyVault@2
       displayName: 'Get secrets from vault'
       inputs:
-        azureSubscription: azure-devops-keyvault
+        azureSubscription: azure-devops
         keyVaultName: keyVaultZala
         secretsFilter: '*'
         runAsPreJob: false
@@ -21,5 +24,5 @@ stages:
       inputs:
         script: |
           cd $(system.defaultworkingdirectory)/7_pipeline_arch/
-          echo $(storageAccountName) >> backend.conf
+          echo $(storage_account_name) >> backend.conf
           cat backend.conf
