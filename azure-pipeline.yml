@@ -53,6 +53,7 @@ stages:
       inputs:
         provider: 'azurerm'
         command: 'init'
+        commandOptions: '--backend-config=backend.conf'
         workingDirectory: '$(system.defaultworkingdirectory)/artifacts/Terraform'
         backendServiceArm: 'azure-devops-keyvault'
         #backendAzureRmResourceGroupName: 'vaultRG'
