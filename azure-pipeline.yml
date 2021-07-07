@@ -24,12 +24,14 @@ stages:
       inputs:
         script: |
           cd $(system.defaultworkingdirectory)/7_pipeline_arch/
+          ls
           echo "storage_account_name=$(storage_account_name)" >> backend.conf
           echo "container_name=$(containerName)" >> backend.conf
           echo "access_key=$(accessKey)" >> backend.conf
           echo "key=terraform.tfstate" >> backend.conf
-          cat $(storageAccountName)
-          cat $(storage_account_name)
-          cat $(containerName)
-          cat $(accessKey)
           cat backend.conf
+          echo $(storageAccountName)
+          echo $(storage_account_name)
+          echo $(containerName)
+          echo $(accessKey)
+          echo backend.conf
