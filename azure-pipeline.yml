@@ -45,7 +45,7 @@ stages:
     - task: CmdLine@2
       displayName: 'Test main.tf'
       inputs:
-        script: cat (system.defaultworkingdirectory)/artifacts/Terraform/main.tf
+        script: cat $(system.defaultworkingdirectory)/artifacts/Terraform/main.tf
     - task: TerraformInstaller@0
       displayName: 'Terraform INSTALL'
       inputs:
