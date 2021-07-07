@@ -1,8 +1,8 @@
 trigger:
 - master
 
-variables:
-- group: storage_account
+#variables:
+#- group: storage_account
 
 pool:
   vmImage: ubuntu-latest
@@ -35,13 +35,28 @@ stages:
         downloadType: 'single'
         artifactName: artifacts
         downloadPath: '$(system.defaultworkingdirectory)'
-    - task: replacetokens@3
-      displayName: 'Replace tokens in Terraform file'
+    - task: AzureKeyVault@2
+      display: 'Get secrets from vault'
       inputs:
-        targetFiles: '**/*tf'
-        escapeType: none
-        tokenPrefix: '<'
-        tokenSuffix: '>'
+        azureSubscription: azure-devops-keyvault
+        keyVaultName: 'zalaVault'
+        secretsFilter: '*'
+        runAsPreJob: false
+    - task: CreateBackendFile
+      displayName: 'Generate backend.conf'
+      inputs:
+        script: |
+          cd $(system.defaultworkingdirectory)/artifacts/Terraform
+          touch backend.conf
+          echo "storage_account_name=$(storage_account_name)" >> backend.conf
+          cat backend.conf
+    #- task: replacetokens@3
+      #displayName: 'Replace tokens in Terraform file'
+      #inputs:
+        #targetFiles: '**/*tf'
+        #escapeType: none
+        #tokenPrefix: '<'
+        #tokenSuffix: '>'
     - task: CmdLine@2
       displayName: 'Test main.tf'
       inputs:
@@ -50,46 +65,46 @@ stages:
       displayName: 'Terraform INSTALL'
       inputs:
         terraformVersion: '1.0.0'
-    - task: TerraformTaskV2@2
-      displayName: 'Terraform INIT'
-      inputs:
-        provider: 'azurerm'
-        command: 'init'
-        workingDirectory: '$(system.defaultworkingdirectory)/artifacts/Terraform'
-        backendServiceArm: 'azure-devops-keyvault'
-        backendAzureRmResourceGroupName: 'vaultRG'
-        backendAzureRmStorageAccountName: $(storage_account_name)
-        backendAzureRmContainerName: $(container_name)
-        backendAzureRmKey: 'terraform.tfstate'
-    - task: TerraformTaskV2@2
-      displayName: 'Terraform VALIDATE'
-      inputs:
-        provider: 'azurerm'
-        command: 'validate'
-        workingDirectory: '$(system.defaultworkingdirectory)/artifacts/Terraform'
-        environmentServiceNameAzureRM: 'azure-devops'
-        backendAzureRmResourceGroupName: 'vaultRG'
-        backendAzureRmStorageAccountName: $(storage_account_name)
-        backendAzureRmContainerName: $(container_name)
-        backendAzureRmKey: 'terraform.tfstate'
-    - task: TerraformTaskV2@2
-      displayName: 'Terraform PLAN'
-      inputs:
-        command: 'plan'
-        workingDirectory: '$(system.defaultworkingdirectory)/artifacts/Terraform'
-        environmentServiceNameAzureRM: 'azure-devops'
-        backendAzureRmResourceGroupName: 'vaultRG'
-        backendAzureRmStorageAccountName: $(storage_account_name)
-        backendAzureRmContainerName: $(container_name)
-        backendAzureRmKey: 'terraform.tfstate'
-    - task: TerraformTaskV2@2
-      displayName: 'Terraform APPLY'
-      inputs:
-        command: 'apply'
-        workingDirectory: '$(system.defaultworkingdirectory)/artifacts/Terraform'
-        commandOptions: '--auto-approve'
-        environmentServiceNameAzureRM: 'azure-devops'
-        backendAzureRmResourceGroupName: 'vaultRG'
-        backendAzureRmStorageAccountName: $(storage_account_name)
-        backendAzureRmContainerName: $(container_name)
-        backendAzureRmKey: 'terraform.tfstate'
+    #- task: TerraformTaskV2@2
+      #displayName: 'Terraform INIT'
+      #inputs:
+        #provider: 'azurerm'
+        #command: 'init'
+        #workingDirectory: '$(system.defaultworkingdirectory)/artifacts/Terraform'
+        #backendServiceArm: 'azure-devops-keyvault'
+        #backendAzureRmResourceGroupName: 'vaultRG'
+        #backendAzureRmStorageAccountName: $(storage_account_name)
+        #backendAzureRmContainerName: $(container_name)
+        #backendAzureRmKey: 'terraform.tfstate'
+    #- task: TerraformTaskV2@2
+      #displayName: 'Terraform VALIDATE'
+      #inputs:
+        #provider: 'azurerm'
+        #command: 'validate'
+        #workingDirectory: '$(system.defaultworkingdirectory)/artifacts/Terraform'
+        #environmentServiceNameAzureRM: 'azure-devops'
+        #backendAzureRmResourceGroupName: 'vaultRG'
+        #backendAzureRmStorageAccountName: $(storage_account_name)
+        #backendAzureRmContainerName: $(container_name)
+        #backendAzureRmKey: 'terraform.tfstate'
+    #- task: TerraformTaskV2@2
+      #displayName: 'Terraform PLAN'
+      #inputs:
+        #command: 'plan'
+        #workingDirectory: '$(system.defaultworkingdirectory)/artifacts/Terraform'
+        #environmentServiceNameAzureRM: 'azure-devops'
+        #backendAzureRmResourceGroupName: 'vaultRG'
+        #backendAzureRmStorageAccountName: $(storage_account_name)
+        #backendAzureRmContainerName: $(container_name)
+        #backendAzureRmKey: 'terraform.tfstate'
+    #- task: TerraformTaskV2@2
+      #displayName: 'Terraform APPLY'
+      #inputs:
+        #command: 'apply'
+        #workingDirectory: '$(system.defaultworkingdirectory)/artifacts/Terraform'
+        #commandOptions: '--auto-approve'
+        #environmentServiceNameAzureRM: 'azure-devops'
+        #backendAzureRmResourceGroupName: 'vaultRG'
+        #backendAzureRmStorageAccountName: $(storage_account_name)
+        #backendAzureRmContainerName: $(container_name)
+        #backendAzureRmKey: 'terraform.tfstate'
