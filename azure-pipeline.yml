@@ -46,3 +46,4 @@ stages:
         workingDirectory: $(system.defaultworkingdirectory)/7_pipeline_arch/
         backendServiceArm: azure-devops
         backendAzureRmStorageAccountName: $(storageAccountName)
+        backendAzureRmContainerName: $(containerName)
