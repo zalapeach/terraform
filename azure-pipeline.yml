@@ -85,7 +85,7 @@ stages:
       inputs:
         command: 'apply'
         workingDirectory: '$(system.defaultworkingdirectory)/artifacts/Terraform'
-        commandOptions: '-auto-approve'
+        commandOptions: '--auto-approve'
         environmentServiceNameAzureRM: 'azure-devops-keyvault'
         backendAzureRmResourceGroupName: 'vaultRG'
         backendAzureRmStorageAccountName: $(storage_account_name)
