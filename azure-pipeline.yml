@@ -42,7 +42,7 @@ stages:
         keyVaultName: 'zalaVault'
         secretsFilter: '*'
         runAsPreJob: false
-    - task: CreateBackendFile
+    - task: CmdLine@2
       displayName: 'Generate backend.conf'
       inputs:
         script: |
