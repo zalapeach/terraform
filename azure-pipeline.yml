@@ -38,3 +38,9 @@ stages:
       displayName: 'Terraform INSTALL'
       inputs:
         terraformVersion: '1.0.0'
+    - task: TerraformTaskV2@2
+      displayName: 'Terraform INIT'
+      inputs:
+        command: init
+        commandOptions: '-backend-config=backend.conf'
+        workingDirectory: $(system.defaultworkingdirectory)/7_pipeline_arch/
