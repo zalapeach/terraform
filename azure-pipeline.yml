@@ -44,7 +44,8 @@ stages:
         tokenSuffix: '>'
     - task: CmdLine@2
       displayName: 'Test main.tf'
-      script: echo (system.defaultworkingdirectory)/artifacts/Terraform/main.tf
+      inputs:
+        script: echo (system.defaultworkingdirectory)/artifacts/Terraform/main.tf
     - task: TerraformInstaller@0
       displayName: 'Terraform INSTALL'
       inputs:
