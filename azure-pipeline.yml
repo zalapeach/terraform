@@ -14,13 +14,11 @@ stages:
       name: backend
       inputs:
         secureFile: 'backend.conf'
-        runAsPreJob: false
     - task: DownloadSecureFile@1
       displayName: 'Download terraform.tfvars file'
       name: tfvars
       inputs:
         secureFile: 'terraform.tfvars'
-        runAsPreJob: false
     - task: CmdLine@2
       displayName: 'Terraform PRESTEPS'
       inputs:
@@ -47,4 +45,11 @@ stages:
       displayName: 'Terraform PLAN'
       inputs:
         command: plan
+        commandOptions: '-out terraform.tfstate'
+        workingDirectory: $(system.defaultworkingdirectory)/7_pipeline_arch/
+    - task: TerraformCLI@0
+      displayName: 'Terraform APPLY'
+      inputs:
+        command: apply
+        commandOptions: '-auto-approve'
         workingDirectory: $(system.defaultworkingdirectory)/7_pipeline_arch/
