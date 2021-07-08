@@ -124,4 +124,8 @@ resource "azurerm_linux_virtual_machine" "vm" {
     username = "zala"
     public_key = file("./id_rsa.pub")
   }
+
+  tags = {
+    env = "Terraform"
+  }
 }
