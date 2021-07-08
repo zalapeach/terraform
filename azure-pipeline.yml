@@ -9,31 +9,6 @@ stages:
   jobs:
   - job: BuildInfra
     steps:
-    #- task: AzureKeyVault@2
-      #displayName: 'Get secrets from vault'
-      #inputs:
-        #azureSubscription: azure-devops
-        #keyVaultName: keyVaultZala
-        #secretsFilter: '*'
-        #runAsPreJob: false
-    #- task: CmdLine@2
-      #displayName: 'Generating backend.conf file'
-      #inputs:
-        #script: |
-          #cd $(system.defaultworkingdirectory)/7_pipeline_arch/
-          #echo "storage_account_name=$(storageAccountName)" >> backend.conf
-          #echo "container_name=$(containerName)" >> backend.conf
-          #echo "access_key=$(accessKey)" >> backend.conf
-          #echo "key=terraform.tfstate" >> backend.conf
-    #- task: CmdLine@2
-      #displayName: 'Generating terraform.tfvars'
-      #inputs:
-        #script: |
-          #cd $(system.defaultworkingdirectory)/7_pipeline_arch/
-          #echo "azure_client_id       = $(azureClientId)" >> terraform.tfvars
-          #echo "azure_client_secret   = $(azureClientSecret)" >> terraform.tfvars
-          #echo "azure_subscription_id = $(azureSubscriptionId)" >> terraform.tfvars
-          #echo "azure_tenant_id       = $(azureTenantId)" >> terraform.tfvars
     - task: DownloadSecureFile@1
       displayName: 'Download backend.conf file'
       name: backend
@@ -50,8 +25,6 @@ stages:
         script: |
           mv $(backend.secureFilePath) $(system.defaultworkingdirectory)/7_pipeline_arch/
           mv $(tfvars.secureFilePath) $(system.defaultworkingdirectory)/7_pipeline_arch/
-          cd $(system.defaultworkingdirectory)/7_pipeline_arch/
-          ls
     - task: TerraformInstaller@0
       displayName: 'Terraform INSTALL'
       inputs:
@@ -63,3 +36,8 @@ stages:
         workingDirectory: $(system.defaultworkingdirectory)/7_pipeline_arch/
         commandOptions: '-backend-config=backend.conf'
         backendType: selfConfigured
+    - task: TerraformCLI@0
+      displayName: 'Terraform VALIDATE'
+      inputs:
+        command: validate
+        workingDirectory: $(system.defaultworkingdirectory)/7_pipeline_arch/
