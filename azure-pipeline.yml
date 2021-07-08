@@ -19,12 +19,18 @@ stages:
       name: tfvars
       inputs:
         secureFile: 'terraform.tfvars'
+    - task: DownloadSecureFile@1
+      displayName: 'Download public ssh key'
+      name: sshKey
+      inputs:
+        secureFile: 'id_rsa.pub'
     - task: CmdLine@2
       displayName: 'Terraform PRESTEPS'
       inputs:
         script: |
           mv $(backend.secureFilePath) $(system.defaultworkingdirectory)/7_pipeline_arch/
           mv $(tfvars.secureFilePath) $(system.defaultworkingdirectory)/7_pipeline_arch/
+          mv $(sshKey.secureFilePath) $(system.defaultworkingdirectory)/7_pipeline_arch/
     - task: TerraformInstaller@0
       displayName: 'Terraform INSTALL'
       inputs:
