@@ -47,10 +47,11 @@ stages:
     - task: CmdLine@2
       displayName: 'Terraform PRESTEPS'
       inputs:
-        mv $(backend.secureFilePath) $(system.defaultworkingdirectory)/7_pipeline_arch/
-        mv $(tfvars.secureFilePath) $(system.defaultworkingdirectory)/7_pipeline_arch/
-        cd $(system.defaultworkingdirectory)/7_pipeline_arch/
-        ls
+        script: |
+          mv $(backend.secureFilePath) $(system.defaultworkingdirectory)/7_pipeline_arch/
+          mv $(tfvars.secureFilePath) $(system.defaultworkingdirectory)/7_pipeline_arch/
+          cd $(system.defaultworkingdirectory)/7_pipeline_arch/
+          ls
     - task: TerraformInstaller@0
       displayName: 'Terraform INSTALL'
       inputs:
