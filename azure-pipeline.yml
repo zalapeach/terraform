@@ -28,9 +28,9 @@ stages:
       displayName: 'Terraform PRESTEPS'
       inputs:
         script: |
-          mv $(backend.secureFilePath) $(system.defaultworkingdirectory)/7_pipeline_arch/
-          mv $(tfvars.secureFilePath) $(system.defaultworkingdirectory)/7_pipeline_arch/
-          mv $(sshKey.secureFilePath) $(system.defaultworkingdirectory)/7_pipeline_arch/
+          mv $(backend.secureFilePath) $(system.defaultworkingdirectory)/7_pipeline_arch/terraform/
+          mv $(tfvars.secureFilePath) $(system.defaultworkingdirectory)/7_pipeline_arch/terraform/
+          mv $(sshKey.secureFilePath) $(system.defaultworkingdirectory)/7_pipeline_arch/terraform/
     - task: TerraformInstaller@0
       displayName: 'Terraform INSTALL'
       inputs:
@@ -39,23 +39,23 @@ stages:
       displayName: 'Terraform INIT'
       inputs:
         command: init
-        workingDirectory: $(system.defaultworkingdirectory)/7_pipeline_arch/
+        workingDirectory: $(system.defaultworkingdirectory)/7_pipeline_arch/terraform/
         commandOptions: '-backend-config=backend.conf'
         backendType: selfConfigured
     - task: TerraformCLI@0
       displayName: 'Terraform VALIDATE'
       inputs:
         command: validate
-        workingDirectory: $(system.defaultworkingdirectory)/7_pipeline_arch/
+        workingDirectory: $(system.defaultworkingdirectory)/7_pipeline_arch/terraform/
     - task: TerraformCLI@0
       displayName: 'Terraform PLAN'
       inputs:
         command: plan
         commandOptions: '-out terraform.tfstate'
-        workingDirectory: $(system.defaultworkingdirectory)/7_pipeline_arch/
+        workingDirectory: $(system.defaultworkingdirectory)/7_pipeline_arch/terraform/
     - task: TerraformCLI@0
       displayName: 'Terraform APPLY'
       inputs:
         command: apply
         commandOptions: '-auto-approve'
-        workingDirectory: $(system.defaultworkingdirectory)/7_pipeline_arch/
+        workingDirectory: $(system.defaultworkingdirectory)/7_pipeline_arch/terraform/
