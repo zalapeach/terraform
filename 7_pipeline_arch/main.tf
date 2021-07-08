@@ -49,7 +49,7 @@ resource "azurerm_public_ip" "ip" {
   allocation_method   = "Dynamic"
 }
 
-resource "azure_network_security_group" "nsg" {
+resource "azurerm_network_security_group" "nsg" {
   name                = "myNSG"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
@@ -76,7 +76,8 @@ resource "azurerm_network_interface" "nic" {
     name                          = "confNIC"
     subnet_id                     = azurerm_subnet.subnet.id
     private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = azure_public_ip.ip.id
+    public_ip_address_id          = azurerm_public_ip.ip.id
+
   }
 }
 
