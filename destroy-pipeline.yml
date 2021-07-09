@@ -1,0 +1,54 @@
+trigger:
+- master
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+- stage: Terraform
+  jobs:
+  - job: BuildInfra
+    steps:
+    - task: DownloadSecureFile@1
+      displayName: 'Download backend.conf file'
+      name: backend
+      inputs:
+        secureFile: 'backend.conf'
+    - task: DownloadSecureFile@1
+      displayName: 'Download terraform.tfvars file'
+      name: tfvars
+      inputs:
+        secureFile: 'terraform.tfvars'
+    - task: DownloadSecureFile@1
+      displayName: 'Download public ssh key'
+      name: sshKey
+      inputs:
+        secureFile: 'id_rsa.pub'
+    - task: CmdLine@2
+      displayName: 'Terraform PRESTEPS'
+      inputs:
+        script: |
+          mv $(backend.secureFilePath) $(system.defaultworkingdirectory)/7_pipeline_arch/terraform/
+          mv $(tfvars.secureFilePath) $(system.defaultworkingdirectory)/7_pipeline_arch/terraform/
+          mv $(sshKey.secureFilePath) $(system.defaultworkingdirectory)/7_pipeline_arch/terraform/
+    - task: TerraformInstaller@0
+      displayName: 'Terraform INSTALL'
+      inputs:
+        terraformVersion: '1.0.0'
+    - task: TerraformCLI@0
+      displayName: 'Terraform INIT'
+      inputs:
+        command: init
+        workingDirectory: $(system.defaultworkingdirectory)/7_pipeline_arch/terraform/
+        commandOptions: '-backend-config=backend.conf'
+        backendType: selfConfigured
+    - task: TerraformCLI@0
+      displayName: 'Terraform VALIDATE'
+      inputs:
+        command: validate
+        workingDirectory: $(system.defaultworkingdirectory)/7_pipeline_arch/terraform/
+    - task: TerraformCLI@0
+      displayName: 'Terraform DESTROY'
+      inputs:
+        command: destroy
+        workingDirectory: $(system.defaultworkingdirectory)/7_pipeline_arch/terraform/
