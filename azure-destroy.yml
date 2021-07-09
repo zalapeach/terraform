@@ -51,4 +51,5 @@ stages:
       displayName: 'Terraform DESTROY'
       inputs:
         command: destroy
+        commandOptions: '-auto-approve'
         workingDirectory: $(system.defaultworkingdirectory)/7_pipeline_arch/terraform/
