@@ -1,0 +1,41 @@
+---
+- hosts: dbs
+  gather_facts: false
+
+  vars:
+    ansible_user: zala
+
+  tasks:
+  - name: run ping
+    action: ping
+  - name: Run apt update
+    become: true
+    apt:
+      update_cache: yes
+  - name: Run apt upgrade
+    become: true
+    apt:
+      upgrade: dist
+  - name: Install Apache & PHP
+    become: true
+    apt:
+      pkg:
+      - apache2
+      - php
+      - php-mysql
+      state: present
+  - name: Enable Apache
+    become: true
+    systemd:
+      name: apache2
+      enabled: yes
+  - name: Restart Apache
+    become: true
+    systemd:
+      name: apache2
+      enabled: yes
+  - name: Copy php demo file
+    become: true
+    template:
+      src: ./info.php
+      dest: /var/www/html/info.php

@@ -3,4 +3,5 @@ include_vm_resource_groups:
 - azdevopsRG
 auth_source: auto
 conditional_groups:
-  dbs: "'Terraform' in tags.env"
+  dbs: "'db' in tags.env"
+  vms: "'vm' in tags.env"
