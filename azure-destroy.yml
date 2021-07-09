@@ -7,7 +7,7 @@ pool:
 stages:
 - stage: Terraform
   jobs:
-  - job: BuildInfra
+  - job: DestroyInfra
     steps:
     - task: DownloadSecureFile@1
       displayName: 'Download backend.conf file'
