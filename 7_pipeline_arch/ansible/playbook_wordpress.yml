@@ -1,0 +1,14 @@
+---
+- hosts: dbs
+  gather_facts: false
+
+  vars:
+    ansible_user: zala
+
+  tasks:
+  - name: Download and unzip wordpress
+    become: true
+    unarchive:
+      src: https://wordpress.org/latest.zip
+      dest: /var/www/html/
+      remote_src: yes
