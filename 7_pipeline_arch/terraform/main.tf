@@ -183,9 +183,10 @@ resource "azurerm_linux_virtual_machine" "vm" {
     version   = "latest"
   }
 
-  computer_name  = "vm0${count.index}"
-  admin_username = "zala"
-  admin_password = "tamarindo"
+  disable_password_authentication = false
+  computer_name                   = "vm0${count.index}"
+  admin_username                  = "zala"
+  admin_password                  = "tamarindo"
 
   tags = {
     env = "vm"
