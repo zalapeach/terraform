@@ -167,7 +167,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
   location              = azurerm_resource_group.rg.location
   availability_set_id   = azurerm_availability_set.as.id
   resource_group_name   = azurerm_resource_group.rg.name
-  network_inferface_ids = [element(azurerm_network_interface.nic.*.id, count.index)]
+  network_interface_ids = [element(azurerm_network_interface.nic.*.id, count.index)]
   size                  = "Standard_DS1_v2"
 
   os_disk {
@@ -215,7 +215,7 @@ resource "azurerm_bastion_host" "bastion" {
 
   ip_configuration {
     name                 = "IPConf"
-    subnet_id            = azurerm_subnet.bastion.id
+    subnet_id            = azurerm_subnet.subnetBastion.id
     public_ip_address_id = azurerm_public_ip.bastionIP.id
   }
 }
