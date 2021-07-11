@@ -42,13 +42,6 @@ resource "azurerm_subnet" "subnetFront" {
   virtual_network_name = azurerm_virtual_network.vnet.name
 }
 
-resource "azurerm_subnet" "subnetBack" {
-  name                 = "backend"
-  address_prefixes     = ["10.0.2.0/24"]
-  resource_group_name  = azurerm_resource_group.rg.name
-  virtual_network_name = azurerm_virtual_network.vnet.name
-}
-
 # Creates all stuff for Application gateway
 
 resource "azurerm_public_ip" "ip" {
@@ -115,6 +108,13 @@ resource "azurerm_application_gateway" "appGateway" {
 
 # start prerequisites for frontend VMs
 
+resource "azurerm_subnet" "subnetBack" {
+  name                 = "backend"
+  address_prefixes     = ["10.0.2.0/24"]
+  resource_group_name  = azurerm_resource_group.rg.name
+  virtual_network_name = azurerm_virtual_network.vnet.name
+}
+
 resource "azurerm_network_security_group" "nsg" {
   name                = "netSecGrp"
   location            = azurerm_resource_group.rg.location
@@ -141,7 +141,7 @@ resource "azurerm_network_interface" "nic" {
 
   ip_configuration {
     name = "nicIPConf"
-    subnet_id = azurerm_subnet.subnetFront.id
+    subnet_id = azurerm_subnet.subnetBack.id
     private_ip_address_allocation = "Dynamic"
   }
 }
@@ -204,7 +204,8 @@ resource "azurerm_subnet" "subnetBastion" {
 resource "azurerm_public_ip" "bastionIP" {
   name                = "bastionIP"
   location            = azurerm_resource_group.rg.location
-  allocation_method   = "Dynamic"
+  allocation_method   = "Static"
+  sku                 = "Standard"
   resource_group_name = azurerm_resource_group.rg.name
 }
 
