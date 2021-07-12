@@ -132,7 +132,7 @@ resource "azurerm_network_interface_application_gateway_backend_address_pool_ass
   count                   = 2
   network_interface_id    = element(azurerm_network_interface.nic.*.id, count.index)
   ip_configuration_name   = "nicIPConf"
-  backend_address_pool_id = azurerm_application_gateway.appGateway.backend_address_pool.id
+  backend_address_pool_id = azurerm_application_gateway.appGateway.backend_address_pool[0].id
 }
 
 resource "azurerm_network_security_group" "nsg" {
