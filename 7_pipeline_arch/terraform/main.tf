@@ -65,6 +65,7 @@ resource "azurerm_public_ip" "ip" {
 }
 
 resource "azurerm_application_gateway" "appGateway" {
+  count               = 2
   name                = "myAppGateway"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
@@ -91,7 +92,6 @@ resource "azurerm_application_gateway" "appGateway" {
   }
 
   backend_address_pool {
-    count           = 2
     name            = "vnet-backpool"
     ip_address_list = [element(azurerm_network_interface.nic.*.private_ip_address, count.index)]
   }
