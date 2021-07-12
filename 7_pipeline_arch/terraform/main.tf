@@ -42,19 +42,6 @@ resource "azurerm_subnet" "subnetFront" {
   virtual_network_name = azurerm_virtual_network.vnet.name
 }
 
-resource "azurerm_network_interface" "nic" {
-  count               = 2
-  name                = "nic0${count.index}"
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
-
-  ip_configuration {
-    name = "nicIPConf"
-    subnet_id = azurerm_subnet.subnetBack.id
-    private_ip_address_allocation = "Dynamic"
-  }
-}
-
 # Creates all stuff for Application gateway
 
 resource "azurerm_public_ip" "ip" {
@@ -65,7 +52,6 @@ resource "azurerm_public_ip" "ip" {
 }
 
 resource "azurerm_application_gateway" "appGateway" {
-  count               = 2
   name                = "myAppGateway"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
@@ -93,7 +79,6 @@ resource "azurerm_application_gateway" "appGateway" {
 
   backend_address_pool {
     name            = "vnet-backpool"
-    ip_address_list = [element(azurerm_network_interface.nic.*.private_ip_address, count.index)]
   }
 
   backend_http_settings {
@@ -128,6 +113,26 @@ resource "azurerm_subnet" "subnetBack" {
   address_prefixes     = ["10.0.2.0/24"]
   resource_group_name  = azurerm_resource_group.rg.name
   virtual_network_name = azurerm_virtual_network.vnet.name
+}
+
+resource "azurerm_network_interface" "nic" {
+  count               = 2
+  name                = "nic0${count.index}"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+
+  ip_configuration {
+    name = "nicIPConf"
+    subnet_id = azurerm_subnet.subnetBack.id
+    private_ip_address_allocation = "Dynamic"
+  }
+}
+
+resource "azurerm_network_interface_application_gateway_backend_address_pool_association" "nic-gw" {
+  count                   = 2
+  network_interface_id    = element(azurerm_network_interface.nic.*.id, count.index)
+  ip_configuration_name   = "nicIPConf"
+  backend_address_pool_id = azurerm_application_gateway.appGateway.backend_address_pool.id
 }
 
 resource "azurerm_network_security_group" "nsg" {
