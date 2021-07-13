@@ -23,6 +23,14 @@ provider "azurerm" {
   subscription_id = var.azure_subscription_id
 }
 
+locals {
+  values [
+    { name = "vm" },
+    { name = "vm" },
+    { name = "db" }
+  ]
+}
+
 resource "azurerm_resource_group" "rg" {
   name     = "azdevopsRG"
   location = "eastus"
@@ -116,7 +124,7 @@ resource "azurerm_subnet" "subnetBack" {
 }
 
 resource "azurerm_network_interface" "nic" {
-  count               = 2
+  count               = 3
   name                = "nic0${count.index}"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
@@ -140,25 +148,37 @@ resource "azurerm_network_security_group" "nsg" {
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
 
-  security_rule {
-    name                       = "httpSecRule"
-    priority                   = 1001
+  security_rule [{
+    name                         = "httpSecRule"
+    priority                     = 1001
+    direction                    = "inbound"
+    access                       = "allow"
+    protocol                     = "TCP"
+    source_port_range            = "*"
+    destination_port_range       = "80"
+    source_address_prefix        = "*"
+    destination_address_prefixes = [azurerm_network_interface.nic[0].private_ip_address,
+                                    azurerm_network_interface.nic[1].private_ip_address]
+  }, {
+    name                       = "DBSecRule"
+    priority                   = 1002
     direction                  = "inbound"
     access                     = "allow"
     protocol                   = "TCP"
     source_port_range          = "*"
-    destination_port_range     = "80"
-    source_address_prefix      = "*"
-    destination_address_prefix = "*"
-  }
+    destination_port_range     = "3306"
+    source_address_prefixes    = [azurerm_network_interface.nic[0].private_ip_address,
+                                  azurerm_network_interface.nic[1].private_ip_address]
+    destination_address_prefix = azurerm_network_interface.nic[2].private_ip_address
+  }]
 }
 
 resource "azurerm_availability_set" "as" {
   name                         = "availabilitySet"
   location                     = azurerm_resource_group.rg.location
   resource_group_name          = azurerm_resource_group.rg.name
-  platform_fault_domain_count  = 2
-  platform_update_domain_count = 2
+  platform_fault_domain_count  = 3
+  platform_update_domain_count = 3
   managed                      = true
 }
 
@@ -169,8 +189,8 @@ resource "azurerm_network_interface_security_group_association" "nsga" {
 }
 
 resource "azurerm_linux_virtual_machine" "vm" {
-  count                 = 2
-  name                  = "vm0${count.index}"
+  count                 = 3
+  name                  = "${local.values[count.index].name}0${count.index}"
   location              = azurerm_resource_group.rg.location
   availability_set_id   = azurerm_availability_set.as.id
   resource_group_name   = azurerm_resource_group.rg.name
@@ -191,12 +211,12 @@ resource "azurerm_linux_virtual_machine" "vm" {
   }
 
   disable_password_authentication = false
-  computer_name                   = "vm0${count.index}"
+  computer_name                   = "${local.values[count.index].name}0${count.index}"
   admin_username                  = "zala"
   admin_password                  = "123@T4M4R1N-do"
 
   tags = {
-    env = "vm"
+    env = "${local.values[count.index].name}"
   }
 }
 
