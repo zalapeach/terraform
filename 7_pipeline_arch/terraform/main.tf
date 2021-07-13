@@ -24,7 +24,7 @@ provider "azurerm" {
 }
 
 locals {
-  values [
+  names = [
     { name = "vm" },
     { name = "vm" },
     { name = "db" }
@@ -190,7 +190,7 @@ resource "azurerm_network_interface_security_group_association" "nsga" {
 
 resource "azurerm_linux_virtual_machine" "vm" {
   count                 = 3
-  name                  = "${local.values[count.index].name}0${count.index}"
+  name                  = "${local.names[count.index].name}0${count.index}"
   location              = azurerm_resource_group.rg.location
   availability_set_id   = azurerm_availability_set.as.id
   resource_group_name   = azurerm_resource_group.rg.name
@@ -211,12 +211,12 @@ resource "azurerm_linux_virtual_machine" "vm" {
   }
 
   disable_password_authentication = false
-  computer_name                   = "${local.values[count.index].name}0${count.index}"
+  computer_name                   = "${local.names[count.index].name}0${count.index}"
   admin_username                  = "zala"
   admin_password                  = "123@T4M4R1N-do"
 
   tags = {
-    env = "${local.values[count.index].name}"
+    env = "${local.names[count.index].name}"
   }
 }
 
