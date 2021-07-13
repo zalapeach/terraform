@@ -147,30 +147,36 @@ resource "azurerm_network_security_group" "nsg" {
   name                = "netSecGrp"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
+}
 
-  security_rule = [{
-    name                         = "httpSecRule"
-    priority                     = 1001
-    direction                    = "inbound"
-    access                       = "allow"
-    protocol                     = "TCP"
-    source_port_range            = "*"
-    destination_port_range       = "80"
-    source_address_prefix        = "*"
-    destination_address_prefixes = [azurerm_network_interface.nic[0].private_ip_address,
-                                    azurerm_network_interface.nic[1].private_ip_address]
-  }, {
-    name                       = "DBSecRule"
-    priority                   = 1002
-    direction                  = "inbound"
-    access                     = "allow"
-    protocol                   = "TCP"
-    source_port_range          = "*"
-    destination_port_range     = "3306"
-    source_address_prefixes    = [azurerm_network_interface.nic[0].private_ip_address,
-                                  azurerm_network_interface.nic[1].private_ip_address]
-    destination_address_prefix = azurerm_network_interface.nic[2].private_ip_address
-  }]
+resource "azurerm_network_security_rule" "httpSecRule" {
+  count                        = 2
+  name                         = "httpSecRule"
+  priority                     = 1001
+  direction                    = "inbound"
+  access                       = "allow"
+  protocol                     = "TCP"
+  source_port_range            = "*"
+  destination_port_range       = "80"
+  source_address_prefix        = "*"
+  destination_address_prefixes = [element(azurerm_network_interface.nic.*.private_ip_address, count.index)]
+  resource_group_name          = azurerm_resource_group.rg.name
+  network_security_group_name  = azurerm_network_security_group.nsg.name
+}
+
+resource "azurerm_network_security_rule" "dbSecRule" {
+  count                        = 2
+  name                         = "DBSecRule"
+  priority                     = 1002
+  direction                    = "inbound"
+  access                       = "allow"
+  protocol                     = "TCP"
+  source_port_range            = "*"
+  destination_port_range       = "3306"
+  source_address_prefixes      = [element(azurerm_network_interface.nic.*.private_ip_address, count.index)]
+  destination_address_prefix   = azurerm_network_interface.nic[2].private_ip_address
+  resource_group_name          = azurerm_resource_group.rg.name
+  network_security_group_name  = azurerm_network_security_group.nsg.name
 }
 
 resource "azurerm_availability_set" "as" {
