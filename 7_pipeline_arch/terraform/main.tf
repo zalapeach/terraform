@@ -177,12 +177,11 @@ resource "azurerm_network_security_rule" "openDBSecRule" {
   destination_address_prefix  = azurerm_network_interface.nic[2].private_ip_address
   resource_group_name         = azurerm_resource_group.rg.name
   network_security_group_name = azurerm_network_security_group.nsg.name
-
 }
 
 resource "azurerm_network_security_rule" "dbSecRule" {
   count                       = 2
-  name                        = "DBSecRule"
+  name                        = "dbSecRule"
   priority                    = 1003
   direction                   = "inbound"
   access                      = "allow"
