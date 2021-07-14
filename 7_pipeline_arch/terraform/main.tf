@@ -189,7 +189,7 @@ resource "azurerm_availability_set" "as" {
 }
 
 resource "azurerm_network_interface_security_group_association" "nsga" {
-  count                     = 2
+  count                     = 3
   network_interface_id      = element(azurerm_network_interface.nic.*.id, count.index)
   network_security_group_id = azurerm_network_security_group.nsg.id
 }
