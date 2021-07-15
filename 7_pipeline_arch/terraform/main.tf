@@ -249,11 +249,12 @@ resource "azurerm_linux_virtual_machine" "vm" {
     version   = "latest"
   }
 
-  computer_name = "${local.names[count.index].name}0${count.index}"
+  computer_name  = "${local.names[count.index].name}0${count.index}"
+  admin_username = "zala"
 
   admin_ssh_key {
-    admin_username = "zala"
-    public_key     = file("./id_rsa.pub")
+    username   = "zala"
+    public_key = file("./id_rsa.pub")
   }
 
   tags = {
