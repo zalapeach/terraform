@@ -206,7 +206,7 @@ resource "azurerm_network_security_rule" "sshSecRule" {
   source_port_range            = "*"
   destination_port_range       = "22"
   source_address_prefix        = "*"
-  destination_address_prefixes = "*"
+  destination_address_prefix   = "*"
   resource_group_name          = azurerm_resource_group.rg.name
   network_security_group_name  = azurerm_network_security_group.nsg.name
 }
@@ -215,7 +215,7 @@ resource "azurerm_availability_set" "as" {
   name                         = "availabilitySet"
   location                     = azurerm_resource_group.rg.location
   resource_group_name          = azurerm_resource_group.rg.name
-  platform_fault_domain_count  = 4
+  platform_fault_domain_count  = 3
   platform_update_domain_count = 4
   managed                      = true
 }
