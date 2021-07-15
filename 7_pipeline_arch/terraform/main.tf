@@ -27,7 +27,8 @@ locals {
   names = [
     { name = "vm" },
     { name = "vm" },
-    { name = "db" }
+    { name = "db" },
+    { name = "ag" }
   ]
 }
 
@@ -124,7 +125,7 @@ resource "azurerm_subnet" "subnetBack" {
 }
 
 resource "azurerm_network_interface" "nic" {
-  count               = 3
+  count               = 4
   name                = "nic0${count.index}"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
@@ -150,7 +151,6 @@ resource "azurerm_network_security_group" "nsg" {
 }
 
 resource "azurerm_network_security_rule" "httpSecRule" {
-  count                        = 2
   name                         = "httpSecRule"
   priority                     = 1001
   direction                    = "inbound"
@@ -159,7 +159,8 @@ resource "azurerm_network_security_rule" "httpSecRule" {
   source_port_range            = "*"
   destination_port_range       = "80"
   source_address_prefix        = "*"
-  destination_address_prefixes = [element(azurerm_network_interface.nic.*.private_ip_address, count.index)]
+  destination_address_prefixes = [azurerm_network_interface.nic[0].private_ip_address,
+                                  azurerm_network_interface.nic[1].private_ip_address]
   resource_group_name          = azurerm_resource_group.rg.name
   network_security_group_name  = azurerm_network_security_group.nsg.name
 }
@@ -173,7 +174,8 @@ resource "azurerm_network_security_rule" "openDBSecRule" {
   protocol                    = "TCP"
   source_port_range           = "*"
   destination_port_range      = "3306"
-  source_address_prefixes     = [element(azurerm_network_interface.nic.*.private_ip_address, count.index)]
+  source_address_prefixes     = [azurerm_network_interface.nic[0].private_ip_address,
+                                 azurerm_network_interface.nic[1].private_ip_address]
   destination_address_prefix  = azurerm_network_interface.nic[2].private_ip_address
   resource_group_name         = azurerm_resource_group.rg.name
   network_security_group_name = azurerm_network_security_group.nsg.name
@@ -188,29 +190,44 @@ resource "azurerm_network_security_rule" "dbSecRule" {
   protocol                    = "TCP"
   source_port_range           = "*"
   destination_port_range      = "3306"
-  source_address_prefixes     = [element(azurerm_network_interface.nic.*.private_ip_address, count.index)]
+  source_address_prefixes     = [azurerm_network_interface.nic[0].private_ip_address,
+                                 azurerm_network_interface.nic[1].private_ip_address]
   destination_address_prefix  = azurerm_network_interface.nic[2].private_ip_address
   resource_group_name         = azurerm_resource_group.rg.name
   network_security_group_name = azurerm_network_security_group.nsg.name
+}
+
+resource "azurerm_network_security_rule" "httpSecRule" {
+  name                         = "httpSecRule"
+  priority                     = 1004
+  direction                    = "inbound"
+  access                       = "allow"
+  protocol                     = "TCP"
+  source_port_range            = "*"
+  destination_port_range       = "22"
+  source_address_prefix        = "*"
+  destination_address_prefixes = "*"
+  resource_group_name          = azurerm_resource_group.rg.name
+  network_security_group_name  = azurerm_network_security_group.nsg.name
 }
 
 resource "azurerm_availability_set" "as" {
   name                         = "availabilitySet"
   location                     = azurerm_resource_group.rg.location
   resource_group_name          = azurerm_resource_group.rg.name
-  platform_fault_domain_count  = 3
-  platform_update_domain_count = 3
+  platform_fault_domain_count  = 4
+  platform_update_domain_count = 4
   managed                      = true
 }
 
 resource "azurerm_network_interface_security_group_association" "nsga" {
-  count                     = 3
+  count                     = 4
   network_interface_id      = element(azurerm_network_interface.nic.*.id, count.index)
   network_security_group_id = azurerm_network_security_group.nsg.id
 }
 
 resource "azurerm_linux_virtual_machine" "vm" {
-  count                 = 3
+  count                 = 4
   name                  = "${local.names[count.index].name}0${count.index}"
   location              = azurerm_resource_group.rg.location
   availability_set_id   = azurerm_availability_set.as.id
@@ -268,4 +285,24 @@ resource "azurerm_bastion_host" "bastion" {
     subnet_id            = azurerm_subnet.subnetBastion.id
     public_ip_address_id = azurerm_public_ip.bastionIP.id
   }
+}
+
+# Create dynamic agent
+
+resource "azurerm_virtual_machine_extension" "agent" {
+  name                 = "azureDevOpsAgent"
+  virtual_machine_id   = azurerm_linux_virtual_machine.vm[3].id
+  publisher            = "Microsoft.Azure.Extensions"
+  type                 = "CustomScript"
+  type_handler_version = "2.0"
+
+  settings = <<SETTINGS
+    {
+      "fileUris": ["https://raw.githubusercontent.com/zalapeach/terraform/master/7_pipeline_arch/agent.sh"],
+      "commandToExecute": "cat agent.sh ${var.azure_devops_pat}"
+    }
+SETTINGS
+
+  depends_on = [
+    azurerm_linux_virtual_machine.vm
 }
