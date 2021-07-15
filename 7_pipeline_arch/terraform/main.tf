@@ -249,10 +249,12 @@ resource "azurerm_linux_virtual_machine" "vm" {
     version   = "latest"
   }
 
-  disable_password_authentication = false
-  computer_name                   = "${local.names[count.index].name}0${count.index}"
-  admin_username                  = "zala"
-  admin_password                  = "123@T4M4R1N-do"
+  computer_name = "${local.names[count.index].name}0${count.index}"
+
+  admin_ssh_key {
+    admin_username = "zala"
+    public_key     = file("./id_rsa.pub")
+  }
 
   tags = {
     env = "${local.names[count.index].name}"
