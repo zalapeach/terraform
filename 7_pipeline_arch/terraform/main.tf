@@ -133,7 +133,8 @@ resource "azurerm_network_interface" "nic" {
   ip_configuration {
     name = "nicIPConf"
     subnet_id = azurerm_subnet.subnetBack.id
-    private_ip_address_allocation = "Dynamic"
+    private_ip_address_allocation = "Static"
+    private_ip_address "10.0.2.${count.index + 4}"
   }
 }
 
@@ -299,7 +300,7 @@ resource "azurerm_virtual_machine_extension" "agent" {
   settings = <<SETTINGS
     {
       "fileUris": ["https://raw.githubusercontent.com/zalapeach/terraform/master/7_pipeline_arch/agent.sh"],
-      "commandToExecute": "cat agent.sh ${var.azure_devops_pat}"
+      "commandToExecute": "sh agent.sh ${var.azure_devops_pat}"
     }
 SETTINGS
 
