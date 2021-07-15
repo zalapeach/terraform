@@ -197,8 +197,8 @@ resource "azurerm_network_security_rule" "dbSecRule" {
   network_security_group_name = azurerm_network_security_group.nsg.name
 }
 
-resource "azurerm_network_security_rule" "httpSecRule" {
-  name                         = "httpSecRule"
+resource "azurerm_network_security_rule" "sshSecRule" {
+  name                         = "sshSecRule"
   priority                     = 1004
   direction                    = "inbound"
   access                       = "allow"
@@ -305,4 +305,5 @@ SETTINGS
 
   depends_on = [
     azurerm_linux_virtual_machine.vm
+  ]
 }
