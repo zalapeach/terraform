@@ -1,11 +1,10 @@
 trigger:
 - master
 
-pool:
-  vmImage: ubuntu-latest
-
 stages:
 - stage: Terraform
+  pool:
+    vmImage: ubuntu-latest
   jobs:
   - job: BuildInfra
     steps:
@@ -59,3 +58,15 @@ stages:
         command: apply
         commandOptions: '-auto-approve'
         workingDirectory: $(system.defaultworkingdirectory)/7_pipeline_arch/terraform/
+
+- stage: Ansible
+  dependsOn: Terraform
+  pool: Demo
+  jobs:
+  - job: ConfigureInfra
+    steps:
+    - task: CmdLine@2
+      displayName: 'Terraform PRESTEPS'
+      inputs:
+        script: |
+          touch hello.txt
