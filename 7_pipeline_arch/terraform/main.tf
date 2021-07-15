@@ -170,7 +170,7 @@ resource "azurerm_network_security_rule" "openDBSecRule" {
   priority                    = 1002
   direction                   = "outbound"
   access                      = "allow"
-  protocol                    = "UDP"
+  protocol                    = "TCP"
   source_port_range           = "*"
   destination_port_range      = "3306"
   source_address_prefixes     = [element(azurerm_network_interface.nic.*.private_ip_address, count.index)]
@@ -185,7 +185,7 @@ resource "azurerm_network_security_rule" "dbSecRule" {
   priority                    = 1003
   direction                   = "inbound"
   access                      = "allow"
-  protocol                    = "UDP"
+  protocol                    = "TCP"
   source_port_range           = "*"
   destination_port_range      = "3306"
   source_address_prefixes     = [element(azurerm_network_interface.nic.*.private_ip_address, count.index)]
