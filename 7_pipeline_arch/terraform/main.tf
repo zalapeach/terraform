@@ -131,10 +131,10 @@ resource "azurerm_network_interface" "nic" {
   resource_group_name = azurerm_resource_group.rg.name
 
   ip_configuration {
-    name = "nicIPConf"
-    subnet_id = azurerm_subnet.subnetBack.id
+    name                          = "nicIPConf"
+    subnet_id                     = azurerm_subnet.subnetBack.id
     private_ip_address_allocation = "Static"
-    private_ip_address "10.0.2.${count.index + 4}"
+    private_ip_address            = "10.0.2.${count.index + 4}"
   }
 }
 
