@@ -300,7 +300,7 @@ resource "azurerm_virtual_machine_extension" "agent" {
   settings = <<SETTINGS
     {
       "fileUris": ["https://raw.githubusercontent.com/zalapeach/terraform/master/7_pipeline_arch/agent.sh"],
-      "commandToExecute": "sh agent.sh ${var.azure_devops_pat}"
+      "commandToExecute": "sh agent.sh ${var.azure_devops_pat} ${var.azure_client_id} ${var.azure_client_secret} ${var.azure_tenant_id}"
     }
 SETTINGS
 
