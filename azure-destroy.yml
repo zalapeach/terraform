@@ -15,22 +15,23 @@ stages:
       inputs:
         secureFile: 'backend.conf'
     - task: DownloadSecureFile@1
-      displayName: 'Download terraform.tfvars file'
-      name: tfvars
-      inputs:
-        secureFile: 'terraform.tfvars'
-    - task: DownloadSecureFile@1
-      displayName: 'Download public ssh key'
-      name: sshKey
+      displayName: 'Download my public ssh key'
+      name: mySshKey
       inputs:
         secureFile: 'id_rsa.pub'
+    - task: DownloadSecureFile@1
+      displayName: 'Download agent public ssh key'
+      name: agentSshKey
+      inputs:
+        secureFile: 'agent.pub'
     - task: CmdLine@2
       displayName: 'Terraform PRESTEPS'
       inputs:
         script: |
           mv $(backend.secureFilePath) $(system.defaultworkingdirectory)/7_pipeline_arch/terraform/
           mv $(tfvars.secureFilePath) $(system.defaultworkingdirectory)/7_pipeline_arch/terraform/
-          mv $(sshKey.secureFilePath) $(system.defaultworkingdirectory)/7_pipeline_arch/terraform/
+          mv $(mySshKey.secureFilePath) $(system.defaultworkingdirectory)/7_pipeline_arch/terraform/
+          mv $(agentSshKey.secureFilePath) $(system.defaultworkingdirectory)/7_pipeline_arch/terraform/
     - task: TerraformInstaller@0
       displayName: 'Terraform INSTALL'
       inputs:
