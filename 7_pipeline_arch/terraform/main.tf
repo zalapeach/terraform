@@ -318,11 +318,3 @@ SETTINGS
     azurerm_linux_virtual_machine.vm
   ]
 }
-
-resource "azurerm_virtual_machine_extension" "slaves" {
-  count                = 3
-  name                 = "azureSlaves"
-  virtual_machine_id   = element(azurerm_linux_virtual_machine.vm.*.id, count.index)
-  publisher            = "Microsoft.Azure.Extensions"
-  type                 = "CustomScript"
-}
