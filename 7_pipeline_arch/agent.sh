@@ -14,5 +14,7 @@ sudo chmod -R 777 /myagent
 runuser -l zala -c "/myagent/config.sh --unattended --url https://dev.azure.com/JuanAguilar0507 --auth pat --token ${PAT} --pool Demo"
 sudo /myagent/svc.sh install
 sudo /myagent/svc.sh start
-sed 's/#host_key_cheking = False/host_key_checking = False/' /etc/ansible/ansible.cfg
+sudo sed 's/#host_key_cheking = False/host_key_checking = False/' /etc/ansible/ansible.cfg
+sudo mv agent /home/zala/.ssh/id_rsa
+sudo mv agent.pub /home/zala/.ssh/id_rsa
 exit 0

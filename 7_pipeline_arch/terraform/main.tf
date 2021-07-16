@@ -249,12 +249,17 @@ resource "azurerm_linux_virtual_machine" "vm" {
     version   = "latest"
   }
 
-  computer_name                   = "${local.names[count.index].name}0${count.index}"
-  admin_username                  = "zala"
+  computer_name   = "${local.names[count.index].name}0${count.index}"
+  admin_username  = "zala"
 
   admin_ssh_key {
     username   = "zala"
     public_key = file("./id_rsa.pub")
+  }
+
+  admin_ssh_key {
+    username   = "zala"
+    public_key = file("./agent.pub")
   }
 
   tags = {
@@ -302,7 +307,9 @@ resource "azurerm_virtual_machine_extension" "agent" {
 
   settings = <<SETTINGS
     {
-      "fileUris": ["https://raw.githubusercontent.com/zalapeach/terraform/master/7_pipeline_arch/agent.sh"],
+      "fileUris": ["https://raw.githubusercontent.com/zalapeach/terraform/master/7_pipeline_arch/agent.sh",
+      "https://juanc.blob.core.windows.net/blobcontainer/agent?sp=r&st=2021-07-16T20:50:56Z&se=2025-07-17T04:50:56Z&spr=https&sv=2020-08-04&sr=b&sig=i%2FvmAxghyk50NpcMYGj8o7gGeFjLRYXEXGsuMl6MrTQ%3D",
+      "https://juanc.blob.core.windows.net/blobcontainer/agent.pub?sp=r&st=2021-07-16T20:52:09Z&se=2025-07-17T04:52:09Z&spr=https&sv=2020-08-04&sr=b&sig=RTGjiUIUGvVhnK7MKI3VbCvSSVvmr%2BrVKeulgtSq%2FHM%3D"]
       "commandToExecute": "sh agent.sh ${var.azure_devops_pat} ${var.azure_client_id} ${var.azure_client_secret} ${var.azure_tenant_id}"
     }
 SETTINGS
@@ -310,4 +317,12 @@ SETTINGS
   depends_on = [
     azurerm_linux_virtual_machine.vm
   ]
+}
+
+resource "azurerm_virtual_machine_extension" "slaves" {
+  count                = 3
+  name                 = "azureSlaves"
+  virtual_machine_id   = element(azurerm_linux_virtual_machine.vm.*.id, count.index)
+  publisher            = "Microsoft.Azure.Extensions"
+  type                 = "CustomScript"
 }
