@@ -249,9 +249,10 @@ resource "azurerm_linux_virtual_machine" "vm" {
     version   = "latest"
   }
 
-  computer_name  = "${local.names[count.index].name}0${count.index}"
-  admin_username = "zala"
-  admin_password = "123@T4M4R1N-do"
+  disable_password_authentication = false
+  computer_name                   = "${local.names[count.index].name}0${count.index}"
+  admin_username                  = "zala"
+  admin_password                  = "123@T4M4R1N-do"
 
   admin_ssh_key {
     username   = "zala"
