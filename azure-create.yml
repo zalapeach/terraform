@@ -1,11 +1,11 @@
 trigger:
 - master
 
-#stages:
-#- stage: Terraform
+stages:
+- stage: Terraform
   pool:
     vmImage: ubuntu-latest
-  #jobs:
+  jobs:
   - job: BuildInfra
     steps:
     - task: DownloadSecureFile@1
@@ -23,11 +23,11 @@ trigger:
       name: mySshKey
       inputs:
         secureFile: 'id_rsa.pub'
-    #- task: DownloadSecureFile@1
-      #displayName: 'Download agent public ssh key'
-      #name: agentSshKey
-      #inputs:
-        #secureFile: 'agent.pub'
+    - task: DownloadSecureFile@1
+      displayName: 'Download agent public ssh key'
+      name: agentSshKey
+      inputs:
+        secureFile: 'agent.pub'
     #- task: CmdLine@2
       #displayName: 'Terraform PRESTEPS'
       #inputs:
@@ -65,14 +65,15 @@ trigger:
         #commandOptions: '-auto-approve'
         #workingDirectory: $(system.defaultworkingdirectory)/7_pipeline_arch/terraform/
 
-#- stage: Ansible
-  #dependsOn: Terraform
-  #pool: Demo
-  #jobs:
-  #- job: ConfigureInfra
-    #steps:
-    #- task: CmdLine@2
-      #displayName: 'Terraform PRESTEPS'
-      #inputs:
-        #script: |
+- stage: Ansible
+  dependsOn: Terraform
+  pool: Demo
+  jobs:
+  - job: ConfigureInfra
+    steps:
+    - task: CmdLine@2
+      displayName: 'Terraform PRESTEPS'
+      inputs:
+        script: |
+          echo "hello world"
           #touch hello.txt
