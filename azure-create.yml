@@ -13,11 +13,11 @@ stages:
       name: backend
       inputs:
         secureFile: 'backend.conf'
-    #- task: DownloadSecureFile@1
-      #displayName: 'Download terraform.tfvars file'
-      #name: tfvars
-      #inputs:
-        #secureFile: 'terraform.tfvars'
+    - task: DownloadSecureFile@1
+      displayName: 'Download terraform.tfvars file'
+      name: tfvars
+      inputs:
+        secureFile: 'terraform.tfvars'
     #- task: DownloadSecureFile@1
       #displayName: 'Download my public ssh key'
       #name: mySshKey
