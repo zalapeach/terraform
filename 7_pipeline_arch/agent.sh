@@ -8,6 +8,8 @@ sudo apt install ansible azure-cli -y
 sudo az login --service-principal -u $APPID -p $SECRET --tenant $TENANT
 sudo mv ./agent /home/zala/.ssh/id_rsa
 sudo mv ./agent.pub /home/zala/.ssh/id_rsa.pub
+sudo chmod 600 /home/zala/.ssh/id_*
+sudo chown zala:zala /home/zala/.ssh/id_*
 sudo sed '/host_key_checking/s/^#//' -i /etc/ansible/ansible.cfg
 sudo mkdir /myagent
 cd /myagent
