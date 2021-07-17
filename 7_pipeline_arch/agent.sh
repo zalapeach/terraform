@@ -6,8 +6,12 @@ sudo apt update
 sudo apt upgrade -y
 sudo apt install ansible azure-cli -y
 sudo az login --service-principal -u $APPID -p $SECRET --tenant $TENANT
-sudo mv ./agent /home/zala/.ssh/id_rsa
-sudo mv ./agent.pub /home/zala/.ssh/id_rsa.pub
+sudo cp ./agent /home/zala/.ssh/id_rsa
+sudo cp ./agent.pub /home/zala/.ssh/id_rsa.pub
+sudo mv ./agent /root/.ssh/id_rsa
+sudo mv ./agent.pub /root.ssh/id_rsa.pub
+sudo chmod 600 /root/.ssh/id_*
+sudo chown root:root /root/.ssh/id_*
 sudo chmod 600 /home/zala/.ssh/id_*
 sudo chown zala:zala /home/zala/.ssh/id_*
 sudo sed '/host_key_checking/s/^#//' -i /etc/ansible/ansible.cfg
