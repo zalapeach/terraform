@@ -1,11 +1,11 @@
 trigger:
 - master
 
-stages:
-- stage: Terraform
+#stages:
+#- stage: Terraform
   pool:
     vmImage: ubuntu-latest
-  jobs:
+  #jobs:
   - job: BuildInfra
     steps:
     - task: DownloadSecureFile@1
@@ -18,11 +18,11 @@ stages:
       name: tfvars
       inputs:
         secureFile: 'terraform.tfvars'
-    #- task: DownloadSecureFile@1
-      #displayName: 'Download my public ssh key'
-      #name: mySshKey
-      #inputs:
-        #secureFile: 'id_rsa.pub'
+    - task: DownloadSecureFile@1
+      displayName: 'Download my public ssh key'
+      name: mySshKey
+      inputs:
+        secureFile: 'id_rsa.pub'
     #- task: DownloadSecureFile@1
       #displayName: 'Download agent public ssh key'
       #name: agentSshKey
