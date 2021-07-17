@@ -259,7 +259,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
 
   admin_ssh_key {
     username   = "zala"
-    public_key = file('./agent.pub')
+    public_key = file("./agent.pub")
   }
 
   tags = {
