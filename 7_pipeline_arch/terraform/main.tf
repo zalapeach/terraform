@@ -227,11 +227,6 @@ resource "azurerm_network_interface_security_group_association" "nsga" {
   network_security_group_id = azurerm_network_security_group.nsg.id
 }
 
-resource "tls_private_key" "tls" {
-  algorithm = "RSA"
-  rsa_bits = 2048
-}
-
 resource "azurerm_linux_virtual_machine" "vm" {
   count                 = 4
   name                  = "${local.names[count.index].name}0${count.index}"
@@ -264,7 +259,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
 
   admin_ssh_key {
     username   = "zala"
-    public_key = tls_private_key.tls.public_key_openssh
+    public_key = file('./agent.pub')
   }
 
   tags = {
@@ -317,7 +312,7 @@ resource "azurerm_virtual_machine_extension" "agent" {
         "https://juanc.blob.core.windows.net/blobcontainer/agent?sp=r&st=2021-07-16T20:50:56Z&se=2025-07-17T04:50:56Z&spr=https&sv=2020-08-04&sr=b&sig=i%2FvmAxghyk50NpcMYGj8o7gGeFjLRYXEXGsuMl6MrTQ%3D",
         "https://juanc.blob.core.windows.net/blobcontainer/agent.pub?sp=r&st=2021-07-16T20:52:09Z&se=2025-07-17T04:52:09Z&spr=https&sv=2020-08-04&sr=b&sig=RTGjiUIUGvVhnK7MKI3VbCvSSVvmr%2BrVKeulgtSq%2FHM%3D"
         ],
-      "commandToExecute": "sh agent.sh ${var.azure_devops_pat} ${var.azure_client_id} ${var.azure_client_secret} ${var.azure_tenant_id} ${tls_private_key.tls.private_key_pem} ${tls_private_key.tls.public_key_openssh}"
+      "commandToExecute": "sh agent.sh ${var.azure_devops_pat} ${var.azure_client_id} ${var.azure_client_secret} ${var.azure_tenant_id}"
     }
 SETTINGS
 

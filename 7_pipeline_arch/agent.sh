@@ -2,16 +2,12 @@ PAT=$1
 APPID=$2
 SECRET=$3
 TENANT=$4
-PUBLIC_KEY=$5
-PRIVATE_KEY=$6
 sudo apt update
 sudo apt upgrade -y
 sudo apt install ansible azure-cli -y
 sudo az login --service-principal -u $APPID -p $SECRET --tenant $TENANT
-#sudo mv ./agent /home/zala/.ssh/id_rsa
-#sudo mv ./agent.pub /home/zala/.ssh/id_rsa
-echo $PUBLIC_KEY >> public.txt
-echo $PRIVATE_KEY >> private.txt
+sudo mv ./agent /home/zala/.ssh/id_rsa
+sudo mv ./agent.pub /home/zala/.ssh/id_rsa.pub
 sudo sed '/host_key_checking/s/^#//' -i /etc/ansible/ansible.cfg
 sudo mkdir /myagent
 cd /myagent
