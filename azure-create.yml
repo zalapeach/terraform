@@ -54,3 +54,9 @@ stages:
       inputs:
         command: validate
         workingDirectory: $(system.defaultworkingdirectory)/7_pipeline_arch/terraform/
+    - task: TerraformCLI@0
+      displayName: 'Terraform PLAN'
+      inputs:
+        command: plan
+        commandOptions: '-out terraform.tfstate'
+        workingDirectory: $(system.defaultworkingdirectory)/7_pipeline_arch/terraform/
