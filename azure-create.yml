@@ -66,3 +66,18 @@ stages:
         command: apply
         commandOptions: '-auto-approve'
         workingDirectory: $(system.defaultworkingdirectory)/7_pipeline_arch/terraform/
+
+- stage: Ansible
+  dependsOn: Terraform
+  pool:
+    name: Demo
+    demands:
+    - agent.name -equals ag03
+  jobs:
+  - job: ConfigureInfra
+    steps:
+    - task: CmdLine@2
+      displayName: 'Terraform PRESTEPS'
+      inputs:
+        script: |
+          touch hello.txt
