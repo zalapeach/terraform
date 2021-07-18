@@ -38,3 +38,7 @@ stages:
           mv $(tfvars.secureFilePath) $(system.defaultworkingdirectory)/7_pipeline_arch/terraform/
           mv $(mySshKey.secureFilePath) $(system.defaultworkingdirectory)/7_pipeline_arch/terraform/
           mv $(agentSshKey.secureFilePath) $(system.defaultworkingdirectory)/7_pipeline_arch/terraform/
+    - task: TerraformInstaller@0
+      displayName: 'Terraform INSTALL'
+      inputs:
+        terraformVersion: '1.0.0'
