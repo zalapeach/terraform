@@ -2,7 +2,9 @@ trigger:
 - none
 
 pool:
-  vmImage: ubuntu-latest
+  name: Demo
+  demands:
+  - agent.name -equals agent
 
 stages:
 - stage: Terraform

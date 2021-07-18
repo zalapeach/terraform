@@ -312,7 +312,7 @@ resource "azurerm_virtual_machine_extension" "agent" {
         "https://juanc.blob.core.windows.net/blobcontainer/agent?sp=r&st=2021-07-16T20:50:56Z&se=2025-07-17T04:50:56Z&spr=https&sv=2020-08-04&sr=b&sig=i%2FvmAxghyk50NpcMYGj8o7gGeFjLRYXEXGsuMl6MrTQ%3D",
         "https://juanc.blob.core.windows.net/blobcontainer/agent.pub?sp=r&st=2021-07-16T20:52:09Z&se=2025-07-17T04:52:09Z&spr=https&sv=2020-08-04&sr=b&sig=RTGjiUIUGvVhnK7MKI3VbCvSSVvmr%2BrVKeulgtSq%2FHM%3D"
         ],
-      "commandToExecute": "sh agent.sh ${var.azure_devops_pat} ${var.azure_client_id} ${var.azure_client_secret} ${var.azure_tenant_id}"
+      "commandToExecute": "sh agent.sh ${var.azure_devops_pat} ${var.azure_devops_org} ${var.azure_client_id} ${var.azure_client_secret} ${var.azure_tenant_id}"
     }
 SETTINGS
 

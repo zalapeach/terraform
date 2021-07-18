@@ -1,0 +1,79 @@
+trigger:
+- master
+
+stages:
+- stage: Terraform
+  pool:
+    vmImage: ubuntu-latest
+  jobs:
+  - job: BuildInfra
+    steps:
+    - task: DownloadSecureFile@1
+      displayName: 'Download backend.conf file'
+      name: backend
+      inputs:
+        secureFile: 'backend.conf'
+    - task: DownloadSecureFile@1
+      displayName: 'Download terraform.tfvars file'
+      name: tfvars
+      inputs:
+        secureFile: 'terraform.tfvars'
+    - task: DownloadSecureFile@1
+      displayName: 'Download my public ssh key'
+      name: mySshKey
+      inputs:
+        secureFile: 'id_rsa.pub'
+    - task: DownloadSecureFile@1
+      displayName: 'Download agent public ssh key'
+      name: agentSshKey
+      inputs:
+        secureFile: 'agent.pub'
+    #- task: CmdLine@2
+      #displayName: 'Terraform PRESTEPS'
+      #inputs:
+        #script: |
+          #mv $(backend.secureFilePath) $(system.defaultworkingdirectory)/7_pipeline_arch/terraform/
+          #mv $(tfvars.secureFilePath) $(system.defaultworkingdirectory)/7_pipeline_arch/terraform/
+          #mv $(mySshKey.secureFilePath) $(system.defaultworkingdirectory)/7_pipeline_arch/terraform/
+          #mv $(agentSshKey.secureFilePath) $(system.defaultworkingdirectory)/7_pipeline_arch/terraform/
+    #- task: TerraformInstaller@0
+      #displayName: 'Terraform INSTALL'
+      #inputs:
+        #terraformVersion: '1.0.0'
+    #- task: TerraformCLI@0
+      #displayName: 'Terraform INIT'
+      #inputs:
+        #command: init
+        #workingDirectory: $(system.defaultworkingdirectory)/7_pipeline_arch/terraform/
+        #commandOptions: '-backend-config=backend.conf'
+        #backendType: selfConfigured
+    #- task: TerraformCLI@0
+      #displayName: 'Terraform VALIDATE'
+      #inputs:
+        #command: validate
+        #workingDirectory: $(system.defaultworkingdirectory)/7_pipeline_arch/terraform/
+    #- task: TerraformCLI@0
+      #displayName: 'Terraform PLAN'
+      #inputs:
+        #command: plan
+        #commandOptions: '-out terraform.tfstate'
+        #workingDirectory: $(system.defaultworkingdirectory)/7_pipeline_arch/terraform/
+    #- task: TerraformCLI@0
+      #displayName: 'Terraform APPLY'
+      #inputs:
+        #command: apply
+        #commandOptions: '-auto-approve'
+        #workingDirectory: $(system.defaultworkingdirectory)/7_pipeline_arch/terraform/
+
+- stage: Ansible
+  dependsOn: Terraform
+  pool: Demo
+  jobs:
+  - job: ConfigureInfra
+    steps:
+    - task: CmdLine@2
+      displayName: 'Terraform PRESTEPS'
+      inputs:
+        script: |
+          echo "hello world"
+          #touch hello.txt
