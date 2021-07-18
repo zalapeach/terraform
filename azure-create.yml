@@ -49,3 +49,8 @@ stages:
         workingDirectory: $(system.defaultworkingdirectory)/7_pipeline_arch/terraform/
         commandOptions: '-backend-config=backend.conf'
         backendType: selfConfigured
+    - task: TerraformCLI@0
+      displayName: 'Terraform VALIDATE'
+      inputs:
+        command: validate
+        workingDirectory: $(system.defaultworkingdirectory)/7_pipeline_arch/terraform/
