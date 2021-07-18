@@ -4,9 +4,9 @@ trigger:
 stages:
 - stage: Terraform
   pool:
-    name: Azure pipelines
+    name: Demo
     demands:
-    - agent.name -equals 'Hosted Agent'
+    - agent.name -equals agent
   jobs:
   - job: BuildInfra
     steps:
