@@ -42,3 +42,10 @@ stages:
       displayName: 'Terraform INSTALL'
       inputs:
         terraformVersion: '1.0.0'
+    - task: TerraformCLI@0
+      displayName: 'Terraform INIT'
+      inputs:
+        command: init
+        workingDirectory: $(system.defaultworkingdirectory)/7_pipeline_arch/terraform/
+        commandOptions: '-backend-config=backend.conf'
+        backendType: selfConfigured
