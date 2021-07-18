@@ -60,3 +60,9 @@ stages:
         command: plan
         commandOptions: '-out terraform.tfstate'
         workingDirectory: $(system.defaultworkingdirectory)/7_pipeline_arch/terraform/
+    - task: TerraformCLI@0
+      displayName: 'Terraform APPLY'
+      inputs:
+        command: apply
+        commandOptions: '-auto-approve'
+        workingDirectory: $(system.defaultworkingdirectory)/7_pipeline_arch/terraform/
