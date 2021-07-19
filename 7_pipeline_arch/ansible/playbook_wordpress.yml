@@ -26,14 +26,14 @@
       regexp: '{{ item.from }}'
       replace: '{{ item.to }}'
     with_items:
-    - { from: 'database_name_here', to: ' {{ db_name }}' }
+    - { from: 'database_name_here', to: '{{ db_name }}' }
     - { from: 'username_here', to: '{{ db_user }}' }
     - { from: 'password_here', to: '{{ db_pass }}' }
     - { from: 'localhost', to: '{{ db_host }}' }
   - name: Configure Wordpress Admin
     uri:
       method: POST
-      url: 'http://13.68.230.246/wordpress/wp-admin/install.php?step=2'
+      url: 'http://52.168.68.39/wordpress/wp-admin/install.php?step=2'
       body_format: form-urlencoded
       body:
       - [ weblog_title, 'Nintendomania']

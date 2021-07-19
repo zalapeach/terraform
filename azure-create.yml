@@ -104,6 +104,15 @@ stages:
         inventoriesAgentMachine: file
         inventoryFileOnAgentMachine: $(system.defaultworkingdirectory)/7_pipeline_arch/ansible/inventory_azure_rm.yml
         sudoEnabled: true
+    - task: Ansible@0
+      displayName: 'Installing wordpress'
+      inputs:
+        ansibleInterface: 'agentMachine'
+        playbookPathOnAgentMachine: $(system.defaultworkingdirectory)/7_pipeline_arch/ansible/playbook_wordpress.yml
+        inventoriesAgentMachine: file
+        inventoryFileOnAgentMachine: $(system.defaultworkingdirectory)/7_pipeline_arch/ansible/inventory_azure_rm.yml
+        sudoEnabled: true
+        args: '--extra-vars "db_pass=$(DB_PASS) db_user=$(DB_USER) db_name=$(DB_NAME) db_host=$(DB_HOST) wp_user=$(WP_USER) wp_pass=$(WP_PASS) wp_user_email=$(WP_USER_EMAIL)"'
 # run sudo ansible-playbook playbook-init.yml -i inventory_azure_rm.yml
 # run sudo ansible-playbook playbook_dbs.yml -i inventory_azure_rm.yml \
   # --extra-vars "db_pass=${ANSIBLE_DB_PASS}"
