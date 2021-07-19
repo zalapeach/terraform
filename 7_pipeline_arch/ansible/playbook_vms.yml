@@ -1,5 +1,5 @@
 ---
-- hosts: dbs
+- hosts: vms
   gather_facts: false
 
   vars:

@@ -1,5 +1,5 @@
 ---
-- hosts: dbs
+- hosts: vms
   gather_facts: false
 
   vars:
@@ -19,25 +19,26 @@
       chdir: /var/www/html/wordpress/
       creates: wp-config.php
   - name: Configure wp-config.php
+    no_log: true
     become: true
     replace:
       path: /var/www/html/wordpress/wp-config.php
       regexp: '{{ item.from }}'
       replace: '{{ item.to }}'
     with_items:
-    - { from: 'database_name_here', to: 'wordpress' }
-    - { from: 'username_here', to: 'root' }
-    - { from: 'password_here', to: '{{ password }}' }
-    - { from: 'localhost', to: 'localhost' }
+    - { from: 'database_name_here', to: ' {{ db_name }}' }
+    - { from: 'username_here', to: '{{ db_user }}' }
+    - { from: 'password_here', to: '{{ db_pass }}' }
+    - { from: 'localhost', to: '{{ db_host }}' }
   - name: Configure Wordpress Admin
     uri:
       method: POST
-      url: 'http://40.80.145.18/wordpress/wp-admin/install.php?step=2'
+      url: 'http://13.68.230.246/wordpress/wp-admin/install.php?step=2'
       body_format: form-urlencoded
       body:
-      - [ weblog_title, Nintendomania]
-      - [ user_name, zala]
-      - [ admin_email, zalapeach@gmail.com]
-      - [ admin_password, {{ password }}]
-      - [ admin_password2, {{ password }}]
+      - [ weblog_title, 'Nintendomania']
+      - [ user_name, '{{ wp_user }}']
+      - [ admin_email, '{{ wp_user_email }}']
+      - [ admin_password, '{{ wp_pass }}']
+      - [ admin_password2, '{{ wp_pass }}']
       - [ pw_weak, 1]

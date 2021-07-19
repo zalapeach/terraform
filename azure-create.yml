@@ -1,6 +1,9 @@
 trigger:
 - master
 
+variables:
+- group: ANSIBLE
+
 stages:
 - stage: Terraform
   pool:
@@ -81,8 +84,30 @@ stages:
       inputs:
         script: |
           touch hello.txt
-    # run sudo ansible-playbook playbook-init.yml -i inventory_azure_rm.yml
-    # run sudo ansible-playbook playbook-dbs.yml -i inventory_azure_rm.yml
-    # run sudo ansible-playbook playbook-vms.yml -i inventory_azure_rm.yml
-    # config vm separately
-    # run sudo ansible-playbook playbook-wordpress.yml -i inventory_azure_rm.yml
+    - task: Ansible@0
+      displayName: 'Update/Upgrade vms'
+      inputs:
+        ansibleInterface: 'agentMachine'
+        playbookPathOnAgentMachine: $(system.defaultworkingdirectory)/7_pipeline_arch/ansible/playbook_init.yml
+        inventoriesAgentMachine: file
+        inventoryFileOnAgentMachine: $(system.defaultworkingdirectory)/7_pipeline_arch/ansible/inventory_azure_rm.yml
+        sudoEnabled: true
+    - task:
+      displayName: 'Preparing db'
+      inputs:
+        ansibleInterface: 'agentMachine'
+        playbookPathOnAgentMachine: $(system.defaultworkingdirectory)/7_pipeline_arch/ansible/playbook_dbs.yml
+        inventoriesAgentMachine: file
+        inventoryFileOnAgentMachine: $(system.defaultworkingdirectory)/7_pipeline_arch/ansible/inventory_azure_rm.yml
+        sudoEnabled: true
+        args: '--extra-vars "db_pass=$(ANSIBLE_DB_PASS) db_user=$(ANSIBLE_DB_USER) db_name=$(ANSIBLE_DB_NAME)"'
+# run sudo ansible-playbook playbook-init.yml -i inventory_azure_rm.yml
+# run sudo ansible-playbook playbook_dbs.yml -i inventory_azure_rm.yml \
+  # --extra-vars "db_pass=${ANSIBLE_DB_PASS}"
+# run sudo ansible-playbook playbook-vms.yml -i inventory_azure_rm.yml
+# config vm separately
+# run sudo ansible-playbook playbook-wordpress.yml -i inventory_azure_rm.yml \
+  # --extra-vars "db_pass=${ANSIBLE_DB_PASS} wp_pass=${ANSIBLE_WP_PASS}"
+# ansible-playbook playbook_wordpress.yml -i inventory_azure_rm.yml \
+  # --extra-vars "db_pass=${ANSIBLE_DB_PASS} wp_pass=${ANSIBLE_DB_PASS} \
+  # db_name=wordpress db_host=${ANSIBLE_DB_HOST}"
