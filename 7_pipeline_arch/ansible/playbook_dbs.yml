@@ -1,0 +1,70 @@
+---
+- hosts: dbs
+  gather_facts: false
+
+  vars:
+    ansible_user: zala
+
+  tasks:
+  - name: Install MariaDB & Pip
+    become: true
+    apt:
+      pkg:
+      - mariadb-server
+      - python3-pip
+      state: present
+  - name: Install PyMySQL using Pip
+    become: true
+    pip:
+      name: pymysql
+      state: present
+  - name: Enable MariaDB
+    become: true
+    systemd:
+      name: mariadb
+      enabled: yes
+  - name: Edit /etc/mysql/mycnf file
+    become: true
+    blockinfile:
+      path: /etc/mysql/my.cnf
+      block: |
+        [mysqld]
+
+        skip-network=0
+        skip-bind-address
+  - name: Restart MariaDB
+    become: true
+    systemd:
+      name: mariadb
+      state: restarted
+      daemon_reload: yes
+  - name: check if root user exists
+    become: true
+    mysql_user:
+      name: 'root'
+      password: {{ password }}
+      host_all: true
+      state: present
+      login_user: root
+      login_password: {{ password }}
+      login_unix_socket: /var/run/mysqld/mysqld.sock
+  - name: no anonymous users
+    become: true
+    mysql_user:
+      name: ''
+      state: absent
+      host_all: true
+      login_user: root
+      login_password: {{ password }}
+      login_unix_socket: /var/run/mysqld/mysqld.sock
+  - name: wordpress db exits
+    mysql_db:
+      name: wordpress
+      state: present
+      login_user: root
+      login_password: {{ password }}
+      login_unix_socket: /var/run/mysqld/mysqld.sock
+  - name: Allow db user to connect externally
+    command: 'mysql -u root -p{{ password }} -ne "{{ item }}"'
+    with_items:
+      - GRANT ALL PRIVILEGES ON *.* TO 'root'@'10.0.2.%' IDENTIFIED BY '{{ password }}' WITH GRANT OPTION;

@@ -81,3 +81,8 @@ stages:
       inputs:
         script: |
           touch hello.txt
+    # run sudo ansible-playbook playbook-init.yml -i inventory_azure_rm.yml
+    # run sudo ansible-playbook playbook-dbs.yml -i inventory_azure_rm.yml
+    # run sudo ansible-playbook playbook-vms.yml -i inventory_azure_rm.yml
+    # config vm separately
+    # run sudo ansible-playbook playbook-wordpress.yml -i inventory_azure_rm.yml

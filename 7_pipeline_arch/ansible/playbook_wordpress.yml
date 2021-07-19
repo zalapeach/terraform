@@ -12,3 +12,32 @@
       src: https://wordpress.org/latest.zip
       dest: /var/www/html/
       remote_src: yes
+  - name: Create wp-config.php
+    become: true
+    command:
+      cmd: cp wp-config-sample.php wp-config.php
+      chdir: /var/www/html/wordpress/
+      creates: wp-config.php
+  - name: Configure wp-config.php
+    become: true
+    replace:
+      path: /var/www/html/wordpress/wp-config.php
+      regexp: '{{ item.from }}'
+      replace: '{{ item.to }}'
+    with_items:
+    - { from: 'database_name_here', to: 'wordpress' }
+    - { from: 'username_here', to: 'root' }
+    - { from: 'password_here', to: '{{ password }}' }
+    - { from: 'localhost', to: 'localhost' }
+  - name: Configure Wordpress Admin
+    uri:
+      method: POST
+      url: 'http://40.80.145.18/wordpress/wp-admin/install.php?step=2'
+      body_format: form-urlencoded
+      body:
+      - [ weblog_title, Nintendomania]
+      - [ user_name, zala]
+      - [ admin_email, zalapeach@gmail.com]
+      - [ admin_password, {{ password }}]
+      - [ admin_password2, {{ password }}]
+      - [ pw_weak, 1]
