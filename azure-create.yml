@@ -79,11 +79,6 @@ stages:
   jobs:
   - job: ConfigureInfra
     steps:
-    - task: CmdLine@2
-      displayName: 'Terraform PRESTEPS'
-      inputs:
-        script: |
-          touch hello.txt
     - task: Ansible@0
       displayName: 'Update/Upgrade vms'
       inputs:
@@ -101,6 +96,14 @@ stages:
         inventoryFileOnAgentMachine: $(system.defaultworkingdirectory)/7_pipeline_arch/ansible/inventory_azure_rm.yml
         sudoEnabled: true
         args: '--extra-vars "db_pass=$(DB_PASS) db_user=$(DB_USER) db_name=$(DB_NAME)"'
+    - task: Ansible@0
+      displayName: 'Installing node tools'
+      inputs:
+        ansibleInterface: 'agentMachine'
+        playbookPathOnAgentMachine: $(system.defaultworkingdirectory)/7_pipeline_arch/ansible/playbook_vms.yml
+        inventoriesAgentMachine: file
+        inventoryFileOnAgentMachine: $(system.defaultworkingdirectory)/7_pipeline_arch/ansible/inventory_azure_rm.yml
+        sudoEnabled: true
 # run sudo ansible-playbook playbook-init.yml -i inventory_azure_rm.yml
 # run sudo ansible-playbook playbook_dbs.yml -i inventory_azure_rm.yml \
   # --extra-vars "db_pass=${ANSIBLE_DB_PASS}"
