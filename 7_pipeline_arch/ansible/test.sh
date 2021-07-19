@@ -1,4 +1,4 @@
-curl "http://40.80.145.18/wordpress/wp-admin/install.php?step=2" \
+curl -v "http://52.168.68.39/wordpress/wp-admin/install.php?step=2" \
   --data-urlencode "weblog_title=Nintendomania" \
   --data-urlencode "user_name=zala" \
   --data-urlencode "admin_email=zalapeach@gmail.com" \

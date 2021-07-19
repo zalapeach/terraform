@@ -42,3 +42,4 @@
       - [ admin_password, '{{ wp_pass }}']
       - [ admin_password2, '{{ wp_pass }}']
       - [ pw_weak, 1]
+      status_code: [200, 302]
