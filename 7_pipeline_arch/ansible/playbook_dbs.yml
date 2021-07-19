@@ -42,12 +42,12 @@
     no_log: true
     become: true
     mysql_user:
-      name: root
-      password: {{ db_pass }}
+      name: "{{ db_user }}"
+      password: "{{ db_pass }}"
       host_all: true
       state: present
-      login_user: root
-      login_password: {{ db_pass }}
+      login_user: "{{ db_user }}"
+      login_password: "{{ db_pass }}"
       login_unix_socket: /var/run/mysqld/mysqld.sock
   - name: no anonymous users
     no_log: true
@@ -56,15 +56,15 @@
       name: ''
       state: absent
       host_all: true
-      login_user: root
-      login_password: {{ db_pass }}
+      login_user: "{{ db_user }}"
+      login_password: "{{ db_pass }}"
       login_unix_socket: /var/run/mysqld/mysqld.sock
   - name: DB must exist
     mysql_db:
-      name: {{ db_name }}
+      name: "{{ db_name }}"
       state: present
-      login_user: root
-      login_password: {{ db_pass }}
+      login_user: "{{ db_user }}"
+      login_password: "{{ db_pass }}"
       login_unix_socket: /var/run/mysqld/mysqld.sock
   - name: Allow db user to connect externally
     no_log: true
