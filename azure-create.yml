@@ -134,14 +134,12 @@ stages:
       inputs:
         ansibleInterface: 'agentMachine'
         playbookPathOnAgentMachine: $(system.defaultworkingdirectory)/7_pipeline_arch/ansible/playbook_node01.yml
-        inventoriesAgentMachine: file
-        inventoryFileOnAgentMachine: $(system.defaultworkingdirectory)/7_pipeline_arch/ansible/inventory_azure_rm.yml
-        sudoEnabled: true
+        inventoriesAgentMachine: hostList
+        inventoryHostListAgentMachine: 10.0.2.4
     - task: Ansible@0
       displayName: 'Configure node02'
       inputs:
         ansibleInterface: 'agentMachine'
         playbookPathOnAgentMachine: $(system.defaultworkingdirectory)/7_pipeline_arch/ansible/playbook_node02.yml
-        inventoriesAgentMachine: file
-        inventoryFileOnAgentMachine: $(system.defaultworkingdirectory)/7_pipeline_arch/ansible/inventory_azure_rm.yml
-        sudoEnabled: true
+        inventoriesAgentMachine: hostList
+        inventoryHostListAgentMachine: 10.0.2.5
