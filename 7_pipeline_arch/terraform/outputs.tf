@@ -27,3 +27,8 @@ output "backSubnet_id" {
   value     = azurerm_subnet.subnetBack.id
   sensitive = true
 }
+
+output "nic_ids" {
+  value     = azurerm_network_interface.nic.*.id
+  sensitive = true
+}
