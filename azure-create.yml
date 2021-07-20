@@ -80,7 +80,7 @@ stages:
   - job: ConfigureInfra
     steps:
     - task: CmdLine@2
-      displayName: 'Terraform PRESTEPS'
+      displayName: 'Get AppGtw IP'
       inputs:
         script: |
           RESULT=$(az network public-ip show -n wordpressIP -g azdevopsRG --query '{ipAddress:ipAddress}')
@@ -128,4 +128,4 @@ stages:
         inventoriesAgentMachine: file
         inventoryFileOnAgentMachine: $(system.defaultworkingdirectory)/7_pipeline_arch/ansible/inventory_azure_rm.yml
         sudoEnabled: true
-        args: '--extra-vars "wp_user=$(WP_USER) wp_pass=$(WP_PASS) wp_user_email=$(WP_USER_EMAIL) appGtwIp=$(appGtwIp)"'
+        args: '--extra-vars "wp_user=$(WP_USER) wp_pass=$(WP_PASS) wp_user_email=$(WP_USER_EMAIL) appGtwIp=${appGtwIp}"'
