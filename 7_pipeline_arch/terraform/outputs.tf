@@ -8,13 +8,13 @@ output "vnet_id" {
   sensitive = true
 }
 
-output "frontSubnet_id" {
-  value     = azurerm_subnet.subnetFront.id
+output "subnet_ids" {
+  value     = values(azurerm_subnet.map)[*].id
   sensitive = true
 }
 
-output "appGtwIp_id" {
-  value     = azurerm_public_ip.ip.id
+output "ip_ids" {
+  value     = values(azurerm_public_ip.map)[*].id
   sensitive = true
 }
 
@@ -23,20 +23,13 @@ output "appGtw_id" {
   sensitive = true
 }
 
-output "backSubnet_id" {
-  value     = azurerm_subnet.subnetBack.id
-  sensitive = true
-}
-
 output "nic_ids" {
-  count     = 4
-  value     = element(azurerm_network_interface.nic.*.id, count.index)
+  value     = values(azurerm_network_interface.map)[*].id
   sensitive = true
 }
 
 output "nicAppGtwBackpool_ids" {
-  count     = 2
-  value     = element(azurerm_network_interface_application_gateway_backend_address_pool_association.nic-gw.*.id, count.index)
+  value     = values(azurerm_network_interface_application_gateway_backend_address_pool_association.map)[*].id
   sensitive = true
 }
 
@@ -45,28 +38,8 @@ output "nsg_id" {
   sensitive = true
 }
 
-output "httpSecRule_id" {
-  value     = azurerm_network_security_rule.httpSecRule.id
-  sensitive = true
-}
-
-output "openDBSecRule_id" {
-  value     = element(azurerm_network_security_rule.openDBSecRule.id, count.index)
-  sensitive = true
-}
-
-output "dbSecRule_id" {
-  value     = element(azurerm_network_security_rule.dbSecRule.id, count.index)
-  sensitive = true
-}
-
-output "sshSecRule_id" {
-  value     = element(azurerm_network_security_rule.sshSecRule.id, count.index)
-  sensitive = true
-}
-
-output "dbSecRule_id" {
-  value     = element(azurerm_network_security_rule.dbSecRule.id, count.index)
+output "secRule_ids" {
+  value     = values(azurerm_network_security_rule.map)[*].id
   sensitive = true
 }
 
@@ -76,24 +49,12 @@ output "as_id" {
 }
 
 output "nsga_ids" {
-  count     = 4
-  value     = element(azurerm_network_interface_security_group_association.nsga.*.id, count.index)
+  value     = values(azurerm_network_interface_security_group_association.map)[*].id
   sensitive = true
 }
 
 output "vm_ids" {
-  count     = 4
-  value     = element(azurerm_linux_virtual_machine.vm.*.id, count.index)
-  sensitive = true
-}
-
-output "bastionSubnet_id" {
-  value     = azurerm_subnet.subnetBastion.id
-  sensitive = true
-}
-
-output "bastionIp_id" {
-  value     = azurerm_public_ip.bastionIP.id
+  value     = values(azurerm_linux_virtual_machine.map)[*].id
   sensitive = true
 }
 
