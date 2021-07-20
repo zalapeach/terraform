@@ -167,7 +167,6 @@ resource "azurerm_network_security_rule" "httpSecRule" {
 }
 
 resource "azurerm_network_security_rule" "openDBSecRule" {
-  count                       = 2
   name                        = "openDBSecRule"
   priority                    = 1002
   direction                   = "outbound"
@@ -183,7 +182,6 @@ resource "azurerm_network_security_rule" "openDBSecRule" {
 }
 
 resource "azurerm_network_security_rule" "dbSecRule" {
-  count                       = 2
   name                        = "dbSecRule"
   priority                    = 1003
   direction                   = "inbound"
