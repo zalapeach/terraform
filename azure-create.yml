@@ -133,13 +133,13 @@ stages:
       displayName: 'Configure node01'
       inputs:
         ansibleInterface: 'agentMachine'
-        playbookPathOnAgentMachine: $(system.defaultworkingdirectory)/7_pipeline_arch/ansible/playbook_node01.yml
+        playbookPathOnAgentMachine: $(system.defaultworkingdirectory)/7_pipeline_arch/ansible/playbook_node1.yml
         inventoriesAgentMachine: hostList
         inventoryHostListAgentMachine: 10.0.2.4
     - task: Ansible@0
       displayName: 'Configure node02'
       inputs:
         ansibleInterface: 'agentMachine'
-        playbookPathOnAgentMachine: $(system.defaultworkingdirectory)/7_pipeline_arch/ansible/playbook_node02.yml
+        playbookPathOnAgentMachine: $(system.defaultworkingdirectory)/7_pipeline_arch/ansible/playbook_node2.yml
         inventoriesAgentMachine: hostList
         inventoryHostListAgentMachine: 10.0.2.5
