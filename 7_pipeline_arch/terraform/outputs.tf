@@ -8,13 +8,13 @@ output "vnet_id" {
   sensitive = true
 }
 
-output "subnet_ids" {
-  value     = values(azurerm_subnet.map)[*].id
+output "frontSubnet_id" {
+  value     = azurerm_subnet.subnetFront.id
   sensitive = true
 }
 
-output "ip_ids" {
-  value     = values(azurerm_public_ip.map)[*].id
+output "appGtwIp_id" {
+  value     = azurerm_public_ip.ip.id
   sensitive = true
 }
 
@@ -23,13 +23,18 @@ output "appGtw_id" {
   sensitive = true
 }
 
+output "backSubnet_id" {
+  value     = azurerm_subnet.subnetBack.id
+  sensitive = true
+}
+
 output "nic_ids" {
-  value     = values(azurerm_network_interface.map)[*].id
+  value     = values(azurerm_network_interface.nic)[*].id
   sensitive = true
 }
 
 output "nicAppGtwBackpool_ids" {
-  value     = values(azurerm_network_interface_application_gateway_backend_address_pool_association.map)[*].id
+  value     = values(azurerm_network_interface_application_gateway_backend_address_pool_association.nic-gw)[*].id
   sensitive = true
 }
 
@@ -38,8 +43,23 @@ output "nsg_id" {
   sensitive = true
 }
 
-output "secRule_ids" {
-  value     = values(azurerm_network_security_rule.map)[*].id
+output "httpSecRule_id" {
+  value     = azurerm_network_security_rule.httpSecRule.id
+  sensitive = true
+}
+
+output "openDBSecRule_id" {
+  value     = azurerm_network_security_rule.openDBSecRule.id
+  sensitive = true
+}
+
+output "dbSecRule_ids" {
+  value     = azurerm_network_security_rule.dbSecRule.id
+  sensitive = true
+}
+
+output "sshSecRule_ids" {
+  value     = azurerm_network_security_rule.sshSecRule.id
   sensitive = true
 }
 
@@ -49,12 +69,22 @@ output "as_id" {
 }
 
 output "nsga_ids" {
-  value     = values(azurerm_network_interface_security_group_association.map)[*].id
+  value     = values(azurerm_network_interface_security_group_association.nsga)[*].id
   sensitive = true
 }
 
 output "vm_ids" {
-  value     = values(azurerm_linux_virtual_machine.map)[*].id
+  value     = values(azurerm_linux_virtual_machine.vm)[*].id
+  sensitive = true
+}
+
+output "bastionSubnet_id" {
+  value     = azurerm_subnet.subnetBastion.id
+  sensitive = true
+}
+
+output "bastionIp_id" {
+  value     = azurerm_public_ip.bastionIP.id
   sensitive = true
 }
 
