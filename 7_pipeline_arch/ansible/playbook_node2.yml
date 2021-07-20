@@ -1,0 +1,24 @@
+---
+- hosts: 10.0.2.5
+  gather_facts: false
+
+  vars:
+    ansible_user: zala
+
+  tasks:
+  - name: Update apache index page title
+    replace:
+      path: /var/www/html/index.html
+      regexp: 'Apache2 Ubuntu Default Page'
+      replace: 'Apache Node 02 Page'
+  - name: Change apache index background color
+    replace:
+      path: /var/www/html/index.html
+      regexp: 'D8DBE2'
+      replace: 'FDAF17'
+  - name: Change info.php page
+    lineinfile:
+      path: /var/www/html/info.php
+      insertBefore: BOF
+      line: <h1>Node 02 php version<h1>
+      state: present

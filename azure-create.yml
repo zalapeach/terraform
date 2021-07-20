@@ -129,3 +129,19 @@ stages:
         inventoryFileOnAgentMachine: $(system.defaultworkingdirectory)/7_pipeline_arch/ansible/inventory_azure_rm.yml
         sudoEnabled: true
         args: '--extra-vars "wp_user=$(WP_USER) wp_pass=$(WP_PASS) wp_user_email=$(WP_USER_EMAIL) appGtwIp=$(appGtwIp)"'
+    - task: Ansible@0
+      displayName: 'Configure node01'
+      inputs:
+        ansibleInterface: 'agentMachine'
+        playbookPathOnAgentMachine: $(system.defaultworkingdirectory)/7_pipeline_arch/ansible/playbook_node01.yml
+        inventoriesAgentMachine: file
+        inventoryFileOnAgentMachine: $(system.defaultworkingdirectory)/7_pipeline_arch/ansible/inventory_azure_rm.yml
+        sudoEnabled: true
+    - task: Ansible@0
+      displayName: 'Configure node02'
+      inputs:
+        ansibleInterface: 'agentMachine'
+        playbookPathOnAgentMachine: $(system.defaultworkingdirectory)/7_pipeline_arch/ansible/playbook_node02.yml
+        inventoriesAgentMachine: file
+        inventoryFileOnAgentMachine: $(system.defaultworkingdirectory)/7_pipeline_arch/ansible/inventory_azure_rm.yml
+        sudoEnabled: true
