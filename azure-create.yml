@@ -136,6 +136,7 @@ stages:
         playbookPathOnAgentMachine: $(system.defaultworkingdirectory)/7_pipeline_arch/ansible/playbook_node1.yml
         inventoriesAgentMachine: hostList
         inventoryHostListAgentMachine: 10.0.2.4
+        sudoEnabled: true
     - task: Ansible@0
       displayName: 'Configure node02'
       inputs:
@@ -143,3 +144,4 @@ stages:
         playbookPathOnAgentMachine: $(system.defaultworkingdirectory)/7_pipeline_arch/ansible/playbook_node2.yml
         inventoriesAgentMachine: hostList
         inventoryHostListAgentMachine: 10.0.2.5
+        sudoEnabled: true
