@@ -58,10 +58,6 @@ resource "azurerm_public_ip" "ip" {
   location            = azurerm_resource_group.rg.location
   allocation_method   = "Dynamic"
   resource_group_name = azurerm_resource_group.rg.name
-
-  tags = {
-    env = "wp"
-  }
 }
 
 resource "azurerm_application_gateway" "appGateway" {

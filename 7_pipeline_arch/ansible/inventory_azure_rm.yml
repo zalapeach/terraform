@@ -5,4 +5,3 @@ auth_source: auto
 conditional_groups:
   dbs: "'db' in tags.env"
   vms: "'vm' in tags.env"
-  wp: "'wp' in tags.env"

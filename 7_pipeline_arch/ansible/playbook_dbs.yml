@@ -23,7 +23,7 @@
     systemd:
       name: mariadb
       enabled: yes
-  - name: Edit /etc/mysql/mycnf file
+  - name: Edit /etc/mysql/my.cnf file
     become: true
     blockinfile:
       path: /etc/mysql/my.cnf
@@ -38,7 +38,7 @@
       name: mariadb
       state: restarted
       daemon_reload: yes
-  - name: check if root user exists
+  - name: check if db user exists
     no_log: true
     become: true
     mysql_user:
@@ -68,6 +68,6 @@
       login_unix_socket: /var/run/mysqld/mysqld.sock
   - name: Allow db user to connect externally
     no_log: true
-    command: 'mysql -u root -p{{ db_pass }} -ne "{{ item }}"'
+    command: 'mysql -u {{ db_user }} -p{{ db_pass }} -ne "{{ item }}"'
     with_items:
       - GRANT ALL PRIVILEGES ON *.* TO '{{ db_user }}'@'10.0.2.%' IDENTIFIED BY '{{ db_pass }}' WITH GRANT OPTION;

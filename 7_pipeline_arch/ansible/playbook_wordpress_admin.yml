@@ -1,5 +1,5 @@
 ---
-- hosts: wp
+- hosts: localhost
   gather_facts: false
 
   vars:
@@ -9,7 +9,7 @@
   - name: Configure Wordpress Admin
     uri:
       method: POST
-      url: 'http://{{ ansible_host }}/wordpress/wp-admin/install.php?step=2'
+      url: 'http://{{ appGtwIp }}/wordpress/wp-admin/install.php?step=2'
       body_format: form-urlencoded
       body:
       - [ weblog_title, 'Nintendomania']
