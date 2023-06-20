@@ -12,3 +12,7 @@
 **/*.conf
 
 id_rsa.pub
+
+credentials.sh
+
+hashicorp.gpg
