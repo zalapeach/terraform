@@ -8,7 +8,7 @@ terraform {
   cloud {
     organization = "zalapeach"
     workspaces {
-      name = "terraform"
+      name = "001_resource_group"
     }
   }
 }
@@ -19,5 +19,5 @@ provider "azurerm" {
 
 resource "azurerm_resource_group" "rg" {
   name     = "resourceGroup001"
-  location = "eastus"
+  location = "eastus2"
 }

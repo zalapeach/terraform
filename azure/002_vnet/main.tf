@@ -2,33 +2,34 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "=2.46.0"
+      version = "~>3.61.0"
+    }
+  }
+  cloud {
+    organization = "zalapeach"
+    workspaces {
+      name = "002_vnet"
     }
   }
 }
 
 provider "azurerm" {
   features {}
-
-  client_id       = var.azure_client_id
-  client_secret   = var.azure_client_secret
-  tenant_id       = var.azure_tenant_id
-  subscription_id = var.azure_subscription_id
 }
 
 resource "azurerm_resource_group" "rg" {
-  name     = var.resource_group_name
-  location = "eastus"
+  name     = "resourceGroup002"
+  location = "eastus2"
 
   tags = {
     Environment = "Terraform"
-    Team = "DevSecOps"
+    Team        = "DevOps"
   }
 }
 
 resource "azurerm_virtual_network" "vnet" {
-  name                = "myVnet"
+  name                = "myTfVnet"
   address_space       = ["10.0.0.0/16"]
-  location            = "eastus"
+  location            = "eastus2"
   resource_group_name = azurerm_resource_group.rg.name
 }
