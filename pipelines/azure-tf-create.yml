@@ -23,6 +23,12 @@ stages:
         terraformVersion: 'latest'
 
     - task: TerraformCLI@0
+      displayName: Terraform LOGIN
+      inputs:
+        command: login
+        workingDirectory: $(System.DefaultWorkingDirectory)/azure/${{ parameters.example }}/
+
+    - task: TerraformCLI@0
       displayName: Terraform INIT
       inputs:
         command: init
