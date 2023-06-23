@@ -2,23 +2,24 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "=2.46.0"
+      version = "~>3.61.0"
+    }
+  }
+  cloud {
+    organization = "zalapeach"
+    workspaces {
+      name = "003_storage_account"
     }
   }
 }
 
 provider "azurerm" {
   features {}
-
-  client_id       = var.azure_client_id
-  client_secret   = var.azure_client_secret
-  tenant_id       = var.azure_tenant_id
-  subscription_id = var.azure_subscription_id
 }
 
 resource "azurerm_resource_group" "rg" {
-  name     = "Practice07d"
-  location = "eastus"
+  name     = "003_storage_account"
+  location = "eastus2"
 }
 
 resource "random_id" "id" {
@@ -30,7 +31,7 @@ resource "random_id" "id" {
 }
 
 resource "azurerm_storage_account" "storageaccount" {
-  name                     = "storage_${random_id.id.hex}"
+  name                     = "storage${random_id.id.hex}"
   resource_group_name      = azurerm_resource_group.rg.name
   location                 = azurerm_resource_group.rg.location
   account_tier             = "Standard"
@@ -38,14 +39,15 @@ resource "azurerm_storage_account" "storageaccount" {
 }
 
 resource "azurerm_storage_container" "storagecontainer" {
-  name                  = "storage_container"
+  name                  = "container"
   storage_account_name  = azurerm_storage_account.storageaccount.name
   container_access_type = "private"
 }
 
 resource "azurerm_storage_blob" "example" {
-  name = "storage_blob"
-  storage_account_name = azurerm_storage_account.example.name
-  storage_container_name = azurerm_storage_container.example.name
-  type = "Block"
+  name                   = "example"
+  storage_account_name   = azurerm_storage_account.storageaccount.name
+  storage_container_name = azurerm_storage_container.storagecontainer.name
+  type                   = "Block"
+  source                 = var.blob_path
 }
