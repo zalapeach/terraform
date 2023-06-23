@@ -1,0 +1,14 @@
+trigger: none
+
+stages:
+- stage: Terraform
+
+  pool:
+    vmImage: ubuntu-latest
+
+  jobs:
+  - job: BuildInfra
+    steps:
+    - task: TerraformInstaller@0
+      inputs:
+        terraformVersion: 'latest'
