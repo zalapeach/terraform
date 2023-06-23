@@ -1,5 +1,14 @@
 trigger: none
 
+parameters:
+- name: example
+  displayName: Terraform Example
+  type: string
+  values:
+  - 001_resource_group
+  - 002_vnet
+  - 003_storage_account
+
 stages:
 - stage: Terraform
 
@@ -12,3 +21,9 @@ stages:
     - task: TerraformInstaller@0
       inputs:
         terraformVersion: 'latest'
+
+    - task: TerraformCLI@0
+      displayName: Terraform INIT
+      inputs:
+        command: init
+        workingDirectory: $(System.DefaultWorkingDirectory)/azure/${{ parameters.example }}/
