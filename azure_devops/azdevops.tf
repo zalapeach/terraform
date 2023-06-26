@@ -1,21 +1,3 @@
-terraform {
-  required_providers {
-    azuredevops = {
-      source  = "microsoft/azuredevops"
-      version = ">=0.5.0"
-    }
-  }
-  cloud {
-    organization = "zalapeach"
-    workspaces {
-      name = "azdo"
-    }
-  }
-}
-
-provider "azuredevops" {
-}
-
 resource "azuredevops_project" "project" {
   name        = "Terraform Examples"
   description = "Project related with Terraform examples, fully managed by Terraform"
