@@ -9,3 +9,9 @@ variable "tfe_token" {
   type        = string
   sensitive   = true
 }
+
+variable "personal_azuread_object_id" {
+  description = "My personal object id"
+  type        = string
+  sensitive   = true
+}
