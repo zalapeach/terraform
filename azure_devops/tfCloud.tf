@@ -20,3 +20,11 @@ resource "tfe_workspace_variable_set" "workspacevarset" {
   variable_set_id = tfe_variable_set.varset.id
   workspace_id    = tfe_workspace.workspace.id
 }
+
+resource "tfe_variable" "tfetoken" {
+  key             = "TFE_TOKEN"
+  value           = var.tfe_token
+  category        = "env"
+  description     = "Terraform Cloud Token"
+  variable_set_id = tfe_variable_set.varset.id
+}

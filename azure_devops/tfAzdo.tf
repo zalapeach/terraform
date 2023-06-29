@@ -24,6 +24,6 @@ resource "azuredevops_build_definition" "pipeline" {
     service_connection_id = azuredevops_serviceendpoint_github.github.id
     repo_type             = "GitHub"
     repo_id               = "zalapeach/terraform"
-    yml_path              = "pipelines/terraform.yml"
+    yml_path              = "pipelines/azure-tf-create.yml"
   }
 }

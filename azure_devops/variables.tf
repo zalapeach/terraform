@@ -3,3 +3,9 @@ variable "org_email" {
   type        = string
   sensitive   = true
 }
+
+variable "tfe_token" {
+  description = "Terraform Cloud Token"
+  type        = string
+  sensitive   = true
+}
