@@ -23,8 +23,27 @@ resource "tfe_workspace_variable_set" "workspacevarset" {
 
 resource "tfe_variable" "tfetoken" {
   key             = "TFE_TOKEN"
-  value           = var.tfe_token
+  value           = var.env_tfe_token
   category        = "env"
   description     = "Terraform Cloud Token"
   variable_set_id = tfe_variable_set.varset.id
+  sensitive       = true
+}
+
+resource "tfe_variable" "azdopat" {
+  key             = "AZDO_PERSONAL_ACCESS_TOKEN"
+  value           = var.env_azdo_personal_access_token
+  category        = "env"
+  description     = "Azure DevOps Personal Access token (PAT)"
+  variable_set_id = tfe_variable_set.varset.id
+  sensitive       = true
+}
+
+resource "tfe_variable" "armtenant" {
+  key             = "ARM_TENANT_ID"
+  value           = var.env_arm_tenant_id
+  category        = "env"
+  description     = "Azure Tenant Id"
+  variable_set_id = tfe_variable_set.varset.id
+  sensitive       = true
 }

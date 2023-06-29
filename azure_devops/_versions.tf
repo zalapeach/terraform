@@ -8,6 +8,10 @@ terraform {
       source  = "microsoft/azuredevops"
       version = ">=0.6.0"
     }
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = ">=3.62.1"
+    }
     tfe = {
       source  = "hashicorp/tfe"
       version = ">=0.45.0"
@@ -18,5 +22,9 @@ terraform {
 provider "azuread" {}
 
 provider "azuredevops" {}
+
+provider "azurerm" {
+  features {}
+}
 
 provider "tfe" {}
