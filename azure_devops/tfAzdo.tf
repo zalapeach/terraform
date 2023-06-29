@@ -10,3 +10,20 @@ resource "azuredevops_serviceendpoint_github" "github" {
 
   auth_personal {}
 }
+
+resource "azuredevops_build_definition" "pipeline" {
+  project_id = azuredevops_project.project.id
+  name       = "Terraform Pipeline"
+  path       = "\\"
+
+  ci_trigger {
+    use_yaml = true
+  }
+
+  repository {
+    service_connection_id = azuredevops_serviceendpoint_github.github.id
+    repo_type             = "GitHub"
+    repo_id               = "zalapeach/terraform"
+    yml_path              = "pipelines/terraform.yml"
+  }
+}
