@@ -18,7 +18,12 @@ stages:
   jobs:
   - job: BuildInfra
     steps:
-    - task: TerraformInstaller@0
+    - task: azurekeyVault@2
+      displayName: Retrieve secrets
+      inputs:
+        connectedServiceName: terraform
+
+    - task: terraformInstaller@0
       displayName: Terraform Install
       inputs:
         terraformVersion: 'latest'
@@ -34,7 +39,7 @@ stages:
         mv $(System.DefaultWorkingDirectory)/pipelines/tfToken.json /home/vsts/.terraform.d/credentials.tfrc.json
       displayName: Terraform Login
 
-    - task: TerraformCLI@0
+    - task: terraformCLI@0
       displayName: Terraform Init
       inputs:
         command: init

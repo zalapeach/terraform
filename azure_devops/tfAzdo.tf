@@ -11,6 +11,21 @@ resource "azuredevops_serviceendpoint_github" "github" {
   auth_personal {}
 }
 
+resource "azuredevops_serviceendpoint_azurerm" "azure" {
+  project_id            = azuredevops_project.project.id
+  description           = "Azure Endpoint using Service Principal"
+  service_endpoint_name = "Azure"
+
+  credentials {
+    serviceprincipalid  = azuread_application.app.application_id
+    serviceprincipalkey = azuread_service_principal_password.pwd.value
+  }
+
+  azurerm_spn_tenantid      = var.env_arm_tenant_id
+  azurerm_subscription_id   = var.env_arm_subscription_id
+  azurerm_subscription_name = "Personal VS subscription"
+}
+
 resource "azuredevops_build_definition" "pipeline" {
   project_id = azuredevops_project.project.id
   name       = "Terraform Pipeline"
