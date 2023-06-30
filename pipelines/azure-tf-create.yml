@@ -36,8 +36,6 @@ stages:
       inputs:
         targetFiles: $(System.DefaultWorkingDirectory)/pipelines/tfToken.json
         tokenPattern: 'azpipelines'
-      env:
-        token: $(tf-token)
 
     - bash: |
         cat $(System.DefaultWorkingDirectory)/pipelines/tfToken.json
