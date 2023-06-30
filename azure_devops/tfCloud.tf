@@ -21,47 +21,11 @@ resource "tfe_workspace_variable_set" "workspacevarset" {
   workspace_id    = tfe_workspace.workspace.id
 }
 
-resource "tfe_variable" "tfetoken" {
-  key             = "TFE_TOKEN"
-  value           = var.env_tfe_token
-  category        = "env"
-  description     = "Terraform Cloud Token"
-  variable_set_id = tfe_variable_set.varset.id
-  sensitive       = true
-}
-
-resource "tfe_variable" "azdopat" {
-  key             = "AZDO_PERSONAL_ACCESS_TOKEN"
-  value           = var.env_azdo_personal_access_token
-  category        = "env"
-  description     = "Azure DevOps Personal Access token (PAT)"
-  variable_set_id = tfe_variable_set.varset.id
-  sensitive       = true
-}
-
-resource "tfe_variable" "armtenant" {
-  key             = "ARM_TENANT_ID"
-  value           = var.env_arm_tenant_id
-  category        = "env"
-  description     = "Azure Tenant Id"
-  variable_set_id = tfe_variable_set.varset.id
-  sensitive       = true
-}
-
-resource "tfe_variable" "armsubscription" {
-  key             = "ARM_SUBSCRIPTION_ID"
-  value           = var.env_arm_subscription_id
-  category        = "env"
-  description     = "Azure Subscription Id"
-  variable_set_id = tfe_variable_set.varset.id
-  sensitive       = true
-}
-
 resource "tfe_variable" "armclient" {
   key             = "ARM_CLIENT_ID"
   value           = azuread_application.app.application_id
   category        = "env"
-  description     = "Azure Subscription Id"
+  description     = "Azure - Subscription Id"
   variable_set_id = tfe_variable_set.varset.id
   sensitive       = true
 }
@@ -70,7 +34,60 @@ resource "tfe_variable" "armclientsecret" {
   key             = "ARM_CLIENT_SECRET"
   value           = azuread_service_principal_password.pwd.value
   category        = "env"
-  description     = "Azure Subscription Id"
+  description     = "Azure - Client Secret"
+  variable_set_id = tfe_variable_set.varset.id
+  sensitive       = true
+}
+
+resource "tfe_variable" "armtenant" {
+  key             = "ARM_TENANT_ID"
+  value           = var.env_arm_tenant_id
+  category        = "env"
+  description     = "Azure - Tenant Id"
+  variable_set_id = tfe_variable_set.varset.id
+  sensitive       = true
+}
+
+resource "tfe_variable" "armsubscription" {
+  key             = "ARM_SUBSCRIPTION_ID"
+  value           = var.env_arm_subscription_id
+  category        = "env"
+  description     = "Azure - Subscription Id"
+  variable_set_id = tfe_variable_set.varset.id
+  sensitive       = true
+}
+
+resource "tfe_variable" "azdogithubpat" {
+  key             = "AZDO_GITHUB_SERVICE_CONNECTION_PAT"
+  value           = var.env_azdo_pat
+  category        = "env"
+  description     = "Azure DevOps - GitHub Service Connection Personal Access token (PAT)"
+  variable_set_id = tfe_variable_set.varset.id
+  sensitive       = true
+}
+
+resource "tfe_variable" "azdopat" {
+  key             = "AZDO_PERSONAL_ACCESS_TOKEN"
+  value           = var.env_azdo_pat
+  category        = "env"
+  description     = "Azure DevOps - Personal Access token (PAT)"
+  variable_set_id = tfe_variable_set.varset.id
+  sensitive       = true
+}
+
+resource "tfe_variable" "azdourl" {
+  key             = "AZDO_ORG_SERVICE_URL"
+  value           = var.env_azdo_url
+  category        = "env"
+  description     = "Azure DevOps - Service URL"
+  variable_set_id = tfe_variable_set.varset.id
+}
+
+resource "tfe_variable" "tfetoken" {
+  key             = "TFE_TOKEN"
+  value           = var.env_tfe_token
+  category        = "env"
+  description     = "Terraform Cloud Token"
   variable_set_id = tfe_variable_set.varset.id
   sensitive       = true
 }

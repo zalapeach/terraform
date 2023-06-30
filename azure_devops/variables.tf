@@ -1,20 +1,15 @@
-variable "org_email" {
-  description = "Terraform Cloud organization email"
-  type        = string
-  sensitive   = true
-}
+# variable "arm_client_id" {
+#   description = "Azure Client id"
+#   type        = string
+#   default     = "${ azuread_application.app.application_id }"
+# }
 
-variable "env_tfe_token" {
-  description = "Terraform Cloud Token"
-  type        = string
-  sensitive   = true
-}
-
-variable "env_azdo_personal_access_token" {
-  description = "Azure DevOps PAT"
-  type        = string
-  sensitive   = true
-}
+# variable "arm_client_secret" {
+#   description = "Azure Client id"
+#   type        = string
+#   sensitive   = true
+#   default     = "${ azuread_service_principal_password.pwd.value }"
+# }
 
 variable "env_arm_tenant_id" {
   description = "Azure Tenant Id"
@@ -28,15 +23,31 @@ variable "env_arm_subscription_id" {
   sensitive   = true
 }
 
-# variable "arm_client_id" {
-#   description = "Azure Client id"
-#   type        = string
-#   default     = "${ azuread_application.app.application_id }"
-# }
+variable "env_azdo_github_pat" {
+  description = "Azure DevOps GitHub PAT"
+  type        = string
+  sensitive   = true
+}
 
-# variable "arm_client_secret" {
-#   description = "Azure Client id"
-#   type        = string
-#   sensitive   = true
-#   default     = "${ azuread_service_principal_password.pwd.value }"
-# }
+variable "env_azdo_pat" {
+  description = "Azure DevOps PAT"
+  type        = string
+  sensitive   = true
+}
+
+variable "env_azdo_url" {
+  description = "Azure DevOps Service URL"
+  type        = string
+}
+
+variable "env_tfe_token" {
+  description = "Terraform Cloud Token"
+  type        = string
+  sensitive   = true
+}
+
+variable "org_email" {
+  description = "Terraform Cloud organization email"
+  type        = string
+  sensitive   = true
+}
