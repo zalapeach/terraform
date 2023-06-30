@@ -43,13 +43,13 @@ stages:
       displayName: Terraform Login
 
     - task: terraformCLI@0
-      displayName: Terraform Init
+      displayName: Terraform init
       inputs:
         command: init
         workingDirectory: $(System.DefaultWorkingDirectory)/azure/${{ parameters.example }}/
 
     - task: terraformCLI@0
-      displayName: Terraform Fmt
+      displayName: Terraform fmt
       inputs:
         command: fmt
         workingDirectory: $(System.DefaultWorkingDirectory)/azure/${{ parameters.example }}/
@@ -58,4 +58,18 @@ stages:
       displayName: Terraform validate
       inputs:
         command: validate
+        workingDirectory: $(System.DefaultWorkingDirectory)/azure/${{ parameters.example }}/
+
+    - task: terraformCLI@0
+      displayName: Terraform plan
+      inputs:
+        command: plan
+        commandOptions: '-out terraform.tfstate'
+        workingDirectory: $(System.DefaultWorkingDirectory)/azure/${{ parameters.example }}/
+
+    - task: terraformCLI@0
+      displayName: Terraform apply
+      inputs:
+        command: apply
+        commandOptions: '-auto-approve'
         workingDirectory: $(System.DefaultWorkingDirectory)/azure/${{ parameters.example }}/
