@@ -10,6 +10,12 @@ resource "tfe_workspace" "workspace" {
   force_delete = true
 }
 
+resource "tfe_workspace" "ws001" {
+  name         = "001"
+  organization = tfe_organization.org.name
+  force_delete = true
+}
+
 resource "tfe_variable_set" "varset" {
   name         = "Terraform credentials"
   description  = "Terraform environment credentials used to build infrastructure"
