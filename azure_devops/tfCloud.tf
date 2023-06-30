@@ -47,3 +47,30 @@ resource "tfe_variable" "armtenant" {
   variable_set_id = tfe_variable_set.varset.id
   sensitive       = true
 }
+
+resource "tfe_variable" "armsubscription" {
+  key             = "ARM_SUBSCRIPTION_ID"
+  value           = var.env_arm_subscription_id
+  category        = "env"
+  description     = "Azure Subscription Id"
+  variable_set_id = tfe_variable_set.varset.id
+  sensitive       = true
+}
+
+resource "tfe_variable" "armclient" {
+  key             = "ARM_CLIENT_ID"
+  value           = azuread_application.app.application_id
+  category        = "env"
+  description     = "Azure Subscription Id"
+  variable_set_id = tfe_variable_set.varset.id
+  sensitive       = true
+}
+
+resource "tfe_variable" "armclientsecret" {
+  key             = "ARM_CLIENT_SECRET"
+  value           = azuread_service_principal_password.pwd.value
+  category        = "env"
+  description     = "Azure Subscription Id"
+  variable_set_id = tfe_variable_set.varset.id
+  sensitive       = true
+}
