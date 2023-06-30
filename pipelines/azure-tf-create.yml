@@ -21,7 +21,10 @@ stages:
     - task: azurekeyVault@2
       displayName: Retrieve secrets
       inputs:
-        connectedServiceName: terraform
+        connectedServiceName: Azure
+        keyVaultName: azdokv-nDkVq
+        secretsFilter: tf-token
+        runAsPreJob: true
 
     - task: terraformInstaller@0
       displayName: Terraform Install
@@ -33,8 +36,11 @@ stages:
       inputs:
         targetFiles: $(System.DefaultWorkingDirectory)/pipelines/tfToken.json
         tokenPattern: 'azpipelines'
+      env:
+        token: $(tf-token)
 
     - bash: |
+        cat $(System.DefaultWorkingDirectory)/pipelines/tfToken.json
         cd $(System.DefaultWorkingDirectory)/azure/${{ parameters.example }}/
         mv $(System.DefaultWorkingDirectory)/pipelines/tfToken.json /home/vsts/.terraform.d/credentials.tfrc.json
       displayName: Terraform Login
