@@ -27,7 +27,7 @@ stages:
         runAsPreJob: true
 
     - task: terraformInstaller@0
-      displayName: Terraform Install
+      displayName: Terraform install
       inputs:
         terraformVersion: 'latest'
 
@@ -40,7 +40,7 @@ stages:
     - bash: |
         cd $(System.DefaultWorkingDirectory)/azure/${{ parameters.example }}/
         mv $(System.DefaultWorkingDirectory)/pipelines/tfToken.json /home/vsts/.terraform.d/credentials.tfrc.json
-      displayName: Terraform Login
+      displayName: Terraform login
 
     - task: terraformCLI@0
       displayName: Terraform init
@@ -64,7 +64,6 @@ stages:
       displayName: Terraform plan
       inputs:
         command: plan
-        commandOptions: '-out terraform.tfstate'
         workingDirectory: $(System.DefaultWorkingDirectory)/azure/${{ parameters.example }}/
 
     - task: terraformCLI@0
