@@ -26,10 +26,8 @@ provider "azuredevops" {}
 provider "azurerm" {
   features {}
 
-  #  client_id       = var.arm_client_id
-  #  client_secret   = var.arm_client_secret
-  #  tenant_id       = var.env_arm_tenant_id
-  #  subscription_id = var.env_arm_subscription_id
+  tenant_id       = var.env_arm_tenant_id
+  subscription_id = var.env_arm_subscription_id
 }
 
 provider "tfe" {}

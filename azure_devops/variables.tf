@@ -1,16 +1,3 @@
-# variable "arm_client_id" {
-#   description = "Azure Client id"
-#   type        = string
-#   default     = "${ azuread_application.app.application_id }"
-# }
-
-# variable "arm_client_secret" {
-#   description = "Azure Client id"
-#   type        = string
-#   sensitive   = true
-#   default     = "${ azuread_service_principal_password.pwd.value }"
-# }
-
 variable "env_arm_tenant_id" {
   description = "Azure Tenant Id"
   type        = string
