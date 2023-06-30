@@ -8,7 +8,7 @@ terraform {
   cloud {
     organization = "zalapeach"
     workspaces {
-      name = "002_vnet"
+      name = "002"
     }
   }
 }

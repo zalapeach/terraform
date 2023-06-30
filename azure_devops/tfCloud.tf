@@ -16,6 +16,12 @@ resource "tfe_workspace" "ws001" {
   force_delete = true
 }
 
+resource "tfe_workspace" "ws002" {
+  name         = "002"
+  organization = tfe_organization.org.name
+  force_delete = true
+}
+
 resource "tfe_variable_set" "varset" {
   name         = "Terraform credentials"
   description  = "Terraform environment credentials used to build infrastructure"
@@ -30,6 +36,11 @@ resource "tfe_workspace_variable_set" "workspacevarset" {
 resource "tfe_workspace_variable_set" "ws001varset" {
   variable_set_id = tfe_variable_set.varset.id
   workspace_id    = tfe_workspace.ws001.id
+}
+
+resource "tfe_workspace_variable_set" "ws002varset" {
+  variable_set_id = tfe_variable_set.varset.id
+  workspace_id    = tfe_workspace.ws002.id
 }
 
 resource "tfe_variable" "armclient" {
