@@ -27,6 +27,11 @@ resource "tfe_workspace_variable_set" "workspacevarset" {
   workspace_id    = tfe_workspace.workspace.id
 }
 
+resource "tfe_workspace_variable_set" "ws001varset" {
+  variable_set_id = tfe_variable_set.varset.id
+  workspace_id    = tfe_workspace.ws001.id
+}
+
 resource "tfe_variable" "armclient" {
   key             = "ARM_CLIENT_ID"
   value           = azuread_application.app.application_id
