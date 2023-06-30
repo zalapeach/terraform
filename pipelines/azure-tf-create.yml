@@ -38,7 +38,6 @@ stages:
         tokenPattern: 'azpipelines'
 
     - bash: |
-        cat $(System.DefaultWorkingDirectory)/pipelines/tfToken.json
         cd $(System.DefaultWorkingDirectory)/azure/${{ parameters.example }}/
         mv $(System.DefaultWorkingDirectory)/pipelines/tfToken.json /home/vsts/.terraform.d/credentials.tfrc.json
       displayName: Terraform Login
@@ -47,4 +46,16 @@ stages:
       displayName: Terraform Init
       inputs:
         command: init
+        workingDirectory: $(System.DefaultWorkingDirectory)/azure/${{ parameters.example }}/
+
+    - task: terraformCLI@0
+      displayName: Terraform Fmt
+      inputs:
+        command: fmt
+        workingDirectory: $(System.DefaultWorkingDirectory)/azure/${{ parameters.example }}/
+
+    - task: terraformCLI@0
+      displayName: Terraform validate
+      inputs:
+        command: validate
         workingDirectory: $(System.DefaultWorkingDirectory)/azure/${{ parameters.example }}/
