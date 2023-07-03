@@ -1,5 +1,5 @@
 resource "azurerm_role_assignment" "sp" {
-  scope                = "/subscriptions/${ var.env_arm_subscription_id }"
+  scope                = "/subscriptions/${var.env_arm_subscription_id}"
   role_definition_name = "Contributor"
   principal_id         = azuread_service_principal.sp.id
 }
@@ -15,7 +15,7 @@ resource "random_string" "kvname" {
 }
 
 resource "azurerm_key_vault" "kv" {
-  name                        = "azdokv-${ random_string.kvname.result }"
+  name                        = "azdokv-${random_string.kvname.result}"
   location                    = azurerm_resource_group.rg.location
   resource_group_name         = azurerm_resource_group.rg.name
   enabled_for_disk_encryption = false
