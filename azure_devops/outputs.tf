@@ -6,3 +6,7 @@ output "client_secret" {
 output "client_id" {
   value = azuread_application.app.application_id
 }
+
+output "azure_key_vault_name" {
+  value = azurerm_key_vault.kv.name
+}

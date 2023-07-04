@@ -22,7 +22,7 @@ stages:
       displayName: Retrieve secrets
       inputs:
         connectedServiceName: Azure
-        keyVaultName: azdokv-nDkVq
+        keyVaultName: $(keyVaultName)
         secretsFilter: tf-token
         runAsPreJob: true
 

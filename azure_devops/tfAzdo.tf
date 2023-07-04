@@ -41,4 +41,9 @@ resource "azuredevops_build_definition" "pipeline" {
     repo_id               = "zalapeach/terraform"
     yml_path              = "pipelines/azure-tf-create.yml"
   }
+
+  variable {
+    name  = "keyVaultName"
+    value = azurerm_key_vault.kv.name
+  }
 }
