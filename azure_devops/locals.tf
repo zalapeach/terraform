@@ -34,4 +34,8 @@ locals {
       description = "Terraform Cloud Token"
     }
   }
+  pipelines = [
+    "Terraform create/update infra",
+    "Terraform destroy infra"
+  ]
 }

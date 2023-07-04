@@ -26,9 +26,10 @@ resource "azuredevops_serviceendpoint_azurerm" "azure" {
   azurerm_subscription_name = "Personal VS subscription"
 }
 
-resource "azuredevops_build_definition" "pipeline" {
+resource "azuredevops_build_definition" "pipelines" {
+  count      = length(local.pipelines)
   project_id = azuredevops_project.project.id
-  name       = "Terraform Pipeline"
+  name       = "local.pipelines[count.index]"
   path       = "\\"
 
   ci_trigger {
