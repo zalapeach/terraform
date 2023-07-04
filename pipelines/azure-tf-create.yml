@@ -16,7 +16,7 @@ stages:
     vmImage: ubuntu-latest
 
   jobs:
-  - job: BuildInfra
+  - job: buildInfra
     steps:
     - task: azurekeyVault@2
       displayName: Retrieve secrets
@@ -32,7 +32,7 @@ stages:
         terraformVersion: 'latest'
 
     - task: replaceTokens@5
-      displayName: Update token files
+      displayName: Update token file
       inputs:
         targetFiles: $(System.DefaultWorkingDirectory)/pipelines/tfToken.json
         tokenPattern: 'azpipelines'

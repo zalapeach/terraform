@@ -18,7 +18,7 @@ provider "azurerm" {
 }
 
 resource "azurerm_resource_group" "rg" {
-  name     = "003_storage_account"
+  name     = "resourceGroup003"
   location = "eastus2"
 }
 
