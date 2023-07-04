@@ -39,7 +39,7 @@ resource "azurerm_key_vault_access_policy" "spaccess" {
   object_id    = azuread_service_principal.sp.object_id
 
   secret_permissions = [
-    "Get", "List"
+    "Delete", "Get", "List", "Purge", "Set"
   ]
 }
 
@@ -47,4 +47,8 @@ resource "azurerm_key_vault_secret" "secrettftoken" {
   name         = "tf-token"
   value        = var.env_tfe_token
   key_vault_id = azurerm_key_vault.kv.id
+
+  depends_on = [
+    azurerm_key_vault_access_policy.spaccess
+  ]
 }

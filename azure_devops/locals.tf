@@ -35,7 +35,9 @@ locals {
     }
   }
   pipelines = [
-    "Terraform create/update infra",
-    "Terraform destroy infra"
+    { name = "Terraform create - update infra",
+      path = "pipelines/azure-tf-create.yml" },
+    { name = "Terraform destroy infra",
+      path = "pipelines/azure-tf-destroy.yml" }
   ]
 }

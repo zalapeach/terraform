@@ -29,7 +29,7 @@ resource "azuredevops_serviceendpoint_azurerm" "azure" {
 resource "azuredevops_build_definition" "pipelines" {
   count      = length(local.pipelines)
   project_id = azuredevops_project.project.id
-  name       = "local.pipelines[count.index]"
+  name       = local.pipelines[count.index].name
   path       = "\\"
 
   ci_trigger {
@@ -40,7 +40,7 @@ resource "azuredevops_build_definition" "pipelines" {
     service_connection_id = azuredevops_serviceendpoint_github.github.id
     repo_type             = "GitHub"
     repo_id               = "zalapeach/terraform"
-    yml_path              = "pipelines/azure-tf-create.yml"
+    yml_path              = local.pipelines[count.index].path
   }
 
   variable {
