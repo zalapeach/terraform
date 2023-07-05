@@ -70,5 +70,5 @@ stages:
       displayName: Terraform apply
       inputs:
         command: apply
-        commandOptions: 'destroyplan -auto-approve'
+        commandOptions: 'destroyplan'
         workingDirectory: $(System.DefaultWorkingDirectory)/azure/${{ parameters.example }}/
