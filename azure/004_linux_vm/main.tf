@@ -83,3 +83,32 @@ resource "tls_private_key" "sshkey" {
   algorithm = "RSA"
   rsa_bits  = 4096
 }
+
+resource "azurerm_linux_virtual_machine" "vm" {
+  name                = "linux_vm"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  size                = "Standard_DS1_v2"
+
+  os_disk {
+    name                 = "os_disk"
+    caching              = "ReadWrite"
+    storage_account_type = "Standard_LRS"
+  }
+
+  source_image_reference {
+    publisher = "Canonical"
+    offer     = "UbuntuServer"
+    sku       = "22.04-LTS"
+    version   = "latest"
+  }
+
+  computer_name                   = "linuxvm01"
+  admin_username                  = "zala"
+  disable_password_authentication = true
+
+  admin_ssh_key {
+    username   = "zala"
+    public_key = tls_private_key.sshkey.public_key_openssh
+  }
+}
