@@ -16,7 +16,7 @@ stages:
     vmImage: ubuntu-latest
 
   jobs:
-  - destroyInfra
+  - job: destroyInfra
     steps:
     - task: azurekeyVault@2
       displayName: Retrieve secrets
