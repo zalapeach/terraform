@@ -61,14 +61,7 @@ stages:
         workingDirectory: $(System.DefaultWorkingDirectory)/azure/${{ parameters.example }}/
 
     - task: terraformCLI@0
-      displayName: Terraform plan -destroy -out destroyplan
-      inputs:
-        command: plan
-        workingDirectory: $(System.DefaultWorkingDirectory)/azure/${{ parameters.example }}/
-
-    - task: terraformCLI@0
       displayName: Terraform apply
       inputs:
-        command: apply
-        commandOptions: 'destroyplan'
+        command: destroy
         workingDirectory: $(System.DefaultWorkingDirectory)/azure/${{ parameters.example }}/
