@@ -27,7 +27,7 @@ stages:
         runAsPreJob: true
 
     - task: terraformInstaller@0
-      display: Terraform install
+      displayName: Terraform install
       inputs:
         terraformVersion: 'latest'
 
