@@ -34,7 +34,7 @@ stages:
     - task: replaceTokens@5
       displayName: Update token file
       inputs:
-        targetFiles: $(System.DefaultWorkingDirectory)/pipelines/tfToken
+        targetFiles: $(System.DefaultWorkingDirectory)/pipelines/tfToken.json
         tokenPattern: 'azpipelines'
 
     - bash: |
