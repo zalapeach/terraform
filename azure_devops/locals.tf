@@ -1,5 +1,5 @@
 locals {
-  workspaces = ["azdo", "001", "002", "003"]
+  workspaces = ["azdo", "001", "002", "003", "004"]
   variables = {
     ARM_CLIENT_ID = {
       value       = azuread_application.app.application_id
