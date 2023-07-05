@@ -10,7 +10,7 @@ output "public_ip" {
   value = azurerm_public_ip.pip.ip_address
 }
 
-ouput "tls_private_key" {
+output "tls_private_key" {
   value     = tls_private_key.sshkey.private_key_pem
   sensitive = true
 }
