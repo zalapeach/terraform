@@ -9,6 +9,7 @@ parameters:
   - 002_vnet
   - 003_storage_account
   - 004_linux_vm
+  - 005_load_balancer
 
 stages:
 - stage: Terraform
