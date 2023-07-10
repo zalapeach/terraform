@@ -32,7 +32,7 @@ resource "azurerm_virtual_network" "vnet" {
 resource "azurerm_subnet" "subnet" {
   name                 = "subnet0"
   resource_group_name  = azurerm_resource_group.rg.name
-  virtual_netowrk_name = azurerm_virtual_network.vnet.name
+  virtual_network_name = azurerm_virtual_network.vnet.name
   address_prefixes     = ["10.0.0.0/24"]
 }
 
@@ -78,20 +78,18 @@ resource "azurerm_lb_backend_address_pool" "lb_bp" {
 }
 
 resource "azurerm_lb_probe" "lb_hp" {
-  resource_group_name = azurerm_resource_group.rg.name
   loadbalancer_id     = azurerm_lb.lb.id
   name                = "sshHealthProbe"
   port                = 22
 }
 
 resource "azurerm_lb_rule" "lb_rule" {
-  resource_group_name            = azurerm_resource_group.rg.name
   loadbalancer_id                = azurerm_lb.lb.id
   name                           = "sshRule"
   protocol                       = "Tcp"
   frontend_port                  = 22
   backend_port                   = 22
-  frontend_ip_configuration_name = azurerm_lb.lb.frontend_ip_configuration.name
-  backend_address_pool_id        = azurerm_lb_backend_address_pool.lb_bp.id
+  frontend_ip_configuration_name = "frontend_ip"
+  backend_address_pool_ids       = [azurerm_lb_backend_address_pool.lb_bp.id]
   probe_id                       = azurerm_lb_probe.lb_hp.id
 }
