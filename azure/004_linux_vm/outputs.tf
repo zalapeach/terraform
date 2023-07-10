@@ -7,7 +7,7 @@ output "vnet_id" {
 }
 
 output "public_ip" {
-  value = azurerm_linux_virtual_machine.vm.public.ip_address
+  value = azurerm_linux_virtual_machine.vm.public_ip_address
 }
 
 output "tls_private_key" {
