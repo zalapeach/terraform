@@ -78,9 +78,9 @@ resource "azurerm_lb_backend_address_pool" "lb_bp" {
 }
 
 resource "azurerm_lb_probe" "lb_hp" {
-  loadbalancer_id     = azurerm_lb.lb.id
-  name                = "sshHealthProbe"
-  port                = 22
+  loadbalancer_id = azurerm_lb.lb.id
+  name            = "sshHealthProbe"
+  port            = 22
 }
 
 resource "azurerm_lb_rule" "lb_rule" {
