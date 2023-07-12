@@ -16,9 +16,9 @@ output "vnet_id" {
 }
 
 output "private_ip_linux_01" {
-  value = azurerm_linux_virtual_machine[0].private_ip_address
+  value = azurerm_linux_virtual_machine.vm[0].private_ip_address
 }
 
 output "private_ip_linux_02" {
-  value = azurerm_linux_virtual_machine[1].private_ip_address
+  value = azurerm_linux_virtual_machine.vm[1].private_ip_address
 }
