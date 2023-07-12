@@ -96,7 +96,7 @@ resource "azurerm_lb_rule" "lb_rule" {
 
 resource "azurerm_network_interface" "nic" {
   count               = 2
-  name                = "nic0${ count.index }"
+  name                = "nic0${count.index}"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
 
