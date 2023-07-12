@@ -132,3 +132,35 @@ resource "azurerm_network_interface_security_group_association" "nsga" {
   network_interface_id      = element(azurerm_network_interface.nic.*.id, count.index)
   network_security_group_id = azurerm_network_security_group.nsg.id
 }
+
+resource "azurerm_linux_virtual_machine" "vm" {
+  count                 = 2
+  name                  = "ubuntu-0${count.index}"
+  location              = azurerm_resource_group.rg.location
+  availability_set_id   = azurerm_availability_set.as.id
+  resource_group_name   = azurerm_resource_group.rg.name
+  network_interface_ids = [element(azurerm_network_interface.nic.*.id, count.index)]
+  size                  = "Standard_DS1_v2"
+
+  os_disk {
+    name                 = "os_disk"
+    caching              = "ReadWrite"
+    storage_account_type = "Standard_LRS"
+  }
+
+  source_image_reference {
+    publisher = "Canonical"
+    offer     = "0001-com-ubuntu-server-jammy"
+    sku       = "22_04-lts-gen2"
+    version   = "latest"
+  }
+
+  computer_name                   = "ubuntu-0${count.index}"
+  admin_username                  = "zala"
+  disable_password_authentication = true
+
+  admin_ssh_key {
+    username = "zala"
+    public_key = tls_private_key.ssh_key.public_key_openssh
+  }
+}
