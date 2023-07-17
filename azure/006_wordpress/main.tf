@@ -49,7 +49,7 @@ resource "azurerm_application_gateway" "gw" {
   resource_group_name = azurerm_resource_group.rg.name
 
   sku {
-    name     = "Standard_Small"
+    name     = "Standard_v2"
     tier     = "Standard_v2"
     capacity = 2
   }
