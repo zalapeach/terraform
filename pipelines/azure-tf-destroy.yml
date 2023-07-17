@@ -10,6 +10,7 @@ parameters:
   - 003_storage_account
   - 004_linux_vm
   - 005_load_balancer
+  - 006_wordpress
 
 stages:
 - stage: Terraform
