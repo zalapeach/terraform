@@ -29,7 +29,7 @@ resource "azurerm_virtual_network" "vnet" {
   resource_group_name = azurerm_resource_group.rg.name
 }
 
-resource "azurerm_subnet" "frontSubnet" {
+resource "azurerm_subnet" "frontend" {
   name                 = "frontend"
   address_prefixes     = ["10.0.0.0/24"]
   resource_group_name  = azurerm_resource_group.rg.name
@@ -57,7 +57,7 @@ resource "azurerm_application_gateway" "gw" {
 
   gateway_ip_configuration {
     name      = "GWIpConf"
-    subnet_id = azurerm_subnet.frontSubnet.id
+    subnet_id = azurerm_subnet.frontend.id
   }
 
   frontend_port {
@@ -98,4 +98,33 @@ resource "azurerm_application_gateway" "gw" {
     backend_http_settings_name = "httpSettings"
     priority                   = 100
   }
+}
+
+# frontend VMs
+
+resource "azurerm_subnet" "backend" {
+  name                 = "backend"
+  address_prefixes     = ["10.0.1.0/24"]
+  resource_group_name  = azurerm_resource_group.rg.name
+  virtual_network_name = azurerm_virtual_network.vnet.name
+}
+
+resource "azurerm_network_interface" "nic" {
+  count               = 4
+  name                = "nic0${count.index}"
+  location            = azurerm_resoure_group.rg.location
+  resource_group.name = azurerm_resource_group.rg.name
+
+  ip_configuration {
+    name                          = "nicIPConf"
+    subnet_id                     = azurerm_subnet.backend.id
+    private_ip_address_allocation = "Static"
+    private_ip_address            = "10.0.1.${count.index + 4}"
+  }
+}
+
+resource "azurerm_network_security_group" "nsg" {
+  name                = "netSecGrp"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
 }
