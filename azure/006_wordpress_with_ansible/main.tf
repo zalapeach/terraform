@@ -165,7 +165,7 @@ resource "azurerm_network_security_rule" "allowOutboundToDb" {
                                  ${azurerm_network_interface.nic[0].private_ip_address},
                                  ${azurerm_network_interface.nic[1].private_ip_address}
                                 EOF
-  destination_address_prefix  = "${azurerm_network_interface.nic[2].private_ip_address}"
+  destination_address_prefix  = azurerm_network_interface.nic[2].private_ip_address
   resource_group_name         = azurerm_resource_group.rg.name
   network_security_group_name = azurerm_network_security_group.nsg.name
 }
@@ -182,7 +182,7 @@ resource "azurerm_network_security_rule" "allowInboundToDb" {
                                   ${azurerm_network_interface.nic[0].private_ip_address},
                                   ${azurerm_network_interface.nic[1].private_ip_address}
                                 EOF
-  destination_address_prefix  = "${azurerm_network_interface.nic[2].private_ip_address}"
+  destination_address_prefix  = azurerm_network_interface.nic[2].private_ip_address
   resource_group_name         = azurerm_resource_group.rg.name
   network_security_group_name = azurerm_network_security_group.nsg.name
 }
