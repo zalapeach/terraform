@@ -10,7 +10,8 @@ parameters:
   - 003_storage_account
   - 004_linux_vm
   - 005_load_balancer
-  - 006_wordpress
+  - 006_wordpress_with_ansible
+  - 007_wordpress_only_terraform
 
 stages:
 - stage: Terraform
@@ -64,7 +65,7 @@ stages:
         workingDirectory: $(System.DefaultWorkingDirectory)/azure/${{ parameters.example }}/
 
     - task: terraformCLI@0
-      displayName: Terraform apply
+      displayName: Terraform destroy
       inputs:
         command: destroy
         workingDirectory: $(System.DefaultWorkingDirectory)/azure/${{ parameters.example }}/
