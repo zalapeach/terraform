@@ -12,6 +12,10 @@ parameters:
   - 005_load_balancer
   - 006_wordpress_with_ansible
   - 007_wordpress_only_terraform
+  - 008_db_migrations
+  - 009_k8s_prometheus
+  - 010_k8s_thanos
+  - 011_databricks
 
 stages:
 - stage: Terraform
