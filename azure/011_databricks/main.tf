@@ -4,6 +4,10 @@ terraform {
       source  = "hashicorp/azurerm"
       version = "~>3.61.0"
     }
+    databricks = {
+      source  = "databricks/databricks"
+      version = "~>1.21.0"
+    }
   }
   cloud {
     organization = "zalapeach"
@@ -27,4 +31,12 @@ resource "azurerm_databricks_workspace" "databricks" {
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   sku                 = "premium"
+}
+
+output "databricks_host" {
+  value = "https://${azurerm_databricks_workspace.databricks.workspace_url}"
+}
+
+data "databricks_current_user" "user" {
+  depends_on = [azurerm_databricks_workspace.databricks]
 }
