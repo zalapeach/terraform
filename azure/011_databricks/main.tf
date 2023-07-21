@@ -24,10 +24,22 @@ data "databricks_spark_version" "latest_lts" {
   depends_on = [azurerm_databricks_workspace.databricks]
 }
 
+data "databricks_current_user" "user" {}
+
 resource "databricks_cluster" "cluster" {
   cluster_name            = "cluster"
   node_type_id            = data.databricks_node_type.smallest.id
   spark_version           = data.databricks_spark_version.latest_lts.id
   autotermination_minutes = 60
   num_workers             = 1
+}
+
+resource "databricks_notebook" "get" {
+  source = "${path.module}/scripts/getData.py"
+  path   = "${data.databricks_current_user.user.home}/"
+}
+
+resource "databricks_notebook" "query" {
+  source = "${path.module}/scripts/queryData.py"
+  path   = "${data.databricks_current_user_user.home}/"
 }
