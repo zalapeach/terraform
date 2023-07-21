@@ -12,14 +12,14 @@ resource "azurerm_databricks_workspace" "databricks" {
 
 resource "databricks_notebook" "get" {
   source = "${path.module}/scripts/getData.py"
-  path   = "/Users/juan_aguilar@epam.com/"
+  path   = /Users/juan_aguilar@epam.com/
 
   depends_on = [azurerm_databricks_workspace.databricks]
 }
 
 resource "databricks_notebook" "query" {
   source = "${path.module}/scripts/queryData.py"
-  path   = "/Users/juan_aguilar@epam.com/"
+  path   = /Users/juan_aguilar@epam.com/
 
   depends_on = [azurerm_databricks_workspace.databricks]
 }
