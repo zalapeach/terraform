@@ -4,8 +4,9 @@
 
 # data "databricks_current_user" "user" {}
 
-data "databricks_user" "user" {
-  user_name = "juan_aguilar@epam.com"
+resource "databricks_user" "user" {
+  user_name    = "juan_aguilar@epam.com"
+  display_name = "Juan Carlos"
 }
 
 resource "azurerm_resource_group" "rg" {
