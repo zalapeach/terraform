@@ -49,14 +49,26 @@ resource "databricks_job" "job" {
 
   existing_cluster_id = databricks_cluster.cluster.cluster_id
 
-  notebook_task {
-    notebook_path = databricks_notebook.get.path
-    source        = "WORKSPACE"
+  task {
+    task_key = "getTask"
+
+    notebook_task {
+      notebook_path = databricks_notebook.get.path
+      source        = "WORKSPACE"
+    }
   }
 
-  notebook_task {
-    notebook_path = databricks_notebook.query.path
-    source        = "WORKSPACE"
+  task {
+    task_key = "queryTask"
+
+    depends_on {
+      task_key = "getTask"
+    }
+
+    notebook_task {
+      notebook_path = databricks_notebook.query.path
+      source        = "WORKSPACE"
+    }
   }
 
   notification_settings {
