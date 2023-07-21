@@ -32,14 +32,14 @@ resource "databricks_cluster" "cluster" {
 
 resource "databricks_notebook" "get" {
   source = "${path.module}/scripts/getData.py"
-  path   = "/"
+  path   = "/Shared/"
 
   depends_on = [azurerm_databricks_workspace.databricks]
 }
 
 resource "databricks_notebook" "query" {
   source = "${path.module}/scripts/queryData.py"
-  path   = "/"
+  path   = "/Shared/"
 
   depends_on = [azurerm_databricks_workspace.databricks]
 }
