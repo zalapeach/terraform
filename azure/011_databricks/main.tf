@@ -10,20 +10,6 @@ resource "azurerm_databricks_workspace" "databricks" {
   sku                 = "premium"
 }
 
-resource "databricks_notebook" "get" {
-  source = "${path.module}/scripts/getData.py"
-  path   = "/"
-
-  depends_on = [azurerm_databricks_workspace.databricks]
-}
-
-resource "databricks_notebook" "query" {
-  source = "${path.module}/scripts/queryData.py"
-  path   = "/"
-
-  depends_on = [azurerm_databricks_workspace.databricks]
-}
-
 data "databricks_node_type" "smallest" {
   local_disk = true
 
@@ -42,4 +28,44 @@ resource "databricks_cluster" "cluster" {
   spark_version           = data.databricks_spark_version.latest_lts.id
   autotermination_minutes = 60
   num_workers             = 1
+}
+
+resource "databricks_notebook" "get" {
+  source = "${path.module}/scripts/getData.py"
+  path   = "/"
+
+  depends_on = [azurerm_databricks_workspace.databricks]
+}
+
+resource "databricks_notebook" "query" {
+  source = "${path.module}/scripts/queryData.py"
+  path   = "/"
+
+  depends_on = [azurerm_databricks_workspace.databricks]
+}
+
+resource "databricks_job" "job" {
+  name = "demoJob"
+
+  existing_cluster_id = databricks_cluster.cluster.cluster_id
+
+  notebook_task {
+    notebook_path = databricks_notebook.get.path
+    source        = "WORKSPACE"
+  }
+
+  notebook_task {
+    notebook_path = databricks_notebook.query.path
+    source        = "WORKSPACE"
+  }
+
+  notification_settings {
+    no_alert_for_skipped_runs  = false
+    no_alert_for_canceled_runs = false
+  }
+
+  email_notifications {
+    on_success = [var.org_email]
+    on_failure = [var.org_email]
+  }
 }
