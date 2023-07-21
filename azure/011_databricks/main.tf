@@ -32,26 +32,20 @@ resource "databricks_cluster" "cluster" {
 
 resource "databricks_notebook" "get" {
   source = "${path.module}/scripts/getData.py"
-  path   = "/Shared/Demo"
+  path   = "/Shared/Demo/getData"
 
   depends_on = [azurerm_databricks_workspace.databricks]
 }
 
 resource "databricks_notebook" "query" {
   source = "${path.module}/scripts/queryData.py"
-  path   = "/Shared/Demo"
+  path   = "/Shared/Demo/queryData"
 
   depends_on = [azurerm_databricks_workspace.databricks]
 }
 
 resource "databricks_job" "job" {
   name = "demoJob"
-
-  # existing_cluster_id = databricks_cluster.cluster.cluster_id
-  # job_cluster {
-    # job_cluster_key     = "cluster"
-    # existing_cluster_id = databricks_cluster.cluster.cluster_id
-  # }
 
   task {
     task_key            = "getTask"
