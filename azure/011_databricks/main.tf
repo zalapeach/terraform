@@ -41,5 +41,5 @@ resource "databricks_notebook" "get" {
 
 resource "databricks_notebook" "query" {
   source = "${path.module}/scripts/queryData.py"
-  path   = "${data.databricks_current_user_user.home}/"
+  path   = "${data.databricks_current_user.user.home}/"
 }
