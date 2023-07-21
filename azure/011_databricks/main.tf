@@ -47,10 +47,15 @@ resource "databricks_notebook" "query" {
 resource "databricks_job" "job" {
   name = "demoJob"
 
-  existing_cluster_id = databricks_cluster.cluster.cluster_id
+  # existing_cluster_id = databricks_cluster.cluster.cluster_id
+  job_cluster {
+    job_cluster_key = "cluster"
+    existing_cluster_id = databricks_cluster.cluster.cluster_id
+  }
 
   task {
-    task_key = "getTask"
+    task_key        = "getTask"
+    job_cluster_key = "cluster"
 
     notebook_task {
       notebook_path = databricks_notebook.get.path
@@ -59,7 +64,8 @@ resource "databricks_job" "job" {
   }
 
   task {
-    task_key = "queryTask"
+    task_key        = "queryTask"
+    job_cluster_key = "cluster"
 
     depends_on {
       task_key = "getTask"
