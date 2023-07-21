@@ -49,7 +49,7 @@ resource "databricks_job" "job" {
 
   # existing_cluster_id = databricks_cluster.cluster.cluster_id
   job_cluster {
-    job_cluster_key = "cluster"
+    job_cluster_key     = "cluster"
     existing_cluster_id = databricks_cluster.cluster.cluster_id
   }
 
