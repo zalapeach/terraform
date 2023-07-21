@@ -1,4 +1,12 @@
-data "azurerm_client_config" "current" {}
+# data "azurerm_client_config" "current" {}
+
+# data "azuread_client_config" "current" {}
+
+# data "databricks_current_user" "user" {}
+
+data "databricks_user" "user" {
+  user_name = juan_aguilar@epam.com
+}
 
 resource "azurerm_resource_group" "rg" {
   name     = "resourceGroup011"
@@ -24,8 +32,6 @@ data "databricks_spark_version" "latest_lts" {
   depends_on = [azurerm_databricks_workspace.databricks]
 }
 
-data "databricks_current_user" "user" {}
-
 resource "databricks_cluster" "cluster" {
   cluster_name            = "cluster"
   node_type_id            = data.databricks_node_type.smallest.id
@@ -37,9 +43,11 @@ resource "databricks_cluster" "cluster" {
 resource "databricks_notebook" "get" {
   source = "${path.module}/scripts/getData.py"
   path   = "${data.databricks_current_user.user.home}/"
+#  path   = "${data.databricks_current_user.user.home}/"
 }
 
 resource "databricks_notebook" "query" {
   source = "${path.module}/scripts/queryData.py"
-  path   = "${data.databricks_current_user.user.home}/"
+  path   = "${data.databricks_user.user.home}/"
+#  path   = "${data.databricks_user.user.home}/"
 }
