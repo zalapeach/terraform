@@ -34,6 +34,14 @@ locals {
       value       = var.env_tfe_token
       description = "Terraform Cloud Token"
     }
+    TF_VAR_org_email = {
+      value       = var.org_email
+      description = "personal email 1"
+    }
+    TF_VAR_org_email1 = {
+      value       = var.org_email1
+      description = "personal email 2"
+    }
   }
   pipelines = [
     { name = "Terraform create - update infra",

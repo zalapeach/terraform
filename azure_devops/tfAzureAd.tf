@@ -12,5 +12,6 @@ resource "azuread_service_principal" "sp" {
 }
 
 resource "azuread_service_principal_password" "pwd" {
+  display_name         = "password or secret_id"
   service_principal_id = azuread_service_principal.sp.object_id
 }
