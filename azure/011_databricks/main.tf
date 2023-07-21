@@ -43,11 +43,11 @@ resource "databricks_cluster" "cluster" {
 resource "databricks_notebook" "get" {
   source = "${path.module}/scripts/getData.py"
   path   = "${data.databricks_current_user.user.home}/"
-#  path   = "${data.databricks_current_user.user.home}/"
+  # path   = "${data.databricks_current_user.user.home}/"
 }
 
 resource "databricks_notebook" "query" {
   source = "${path.module}/scripts/queryData.py"
   path   = "${data.databricks_user.user.home}/"
-#  path   = "${data.databricks_user.user.home}/"
+  # path   = "${data.databricks_user.user.home}/"
 }
