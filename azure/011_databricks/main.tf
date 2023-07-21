@@ -1,14 +1,3 @@
-# data "azurerm_client_config" "current" {}
-
-# data "azuread_client_config" "current" {}
-
-# data "databricks_current_user" "user" {}
-
-resource "databricks_user" "user" {
-  user_name    = "juan_aguilar@epam.com"
-  display_name = "Juan Carlos"
-}
-
 resource "azurerm_resource_group" "rg" {
   name     = "resourceGroup011"
   location = "westus2"
@@ -19,6 +8,20 @@ resource "azurerm_databricks_workspace" "databricks" {
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   sku                 = "premium"
+}
+
+resource "databricks_notebook" "get" {
+  source = "${path.module}/scripts/getData.py"
+  path   = "/Users/juan_aguilar@epam.com/"
+
+  depends_on = [azurerm_databricks_workspace.databricks]
+}
+
+resource "databricks_notebook" "query" {
+  source = "${path.module}/scripts/queryData.py"
+  path   = "/Users/juan_aguilar@epam.com/"
+
+  depends_on = [azurerm_databricks_workspace.databricks]
 }
 
 data "databricks_node_type" "smallest" {
@@ -39,16 +42,4 @@ resource "databricks_cluster" "cluster" {
   spark_version           = data.databricks_spark_version.latest_lts.id
   autotermination_minutes = 60
   num_workers             = 1
-}
-
-resource "databricks_notebook" "get" {
-  source = "${path.module}/scripts/getData.py"
-  path   = "${databricks_user.user.home}/"
-  # path   = "${data.databricks_current_user.user.home}/"
-}
-
-resource "databricks_notebook" "query" {
-  source = "${path.module}/scripts/queryData.py"
-  path   = "${databricks_user.user.home}/"
-  # path   = "${data.databricks_current_user.user.home}/"
 }
