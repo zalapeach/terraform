@@ -48,3 +48,30 @@ resource "azuredevops_build_definition" "pipelines" {
     value = azurerm_key_vault.kv.name
   }
 }
+
+resource "azuredevops_agent_pool" "agentPool" {
+  name "SelfHosted"
+}
+
+resource "azuredevops_agent_queue" "queue" {
+  project_id    = azuredevops_project.project.id
+  agent_pool_id = azuredevops_agent_pool.agentPool.id
+}
+
+resource "azuredevops_resource_authorization" "authQueue" {
+  project_id  = azuredevops_project.project.id
+  resource_id = azuredevops_agent_queue.queue.id
+  authorized  = true
+}
+
+resource "azuredevops_resource_authorization" "authAzure" {
+  project_id  = azuredevops_project.project.id
+  resource_id = azuredevops_serviceendpoint_azurerm.azure.id
+  authorized  = true
+}
+
+resource "azuredevops_resource_authorization" "authGitHub" {
+  project_id  = azuredevops_project.project.id
+  resource_id = azuredevops_serviceendpoint_github.github.id
+  authorized  = true
+}
