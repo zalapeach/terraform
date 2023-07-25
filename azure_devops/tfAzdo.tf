@@ -50,7 +50,7 @@ resource "azuredevops_build_definition" "pipelines" {
 }
 
 resource "azuredevops_agent_pool" "agentPool" {
-  name "SelfHosted"
+  name = "SelfHosted"
 }
 
 resource "azuredevops_agent_queue" "queue" {
@@ -58,20 +58,20 @@ resource "azuredevops_agent_queue" "queue" {
   agent_pool_id = azuredevops_agent_pool.agentPool.id
 }
 
-resource "azuredevops_resource_authorization" "authQueue" {
+resource "azuredevops_pipeline_authorization" "authQueue" {
   project_id  = azuredevops_project.project.id
   resource_id = azuredevops_agent_queue.queue.id
-  authorized  = true
+  type        = "queue"
 }
 
-resource "azuredevops_resource_authorization" "authAzure" {
+resource "azuredevops_pipeline_authorization" "authAzure" {
   project_id  = azuredevops_project.project.id
   resource_id = azuredevops_serviceendpoint_azurerm.azure.id
-  authorized  = true
+  type        = "endpoint"
 }
 
-resource "azuredevops_resource_authorization" "authGitHub" {
+resource "azuredevops_pipeline_authorization" "authGitHub" {
   project_id  = azuredevops_project.project.id
   resource_id = azuredevops_serviceendpoint_github.github.id
-  authorized  = true
+  type        = "endpoint"
 }
