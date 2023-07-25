@@ -31,6 +31,10 @@ resource "azurerm_key_vault_access_policy" "access" {
   secret_permissions = [
     "Delete", "Get", "List", "Purge", "Set"
   ]
+
+  depends_on = [
+    azurerm_key_vault.kv
+  ]
 }
 
 resource "azurerm_key_vault_access_policy" "spaccess" {
@@ -40,6 +44,10 @@ resource "azurerm_key_vault_access_policy" "spaccess" {
 
   secret_permissions = [
     "Delete", "Get", "List", "Purge", "Set"
+  ]
+
+  depends_on = [
+    azurerm_key_vault.kv
   ]
 }
 
