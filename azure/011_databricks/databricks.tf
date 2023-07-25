@@ -1,15 +1,3 @@
-resource "azurerm_resource_group" "rg" {
-  name     = "resourceGroup011"
-  location = "westus2"
-}
-
-resource "azurerm_databricks_workspace" "databricks" {
-  name                = "databricks"
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
-  sku                 = "premium"
-}
-
 data "databricks_node_type" "smallest" {
   local_disk = true
 
@@ -72,12 +60,12 @@ resource "databricks_job" "job" {
   }
 
   notification_settings {
-    no_alert_for_skipped_runs  = false
-    no_alert_for_canceled_runs = false
+    no_alert_for_skipped_runs  = true
+    no_alert_for_canceled_runs = true
   }
 
   email_notifications {
-    on_success = [var.org_email]
-    on_failure = [var.org_email]
+    on_success = [var.org_email, var.org_email1]
+    on_failure = [var.org_email, var.org_email1]
   }
 }
