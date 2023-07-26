@@ -137,20 +137,18 @@ resource "azurerm_network_security_group" "nsg" {
 }
 
 resource "azurerm_network_security_rule" "allowHttp" {
-  name                        = "allowHttp"
-  priority                    = 1001
-  direction                   = "Inbound"
-  access                      = "Allow"
-  protocol                    = "Tcp"
-  source_port_range           = "*"
-  destination_port_range      = "80"
-  source_address_prefix       = "*"
-  destination_address_prefix  = <<EOF
-                                  ${azurerm_network_interface.nic[0].private_ip_address},
-                                  ${azurerm_network_interface.nic[1].private_ip_address}
-                                EOF
-  resource_group_name         = azurerm_resource_group.rg.name
-  network_security_group_name = azurerm_network_security_group.nsg.name
+  name                         = "allowHttp"
+  priority                     = 1001
+  direction                    = "Inbound"
+  access                       = "Allow"
+  protocol                     = "Tcp"
+  source_port_range            = "*"
+  destination_port_range       = "80"
+  source_address_prefix        = "*"
+  destination_address_prefixes = [azurerm_network_interface.nic[0].private_ip_address,
+                                  azurerm_network_interface.nic[1].private_ip_address]
+  resource_group_name          = azurerm_resource_group.rg.name
+  network_security_group_name  = azurerm_network_security_group.nsg.name
 }
 
 resource "azurerm_network_security_rule" "allowOutboundToDb" {
@@ -161,10 +159,8 @@ resource "azurerm_network_security_rule" "allowOutboundToDb" {
   protocol                    = "Tcp"
   source_port_range           = "*"
   destination_port_range      = "3306"
-  source_address_prefix       = <<EOF
-                                 ${azurerm_network_interface.nic[0].private_ip_address},
-                                 ${azurerm_network_interface.nic[1].private_ip_address}
-                                EOF
+  source_address_prefixes     = [azurerm_network_interface.nic[0].private_ip_address,
+                                 azurerm_network_interface.nic[1].private_ip_address]
   destination_address_prefix  = azurerm_network_interface.nic[2].private_ip_address
   resource_group_name         = azurerm_resource_group.rg.name
   network_security_group_name = azurerm_network_security_group.nsg.name
@@ -178,10 +174,8 @@ resource "azurerm_network_security_rule" "allowInboundToDb" {
   protocol                    = "Tcp"
   source_port_range           = "*"
   destination_port_range      = "3306"
-  source_address_prefix       = <<EOF
-                                  ${azurerm_network_interface.nic[0].private_ip_address},
-                                  ${azurerm_network_interface.nic[1].private_ip_address}
-                                EOF
+  source_address_prefixes     = [azurerm_network_interface.nic[0].private_ip_address,
+                                 azurerm_network_interface.nic[1].private_ip_address]
   destination_address_prefix  = azurerm_network_interface.nic[2].private_ip_address
   resource_group_name         = azurerm_resource_group.rg.name
   network_security_group_name = azurerm_network_security_group.nsg.name
