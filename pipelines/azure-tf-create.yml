@@ -82,3 +82,8 @@ stages:
         command: apply
         commandOptions: '-auto-approve'
         workingDirectory: $(System.DefaultWorkingDirectory)/azure/${{ parameters.example }}/
+
+    - bash: |
+        newRunName="${{ parameters.example }}"
+        echo "##vso[build.updatebuildnumber]$newRunName"
+      displayName: Set run name
