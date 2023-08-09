@@ -1,5 +1,5 @@
 resource "azurerm_resource_group" "rg" {
-  name     = "resourceGroup011"
+  name     = "resourceGroup009"
   location = "westus2"
 }
 
