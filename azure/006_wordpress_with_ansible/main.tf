@@ -224,7 +224,7 @@ resource "azurerm_linux_virtual_machine" "vms" {
     publisher = "Canonical"
     offer     = "0001-com-ubuntu-server-jammy"
     sku       = "22_04-lts-gen2"
-    version   = latest
+    version   = "latest"
   }
 
   computer_name                   = "${local.names[count.index].name}-0${count.index}"
