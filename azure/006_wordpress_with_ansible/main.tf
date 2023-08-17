@@ -17,6 +17,10 @@ provider "azurerm" {
   features {}
 }
 
+data "external" "env" {
+  program = ["${path.module}/scripts/env.sh"]
+}
+
 resource "azurerm_resource_group" "rg" {
   name     = "resourceGroup006"
   location = "westus2"
@@ -268,4 +272,27 @@ resource "azurerm_bastion_host" "bastion" {
     subnet_id            = azurerm_subnet.bastion.id
     public_ip_address_id = azurerm_public_ip.bastionIp.id
   }
+}
+
+# Create dynamic agent
+
+resource "azurerm_virtual_machine_extension" "agent" {
+  name                 = "azureDevOpsAgent"
+  virtual_machine_id   = azurerm_linux_virtual_machine.vms[3].id
+  publisher            = "Microsoft.Azure.Extensions"
+  type                 = "CustomScript"
+  type_handler_version = "2.0"
+
+  settings = <<SETTINGS
+    {
+      "fileUris": [
+        "https://raw.githubusercontent.com/zalapeach/terraform/master/azure/006_wordpress_with_ansible/scripts/agent.sh"
+        ],
+      "commandToExecute": "sh agent.sh ${data.external.env.result["azure_devops_pat"]} ${data.external.env.result["azure_devops_org"]} ${var.azure_client_id} ${var.azure_client_secret} ${var.azure_tenant_id}"
+    }
+SETTINGS
+
+  depends_on = [
+    azurerm_linux_virtual_machine.vms
+  ]
 }

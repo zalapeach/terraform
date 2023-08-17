@@ -1,19 +1,19 @@
 apiVersion: apps/v1
-kind: ReplicaSet
+kind: Deployment
 metadata:
-  name: replicaset
+  name: service-deployment
   labels:
-    name: replicaset
+    name: service-deployment
 spec:
   selector:
     matchLabels:
-      name: replicaset-pod
-  replicas: 3
+      name: service-pod
+  replicas: 6
   template:
     metadata:
-      name: nginx-pod
+      name: service-pod
       labels:
-        name: replicaset-pod
+        name: service-pod
     spec:
       containers:
       - name: nginx-container

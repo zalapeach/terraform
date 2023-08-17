@@ -3,17 +3,17 @@ kind: Deployment
 metadata:
   name: deployment
   labels:
-    app: myApp
+    name: deployment
 spec:
   selector:
     matchLabels:
-      app: nginx3
+      name: deployment-pod
   replicas: 3
   template:
     metadata:
-      name: nginx-pod
+      name: deployment-pod
       labels:
-        app: nginx3
+        name: deployment-pod
     spec:
       containers:
       - name: nginx-container

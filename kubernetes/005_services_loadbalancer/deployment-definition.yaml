@@ -1,19 +1,19 @@
 apiVersion: apps/v1
-kind: ReplicaSet
+kind: Deployment
 metadata:
-  name: replicaset
+  name: svc-lb-deployment
   labels:
-    name: replicaset
+    name: svc-lb-deployment
 spec:
   selector:
     matchLabels:
-      name: replicaset-pod
-  replicas: 3
+      name: svc-lb-pod
+  replicas: 6
   template:
     metadata:
-      name: nginx-pod
+      name: svc-lb-pod
       labels:
-        name: replicaset-pod
+        name: svc-lb-pod
     spec:
       containers:
       - name: nginx-container
