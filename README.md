@@ -1,25 +1,44 @@
 # Terraform demos
 
-The following examples are some demos for Terraform with Azure in order to
-learn how it works.
+The following examples are some demos for Terraform with Azure in order to learn how it works.
 
-## 1 - Resource group
+It also contains an automated way (used for personal purposes) to create and drop the underlying
+infrastructure in order to run terraform pipelines in azure DevOps.
 
-This demo just create a resource group in Azure
+# How to setup everything
 
-## 2 - Vnet
+1. Create an account in Terraform Cloud
+2. Create an account in Azure DevOps
+3. Get an Azure subscription
+4. Create a PAT (Personal Access Token) in Github, store it in a secure place
+5. Create a PAT (Personal Access Token) in Azure DevOps, save it in a secure place
+6. Create a token in Terraform Cloud and saved in a secure place
+7. Download the repo
+8. Create in the root of this project a `credentials.sh` file
+9. Grant to credentials.sh executable permissions (`chmod 700 credentials.sh`)
+10. Fill out this file as follows:
 
-This demo creates a resource group, and a vnet.
+```
+export ARM_TENANT_ID="your-azure-active-directory-tenant-id-mapped-to-your-subscription"
+export ARM_SUBSCRIPTION_ID="your-azure-active-directory-subscription-id"
 
-## 3 - Linux VM
+export AZDO_GITHUB_SERVICE_CONNECTION_PAT="github-token-created-in-step-4"
+export AZDO_ORG_SERVICE_URL="https://dev.azure.com/your-organization-name"
+export AZDO_PERSONAL_ACCESS_TOKEN="azure-devops-token-created-in-step-5"
 
-This demo creates an Ubuntu VM and all the required stuff in Azure.
+export TFE_TOKEN="terraform-token-created-in-step-6"
 
-## 4 - Storage account
+# variables
 
-This demo creates a storage account and configures in order to be used for the
-demo 5.
+export TF_VAR_env_arm_tenant_id=$ARM_TENANT_ID
+export TF_VAR_env_arm_subscription_id=$ARM_SUBSCRIPTION_ID
+export TF_VAR_env_azdo_github_pat=$AZDO_GITHUB_SERVICE_CONNECTION_PAT
+export TF_VAR_env_azdo_pat=$AZDO_PERSONAL_ACCESS_TOKEN
+export TF_VAR_env_azdo_url=$AZDO_ORG_SERVICE_URL
+export TF_VAR_env_tfe_token=$TFE_TOKEN
+export TF_VAR_org_email="personal1@email.com"
+export TF_VAR_org_email1="personal2@email.com"
+```
 
-## 5 - Load balancer
-
-This demo creates a load balancer, two VMs and redirect SSH traffic to port 22.
+11. export variables from `credentials.sh` with source `./credentials.sh`
+12. Apply changes with terraform, in case of errors resolve them.
