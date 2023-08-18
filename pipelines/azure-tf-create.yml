@@ -84,6 +84,11 @@ stages:
         workingDirectory: $(System.DefaultWorkingDirectory)/azure/${{ parameters.example }}/
 
     - bash: |
+        terraform import azurerm_resource_group.net_watcher \
+          /subscriptions/$(terraform output subscription_id)/resourceGroups/NetworkWatcherRG
+      displayName: Importing Network Watcher RG
+
+    - bash: |
         newRunName="${{ parameters.example }}"
         echo "##vso[build.updatebuildnumber]$newRunName"
       displayName: Set run name

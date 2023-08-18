@@ -5,3 +5,8 @@ output "resource_group_id" {
 output "vnet_id" {
   value = azurerm_virtual_network.vnet.id
 }
+
+output "subcription_id" {
+  value     = data.external.env.result["subscription_id"]
+  sensitive = true
+}
