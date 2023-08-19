@@ -83,11 +83,12 @@ stages:
         commandOptions: '-auto-approve'
         workingDirectory: $(System.DefaultWorkingDirectory)/azure/${{ parameters.example }}/
 
+    # move this to destroy pipeline
     - bash: |
         cd $(System.DefaultWorkingDirectory)/azure/${{ parameters.example }}
         terraform output subscription_id
         terraform import azurerm_resource_group.net_watcher \
-          "/subscriptions/$(terraform output subscription_id)/resourceGroups/NetworkWatcherRG"
+          /subscriptions/$(terraform output subscription_id)/resourceGroups/NetworkWatcherRG
       displayName: Importing Network Watcher RG
 
     - bash: |
