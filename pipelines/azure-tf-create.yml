@@ -84,6 +84,7 @@ stages:
         workingDirectory: $(System.DefaultWorkingDirectory)/azure/${{ parameters.example }}/
 
     - bash: |
+        cd $(System.DefaultWorkingDirectory)/azure/${{ parameters.example }}
         terraform output subscription_id
         terraform import azurerm_resource_group.net_watcher \
           "/subscriptions/$(terraform output subscription_id)/resourceGroups/NetworkWatcherRG"
