@@ -86,9 +86,10 @@ stages:
     # move this to destroy pipeline
     - bash: |
         cd $(System.DefaultWorkingDirectory)/azure/${{ parameters.example }}
-        terraform output subscription_id
+        VALUE=$(terraform output subscription_id)
+        vALUE=${value:1:-1}
         terraform import azurerm_resource_group.net_watcher \
-          /subscriptions/$(terraform output subscription_id)/resourceGroups/NetworkWatcherRG
+          /subscriptions/$VALUE/resourceGroups/NetworkWatcherRG
       displayName: Importing Network Watcher RG
 
     - bash: |
