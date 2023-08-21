@@ -21,6 +21,8 @@ data "external" "env" {
   program = ["${path.module}/scripts/env.sh"]
 }
 
+resource "azurerm_resource_group" "net_watcher" {}
+
 resource "azurerm_resource_group" "rg" {
   name     = "resourceGroup002"
   location = "eastus2"
