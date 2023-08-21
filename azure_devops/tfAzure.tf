@@ -1,5 +1,3 @@
-
-
 resource "azurerm_role_assignment" "sp" {
   scope                = "/subscriptions/${var.env_arm_subscription_id}"
   role_definition_name = "Contributor"
@@ -36,15 +34,15 @@ resource "azurerm_key_vault_access_policy" "access" {
   ]
 }
 
-# resource "azurerm_key_vault_access_policy" "spaccess" {
-#   key_vault_id = azurerm_key_vault.kv.id
-#   tenant_id    = var.env_arm_tenant_id
-#   object_id    = azuread_service_principal.sp.object_id
+resource "azurerm_key_vault_access_policy" "spaccess" {
+  key_vault_id = azurerm_key_vault.kv.id
+  tenant_id    = var.env_arm_tenant_id
+  object_id    = azuread_service_principal.sp.object_id
 
-#   secret_permissions = [
-#     "Delete", "Get", "List", "Purge", "Set"
-#   ]
-# }
+  secret_permissions = [
+    "Delete", "Get", "List", "Purge", "Set"
+  ]
+}
 
 resource "azurerm_key_vault_secret" "secrettftoken" {
   name         = "tf-token"
@@ -52,6 +50,7 @@ resource "azurerm_key_vault_secret" "secrettftoken" {
   key_vault_id = azurerm_key_vault.kv.id
 
   depends_on = [
-    azurerm_key_vault_access_policy.access
+    azurerm_key_vault_access_policy.access,
+    azurerm_key_vault_access_policy.spaccess
   ]
 }

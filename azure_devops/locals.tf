@@ -1,6 +1,6 @@
 locals {
-  workspaces = ["azdo", "001", "002", "003", "004", "005", "006", "007", "008", "009", "010",
-  "011", "100", "101", "102", "103"]
+  workspaces = ["azdo", "Az001", "Az002", "Az003", "Az004", "Az005", "Az006", "Az007", "Az008",
+  "Az009", "Az010", "Az011", "Az100", "Az101", "Az102", "Az103"]
   variables = {
     ARM_CLIENT_ID = {
       value       = azuread_application.app.application_id
@@ -45,9 +45,11 @@ locals {
   }
   pipelines = [
     { name = "Terraform create - update infra",
-    path = "pipelines/azure-tf-create.yml" },
+    path = "pipelines/tf-azure-create.yml" },
     { name = "Terraform destroy infra",
-    path = "pipelines/azure-tf-destroy.yml" },
+    path = "pipelines/tf-azure-destroy.yml" },
+    { name = "Terraform destroy - Network watchers",
+    path = "pipelines/tf-azure-drop-net-watchers.yml"},
     { name = "Ansible configure - example 006"
     path = "pipelines/ansible-configure.yml" }
   ]
