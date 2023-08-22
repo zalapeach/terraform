@@ -8,7 +8,7 @@ terraform {
   cloud {
     organization = "zalapeach"
     workspaces {
-      name = "006"
+      name = "Az006"
     }
   }
 }
