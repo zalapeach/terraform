@@ -51,17 +51,15 @@ stages:
         command: validate
         workingDirectory: $(System.DefaultWorkingDirectory)/azure/destroy_network_watchers
 
-    #- bash: |
-        #echo $ARM_SUBSCRIPTION_ID
-      #displayName: Get Subscription id
-
-    - task: terraformCLI@0
-      displayName: Import NW RG
+    - task: AzureCLI@2
+      displayName: import NW RG
       inputs:
-        command: import
-        workingDirectory: $(System.DefaultWorkingDirectory)/azure/destroy_network_watchers
-        resourceAddress: azurerm_resource_group.rg
-        resourceId: "/subscriptions/$(subscriptionId)/resourceGroups/NetworkWatcherRG"
+        azureSubscription: Azure
+        scriptType: bash
+        scriptLocation: inlineScript
+        inlineScript:
+          cd $(System.DefaultWorkingDirectory)/azure/destroy_network_watchers
+          terraform import azurerm_resource_group.rg /subscriptions/$(subscriptionId)/resourceGroups/NetworkWatcherRG
 
     - task: terraformCLI@0
       displayName: Terraform destroy
