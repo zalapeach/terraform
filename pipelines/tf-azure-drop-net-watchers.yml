@@ -20,7 +20,7 @@ stages:
     - task: terraformInstaller@0
       displayName: Terraform install
       inputs:
-        terraformVersion: '1.5.6'
+        terraformVersion: latest
 
     - task: replaceTokens@5
       displayName: Update token file
@@ -43,19 +43,19 @@ stages:
       displayName: Terraform fmt
       inputs:
         command: fmt
-        workingDirectory: $(System.DefaultWorkingDirectory)/azure/destroy_network_watcher
+        workingDirectory: $(System.DefaultWorkingDirectory)/azure/destroy_network_watchers
 
     - task: terraformCLI@0
       displayName: Terraform validate
       inputs:
         command: validate
-        workingDirectory: $(System.DefaultWorkingDirectory)/azure/destroy_network_watcher
+        workingDirectory: $(System.DefaultWorkingDirectory)/azure/destroy_network_watchers
 
     - task: terraformCLI@0
       displayName: Import NW RG
       inputs:
         command: import
-        workingDirectory: $(System.DefaultWorkingDirectory)/azure/destroy_network_watcher
+        workingDirectory: $(System.DefaultWorkingDirectory)/azure/destroy_network_watchers
         resourceAddress: azurerm_resource_group.rg
         resourceId: "subscriptions/$(ARM_SUBSCRIPTION_ID)/resourceGroups/NetworkWatcherRG"
 
@@ -63,4 +63,4 @@ stages:
       displayName: Terraform destroy
       inputs:
         command: destroy
-        workingDirectory: $(System.DefaultWorkingDirectory)/azure/destroy_network_watcher
+        workingDirectory: $(System.DefaultWorkingDirectory)/azure/destroy_network_watchers
