@@ -57,7 +57,7 @@ stages:
         command: import
         workingDirectory: $(System.DefaultWorkingDirectory)/azure/destroy_network_watchers
         resourceAddress: azurerm_resource_group.rg
-        resourceId: "subscriptions/$(ARM_SUBSCRIPTION_ID)/resourceGroups/NetworkWatcherRG"
+        resourceId: "/subscriptions/$(ARM_SUBSCRIPTION_ID)/resourceGroups/NetworkWatcherRG"
 
     - task: terraformCLI@0
       displayName: Terraform destroy
