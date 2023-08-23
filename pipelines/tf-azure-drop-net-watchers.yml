@@ -29,7 +29,7 @@ stages:
         tokenPattern: 'azpipelines'
 
     - bash: |
-        cd $(System.DefaultWorkingDirectory)/azure/${{ parameters.example }}/
+        cd $(System.DefaultWorkingDirectory)/azure/destroy_network_watchers/
         mv $(System.DefaultWorkingDirectory)/pipelines/tfToken.json /home/vsts/.terraform.d/credentials.tfrc.json
       displayName: Terraform login
 
@@ -37,22 +37,30 @@ stages:
       displayName: Terraform init
       inputs:
         command: init
-        workingDirectory: $(System.DefaultWorkingDirectory)/azure/000_network_watcher
+        workingDirectory: $(System.DefaultWorkingDirectory)/azure/destroy_network_watchers
 
     - task: terraformCLI@0
       displayName: Terraform fmt
       inputs:
         command: fmt
-        workingDirectory: $(System.DefaultWorkingDirectory)/azure/000_network_watcher
+        workingDirectory: $(System.DefaultWorkingDirectory)/azure/destroy_network_watcher
 
     - task: terraformCLI@0
       displayName: Terraform validate
       inputs:
         command: validate
-        workingDirectory: $(System.DefaultWorkingDirectory)/azure/000_network_watcher
+        workingDirectory: $(System.DefaultWorkingDirectory)/azure/destroy_network_watcher
+
+    - task: terraformCLI@0
+      displayName: Import NW RG
+      inputs:
+        command: import
+        workingDirectory: $(System.DefaultWorkingDirectory)/azure/destroy_network_watcher
+        resourceAddress: azurerm_resource_group.rg
+        resourceId: "subscriptions/$(ARM_SUBSCRIPTION_ID)/resourceGroups/NetworkWatcherRG"
 
     - task: terraformCLI@0
       displayName: Terraform destroy
       inputs:
         command: destroy
-        workingDirectory: $(System.DefaultWorkingDirectory)/azure/000_network_watcher
+        workingDirectory: $(System.DefaultWorkingDirectory)/azure/destroy_network_watcher
