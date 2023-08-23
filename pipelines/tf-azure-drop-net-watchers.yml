@@ -20,7 +20,7 @@ stages:
     - task: terraformInstaller@0
       displayName: Terraform install
       inputs:
-        terraformVersion: 'latest'
+        terraformVersion: '1.5.6'
 
     - task: replaceTokens@5
       displayName: Update token file
