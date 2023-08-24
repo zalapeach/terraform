@@ -16,3 +16,5 @@ id_rsa.pub
 credentials.sh
 
 hashicorp.gpg
+
+kubernetes/k8sCluster

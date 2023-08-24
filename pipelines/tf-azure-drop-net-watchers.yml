@@ -57,7 +57,7 @@ stages:
         azureSubscription: Azure
         scriptType: bash
         scriptLocation: inlineScript
-        inlineScript:
+        inlineScript: |
           cd $(System.DefaultWorkingDirectory)/azure/destroy_network_watchers
           terraform import azurerm_resource_group.rg /subscriptions/$(subscriptionId)/resourceGroups/NetworkWatcherRG
 
