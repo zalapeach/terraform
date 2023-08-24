@@ -21,7 +21,7 @@ provider "azurerm" {
   }
 }
 
-imports {
+import {
   to       = azurerm_resource_group.rg
   id       = "/subscriptions/$(subscriptionId)/resourceGroups/NetworkWatcherRG"
   provider = azurerm
