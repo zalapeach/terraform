@@ -83,15 +83,6 @@ stages:
         commandOptions: '-auto-approve'
         workingDirectory: $(System.DefaultWorkingDirectory)/azure/${{ parameters.example }}/
 
-    #move this to destroy pipeline
-    #- bash: |
-        #cd $(System.DefaultWorkingDirectory)/azure/${{ parameters.example }}
-        #VALUE=$(terraform output subscription_id)
-        #VALUE=${value:1:-1}
-        #terraform import azurerm_resource_group.net_watcher \
-          #/subscriptions/$VALUE/resourceGroups/NetworkWatcherRG
-      #displayName: Importing Network Watcher RG
-
     - bash: |
         newRunName="${{ parameters.example }}"
         echo "##vso[build.updatebuildnumber]$newRunName"
