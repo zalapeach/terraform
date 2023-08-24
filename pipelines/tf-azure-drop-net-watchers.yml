@@ -58,12 +58,6 @@ stages:
         workingDirectory: $(System.DefaultWorkingDirectory)/azure/destroy_network_watchers
 
     - task: terraformCLI@0
-      displayName: Terraform plan
-      inputs:
-        command: plan
-        workingDirectory: $(System.DefaultWorkingDirectory)/azure/destroy_network_watchers
-
-    - task: terraformCLI@0
       displayName: Terraform apply
       inputs:
         command: apply

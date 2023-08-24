@@ -77,7 +77,7 @@ locals {
         {
           name   = "subscriptionId"
           value  = var.env_arm_subscription_id
-          secret = true
+          secret = false
         }
       ]
     },
