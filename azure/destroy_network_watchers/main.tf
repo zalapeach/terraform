@@ -14,7 +14,6 @@ terraform {
 }
 
 provider "azurerm" {
-  alias = "azure"
   features {
     resource_group {
       prevent_deletion_if_contains_resources = false
@@ -25,7 +24,6 @@ provider "azurerm" {
 import {
   to       = azurerm_resource_group.rg
   id       = "/subscriptions/$(subscriptionId)/resourceGroups/NetworkWatcherRG"
-  provider = azurerm.azure
 }
 
 resource "azurerm_resource_group" "rg" {
