@@ -69,6 +69,12 @@ stages:
           #terraform import azurerm_resource_group.rg /subscriptions/$(subscriptionId)/resourceGroups/NetworkWatcherRG
 
     - task: terraformCLI@0
+      displayName: Terraform plan
+      inputs:
+        command: plan
+        workingDirectory: $(System.DefaultWorkingDirectory)/azure/destroy_network_watchers
+
+    - task: terraformCLI@0
       displayName: Terraform destroy
       inputs:
         command: destroy

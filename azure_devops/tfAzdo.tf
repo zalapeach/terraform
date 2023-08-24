@@ -43,9 +43,14 @@ resource "azuredevops_build_definition" "pipelines" {
     yml_path              = local.pipelines[count.index].path
   }
 
-  variable {
-    name  = "keyVaultName"
-    value = azurerm_key_vault.kv.name
+  dynamic "variable" {
+    for_each = try(local.pipelines[count.index].variables, [])
+    content {
+      name           = variable.value["name"]
+      value          = variable.value["value"]
+      is_secret      = variable.value["secret"]
+      allow_override = false
+    }
   }
 }
 

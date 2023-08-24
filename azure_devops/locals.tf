@@ -44,12 +44,43 @@ locals {
     }
   }
   pipelines = [
-    { name = "Terraform create - update infra",
-    path = "pipelines/tf-azure-create.yml" },
+    {
+      name = "Terraform create - update infra",
+      path = "pipelines/tf-azure-create.yml",
+      variables = [
+        {
+          name   = "keyVaultName"
+          value  = azurerm_key_vault.kv.name
+          secret = false
+        }
+      ]
+    },
     { name = "Terraform destroy infra",
-    path = "pipelines/tf-azure-destroy.yml" },
-    { name = "Terraform destroy - Network watchers",
-    path = "pipelines/tf-azure-drop-net-watchers.yml"},
+      path = "pipelines/tf-azure-destroy.yml",
+      variables = [
+        {
+          name   = "keyVaultName"
+          value  = azurerm_key_vault.kv.name
+          secret = false
+        }
+      ]
+    },
+    {
+      name = "Terraform destroy - Network watchers",
+      path = "pipelines/tf-azure-drop-net-watchers.yml",
+      variables = [
+        {
+          name   = "keyVaultName"
+          value  = azurerm_key_vault.kv.name
+          secret = false
+        },
+        {
+          name   = "subscriptionId"
+          value  = var.env_arm_subscription_id
+          secret = true
+        }
+      ]
+    },
     { name = "Ansible configure - example 006"
     path = "pipelines/ansible-configure.yml" }
   ]
