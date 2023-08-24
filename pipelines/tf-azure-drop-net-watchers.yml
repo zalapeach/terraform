@@ -57,21 +57,17 @@ stages:
         command: validate
         workingDirectory: $(System.DefaultWorkingDirectory)/azure/destroy_network_watchers
 
-    #- task: AzureCLI@2
-      #displayName: import NW RG
-      #inputs:
-        #azureSubscription: Azure
-        #scriptType: bash
-        #scriptLocation: inlineScript
-        #inlineScript: |
-          #cd $(System.DefaultWorkingDirectory)/azure/destroy_network_watchers
-          #RESOURCE_ID=$(terraform)
-          #terraform import azurerm_resource_group.rg /subscriptions/$(subscriptionId)/resourceGroups/NetworkWatcherRG
-
     - task: terraformCLI@0
       displayName: Terraform plan
       inputs:
         command: plan
+        workingDirectory: $(System.DefaultWorkingDirectory)/azure/destroy_network_watchers
+
+    - task: terraformCLI@0
+      displayName: Terraform apply
+      inputs:
+        command: apply
+        commandOptions: '-auto-approve'
         workingDirectory: $(System.DefaultWorkingDirectory)/azure/destroy_network_watchers
 
     - task: terraformCLI@0
