@@ -22,8 +22,8 @@ provider "azurerm" {
 }
 
 import {
-  to       = azurerm_resource_group.rg
-  id       = "/subscriptions/$(subscriptionId)/resourceGroups/NetworkWatcherRG"
+  to = azurerm_resource_group.rg
+  id = "/subscriptions/$(subscriptionId)/resourceGroups/NetworkWatcherRG"
 }
 
 resource "azurerm_resource_group" "rg" {
