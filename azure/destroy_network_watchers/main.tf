@@ -21,6 +21,12 @@ provider "azurerm" {
   }
 }
 
+imports {
+  to       = azurerm_resource_group.rg
+  id       = "/subscriptions/$(subscriptionId)/resourceGroups/NetworkWatcherRG"
+  provider = azurerm
+}
+
 resource "azurerm_resource_group" "rg" {
   name     = "NetworkWatcherRG"
   location = "eastus2"

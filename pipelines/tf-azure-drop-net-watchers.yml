@@ -28,6 +28,12 @@ stages:
         targetFiles: $(System.DefaultWorkingDirectory)/pipelines/tfToken.json
         tokenPattern: 'azpipelines'
 
+    - task: replaceTokens@5
+      displayName: Update subscription id
+      inputs:
+        targetFiles: $(System.DefaultWorkingDirectory)/azure/destroy_network_watchers/main.tf
+        tokenPattern: 'azpipelines'
+
     - bash: |
         cd $(System.DefaultWorkingDirectory)/azure/destroy_network_watchers/
         mv $(System.DefaultWorkingDirectory)/pipelines/tfToken.json /home/vsts/.terraform.d/credentials.tfrc.json
@@ -51,15 +57,16 @@ stages:
         command: validate
         workingDirectory: $(System.DefaultWorkingDirectory)/azure/destroy_network_watchers
 
-    - task: AzureCLI@2
-      displayName: import NW RG
-      inputs:
-        azureSubscription: Azure
-        scriptType: bash
-        scriptLocation: inlineScript
-        inlineScript: |
-          cd $(System.DefaultWorkingDirectory)/azure/destroy_network_watchers
-          terraform import azurerm_resource_group.rg /subscriptions/$(subscriptionId)/resourceGroups/NetworkWatcherRG
+    #- task: AzureCLI@2
+      #displayName: import NW RG
+      #inputs:
+        #azureSubscription: Azure
+        #scriptType: bash
+        #scriptLocation: inlineScript
+        #inlineScript: |
+          #cd $(System.DefaultWorkingDirectory)/azure/destroy_network_watchers
+          #RESOURCE_ID=$(terraform)
+          #terraform import azurerm_resource_group.rg /subscriptions/$(subscriptionId)/resourceGroups/NetworkWatcherRG
 
     - task: terraformCLI@0
       displayName: Terraform destroy
