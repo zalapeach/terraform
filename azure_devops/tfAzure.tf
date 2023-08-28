@@ -34,9 +34,10 @@ resource "azurerm_key_vault_access_policy" "access" {
   ]
 }
 
-resource "azurerm_key_vault_secret" "secrettftoken" {
-  name         = "tf-token"
-  value        = var.env_tfe_token
+resource "azurerm_key_vault_secret" "secrets" {
+  for_each     = local.secrets
+  name         = each.key
+  value        = each.value
   key_vault_id = azurerm_key_vault.kv.id
 
   depends_on = [

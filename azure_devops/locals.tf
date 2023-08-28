@@ -88,4 +88,8 @@ locals {
     data.azuread_client_config.current.object_id,
     azuread_service_principal.sp.object_id
   ]
+  secrets = {
+    tfToken = var.env_tfe_token,
+    subscriptionId = var.env_arm_subscription_id
+  }
 }
