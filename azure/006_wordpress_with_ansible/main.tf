@@ -288,7 +288,7 @@ resource "azurerm_virtual_machine_extension" "agent" {
       "fileUris": [
         "https://raw.githubusercontent.com/zalapeach/terraform/master/azure/006_wordpress_with_ansible/scripts/agent.sh"
         ],
-      "commandToExecute": "sh agent.sh ${data.external.env.result["azure_devops_pat"]} ${data.external.env.result["azure_devops_org"]} ${var.azure_client_id} ${var.azure_client_secret} ${var.azure_tenant_id}"
+      "commandToExecute": "sh agent.sh ${data.external.env.result["azure_devops_pat"]} ${data.external.env.result["azure_devops_org"]} ${data.external.env.result["azure_app_id"]} ${data.external.env.result["azure_app_secret"]} ${data.external.env.result["azure_app_tenant"]}"
     }
 SETTINGS
 
