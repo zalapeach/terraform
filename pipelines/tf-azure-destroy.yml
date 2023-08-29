@@ -33,7 +33,7 @@ stages:
       inputs:
         connectedServiceName: Azure
         keyVaultName: $(keyVaultName)
-        secretsFilter: tf-token
+        secretsFilter: tfToken
         runAsPreJob: true
 
     - task: terraformInstaller@0
