@@ -4,8 +4,9 @@ APPID=$3
 SECRET=$4
 TENANT=$5
 sudo apt update
-sudo apt upgrade -y
-sudo apt install ansible azure-cli -y
+sudo apt upgrade
+sudo apt install ansible -y
+curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 sudo az login --service-principal -u $APPID -p $SECRET --tenant $TENANT
 sudo wget https://vstsagentpackage.azureedge.net/agent/3.225.0/vsts-agent-linux-x64-3.225.0.tar.gz
 sudo tar zxvf ./vsts-agent-linux-x64-2.188.4.tar.gz
