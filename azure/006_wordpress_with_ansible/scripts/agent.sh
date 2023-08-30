@@ -7,7 +7,7 @@ sudo apt update
 sudo apt upgrade -y
 sudo apt install ansible azure-cli -y
 sudo az login --service-principal -u $APPID -p $SECRET --tenant $TENANT
-sudo cp ./agent /home/zala/.ssh/id_rsa
+#sudo cp ./agent /home/zala/.ssh/id_rsa
 #sudo cp ./agent.pub /home/zala/.ssh/id_rsa.pub
 #sudo mv ./agent /root/.ssh/id_rsa
 #sudo mv ./agent.pub /root.ssh/id_rsa.pub
