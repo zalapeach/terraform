@@ -13,3 +13,16 @@ stages:
   - job: destroy
     steps:
     - checkout: none
+
+    - task: azureKeyVault@2
+      displayName: Retrieve secrets
+      inputs:
+        connectedServiceName: Azure
+        keyVaultName: $(keyVaultName)
+        secretsFilter: azdoPat
+        runAsPreJob: true
+
+    - bash: |
+        BASEURL="dev.azure.com/JuanAguilar"
+        curl -u :$(azdoPat) "https://dev.azure.com/JuanAguilar0507/Terraform/_apis/distributedtask/queues?queueNames=SelfHosted&api-version=7.0"
+      displayName: Remove agent

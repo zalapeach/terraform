@@ -73,11 +73,6 @@ locals {
           name   = "keyVaultName"
           value  = azurerm_key_vault.kv.name
           secret = false
-        },
-        {
-          name   = "subscriptionId"
-          value  = var.env_arm_subscription_id
-          secret = false
         }
       ]
     },
@@ -90,6 +85,7 @@ locals {
   ]
   secrets = {
     tfToken = var.env_tfe_token,
-    subscriptionId = var.env_arm_subscription_id
+    subscriptionId = var.env_arm_subscription_id,
+    azdoPat = var.env_azdo_pat
   }
 }
