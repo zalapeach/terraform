@@ -1,0 +1,15 @@
+resources:
+  pipelines:
+  - pipeline: 'Terraform destroy infra'
+    source:
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+- stage: agent
+
+  jobs:
+  - job: destroy
+    steps:
+    - checkout: none
