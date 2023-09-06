@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: redis-deploy
+  name: postgres-deploy
   labels:
     name: postgres-deploy
     app: voting-app
