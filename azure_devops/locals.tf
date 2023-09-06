@@ -1,6 +1,6 @@
 locals {
   workspaces = ["azdo", "netWatch", "Az001", "Az002", "Az003", "Az004", "Az005", "Az006", "Az007",
-  "Az008", "Az009", "Az010", "Az011", "Az100", "Az101", "Az102", "Az103"]
+  "Az008", "Az009", "Az010", "Az011", "Az100", "Az101", "Az102", "Az103"],
   variables = {
     ARM_CLIENT_ID = {
       value       = azuread_application.app.application_id
@@ -42,15 +42,15 @@ locals {
       value       = var.org_email1
       description = "personal email 2"
     }
-  }
+  },
   pipelines = [
     {
       name = "Terraform create - update infra",
       path = "pipelines/tf-azure-create.yml",
       variables = [
         {
-          name   = "keyVaultName"
-          value  = azurerm_key_vault.kv.name
+          name   = "keyVaultName",
+          value  = azurerm_key_vault.kv.name,
           secret = false
         }
       ]
@@ -59,8 +59,8 @@ locals {
       path = "pipelines/tf-azure-destroy.yml",
       variables = [
         {
-          name   = "keyVaultName"
-          value  = azurerm_key_vault.kv.name
+          name   = "keyVaultName",
+          value  = azurerm_key_vault.kv.name,
           secret = false
         }
       ]
@@ -70,19 +70,35 @@ locals {
       path = "pipelines/tf-azure-drop-net-watchers.yml",
       variables = [
         {
-          name   = "keyVaultName"
-          value  = azurerm_key_vault.kv.name
+          name   = "keyVaultName",
+          value  = azurerm_key_vault.kv.name,
           secret = false
         }
       ]
     },
-    { name = "Ansible configure - example 006"
+    {
+      name = "Drop offline agents",
+      path = "pipelines/azdo-drop-agents.yml",
+      variables = [
+        {
+          name   = "keyVaultName",
+          value  = azurerm_key_vault.kv.name,
+          secret = false
+        },
+        {
+          name   = "azdoUrl",
+          value  = var.env_azdo_url,
+          secret = false
+        }
+      ]
+    },
+    { name = "Ansible configure - example 006",
     path = "pipelines/ansible-configure.yml" }
-  ]
+  ],
   users = [
     data.azuread_client_config.current.object_id,
     azuread_service_principal.sp.object_id
-  ]
+  ],
   secrets = {
     tfToken = var.env_tfe_token,
     subscriptionId = var.env_arm_subscription_id,
