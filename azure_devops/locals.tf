@@ -89,6 +89,16 @@ locals {
           name   = "azdoUrl",
           value  = var.env_azdo_url,
           secret = false
+        },
+        {
+          name   = "projectName",
+          value  = azuredevops_project.project.name,
+          secret = false
+        },
+        {
+          name   = "poolName",
+          value  = azuredevops_agent_pool.agentPool.name,
+          secret = false
         }
       ]
     },

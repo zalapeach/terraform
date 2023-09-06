@@ -23,6 +23,6 @@ stages:
         runAsPreJob: true
 
     - bash: |
-        BASEURL="dev.azure.com/JuanAguilar"
-        curl -u :$(azdoPat) "https://dev.azure.com/JuanAguilar0507/Terraform/_apis/distributedtask/queues?queueNames=SelfHosted&api-version=7.0"
+        PATH="/Terraform"
+        curl -u :$(azdoPat) "$(azdoUrl)/Terraform/_apis/distributedtask/queues?queueNames=SelfHosted&api-version=7.0"
       displayName: Remove agent
