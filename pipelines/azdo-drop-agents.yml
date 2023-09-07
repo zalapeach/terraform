@@ -32,4 +32,16 @@ stages:
         RESPONSE=$(curl -u :$(azdoPat) "$(azdoUrl)$GET_AGENTS_PATH")
         OFFLINE_AGENTS_IDS=$(echo $RESPONSE | jq '[.value[] | select(.status != "online" ) | .id]')
         echo "Agent offline IDS is $OFFLINE_AGENTS_IDS"
+        if [[-v OFFLINE_AGENTS_IDS ]]
+        then
+          echo "variable has value"
+        else
+          echo "variable has not value"
+        fi
+        for i in $OFFLINE_AGENTS_IDS
+        do
+          DELETE_AGENT_PATH="/_apis/distributedtask/pools/$POOL_ID/agents/$i?api-version=7.0"
+          RESPONSE=$(curl -X DELETE -u :$(azdoPat) "$(azdoUrl)$DELETE_AGENT_PATH")
+          echo $RESPONSE
+        done
       displayName: Remove agent
