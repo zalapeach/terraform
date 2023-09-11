@@ -20,7 +20,7 @@ parameters:
   - 103_k8s_alerts
 
 stages:
-- stage: Terraform_${ parameters.example }
+- stage: Terraform_${{ parameters.example }}
 
   pool:
     vmImage: ubuntu-latest
