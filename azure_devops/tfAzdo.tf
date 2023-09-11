@@ -41,6 +41,7 @@ resource "azuredevops_build_definition" "pipelines" {
     repo_type             = "GitHub"
     repo_id               = "zalapeach/terraform"
     yml_path              = local.pipelines[count.index].path
+    branch_name           = "refs/heads/master"
   }
 
   dynamic "variable" {
