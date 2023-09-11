@@ -3,7 +3,9 @@ resources:
   - pipeline: TFdestroy
     source: Terraform destroy infra
     project: Terraform
-    trigger: true
+    trigger:
+      stages:
+      - Terraform_006_wordpress_with_ansible
 
 trigger: none
 
