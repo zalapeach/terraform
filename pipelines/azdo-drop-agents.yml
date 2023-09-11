@@ -1,7 +1,7 @@
 resources:
   pipelines:
-  - pipeline: 'Terraform destroy infra'
-    source: 'tf-azure-destroy'
+  - pipeline: TFdestroy
+    source: tf-azure-destroy
     project: Terraform
     trigger:
       stages:
