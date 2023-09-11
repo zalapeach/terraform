@@ -1,7 +1,10 @@
-#resources:
-  #pipelines:
-  #- pipeline: 'Terraform destroy infra'
-    #source:
+resources:
+  pipelines:
+  - pipeline: 'Terraform destroy infra'
+    source: 'tf-azure-destroy'
+    trigger:
+      stages:
+      - Terraform_006_wordpress_with_ansible
 
 trigger: none
 
