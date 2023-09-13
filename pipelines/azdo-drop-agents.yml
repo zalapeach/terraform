@@ -36,7 +36,7 @@ stages:
         GET_AGENTS_PATH="/_apis/distributedtask/pools/$POOL_ID/agents?api-version=7.0"
         RESPONSE=$(curl -u :$(azdoPat) "$(azdoUrl)$GET_AGENTS_PATH")
         OFFLINE_AGENTS_IDS=$(echo $RESPONSE | jq '.value[] | select(.status != "online" ) | .id')
-        if [[ -z "$OFFLINE_AGENTS_IDS" ]]
+        if [[ $OFFLINE_AGENTS_IDS == "" ]]
         then
           echo "==================="
           echo "Agent offline IDS is $OFFLINE_AGENTS_IDS"
