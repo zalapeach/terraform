@@ -44,9 +44,9 @@ stages:
             RESPONSE=$(curl -X DELETE -u :$(azdoPat) "$(azdoUrl)$DELETE_AGENT_PATH")
             echo $RESPONSE
           done
-          return 0
+          exit 0
         else
           echo "No agents offline, skipping"
-          return 0
+          exit 0
         fi
       displayName: Remove agent
