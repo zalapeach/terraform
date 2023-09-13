@@ -39,6 +39,10 @@ stages:
         if [[ $OFFLINE_AGENTS_IDS == "" ]]
         then
           echo "==================="
+          echo "No agents offline, skipping"
+          exit 0
+        else
+          echo "==================="
           echo "Agent offline IDS is $OFFLINE_AGENTS_IDS"
           for i in $OFFLINE_AGENTS_IDS
           do
@@ -48,10 +52,6 @@ stages:
             echo "Deleted agent with Id: $i"
             echo $RESPONSE
           done
-          exit 0
-        else
-          echo "==================="
-          echo "No agents offline, skipping"
           exit 0
         fi
       displayName: Remove agent
