@@ -31,21 +31,26 @@ stages:
     - bash: |
         GET_AGENT_POOL_PATH="/$(projectName)/_apis/distributedtask/queues?queueNames=$(poolName)&api-version=7.0"
         POOL_ID=$(curl -u :$(azdoPat) "$(azdoUrl)$GET_AGENT_POOL_PATH" | jq '.value[0].pool.id')
+        echo "==================="
         echo "Pool ID is $POOL_ID"
         GET_AGENTS_PATH="/_apis/distributedtask/pools/$POOL_ID/agents?api-version=7.0"
         RESPONSE=$(curl -u :$(azdoPat) "$(azdoUrl)$GET_AGENTS_PATH")
         OFFLINE_AGENTS_IDS=$(echo $RESPONSE | jq '.value[] | select(.status != "online" ) | .id')
-        echo "Agent offline IDS is $OFFLINE_AGENTS_IDS"
-        if [[-v OFFLINE_AGENTS_IDS ]]
+        if [[ -v OFFLINE_AGENTS_IDS ]]
         then
+          echo "==================="
+          echo "Agent offline IDS is $OFFLINE_AGENTS_IDS"
           for i in $OFFLINE_AGENTS_IDS
           do
             DELETE_AGENT_PATH="/_apis/distributedtask/pools/$POOL_ID/agents/$i?api-version=7.0"
             RESPONSE=$(curl -X DELETE -u :$(azdoPat) "$(azdoUrl)$DELETE_AGENT_PATH")
+            echo "==================="
+            echo "Deleted agent with Id: $i"
             echo $RESPONSE
           done
           exit 0
         else
+          echo "==================="
           echo "No agents offline, skipping"
           exit 0
         fi
