@@ -38,14 +38,15 @@ stages:
         echo "Agent offline IDS is $OFFLINE_AGENTS_IDS"
         if [[-v OFFLINE_AGENTS_IDS ]]
         then
-          echo "variable has value"
+          for i in $OFFLINE_AGENTS_IDS
+          do
+            DELETE_AGENT_PATH="/_apis/distributedtask/pools/$POOL_ID/agents/$i?api-version=7.0"
+            RESPONSE=$(curl -X DELETE -u :$(azdoPat) "$(azdoUrl)$DELETE_AGENT_PATH")
+            echo $RESPONSE
+          done
+          return 0
         else
-          echo "variable has not value"
+          echo "No agents offline, skipping"
+          return 0
         fi
-        for i in $OFFLINE_AGENTS_IDS
-        do
-          DELETE_AGENT_PATH="/_apis/distributedtask/pools/$POOL_ID/agents/$i?api-version=7.0"
-          RESPONSE=$(curl -X DELETE -u :$(azdoPat) "$(azdoUrl)$DELETE_AGENT_PATH")
-          echo $RESPONSE
-        done
       displayName: Remove agent
