@@ -2,8 +2,7 @@ trigger: none
 
 pool:
   name: SelfHosted
-  demands:
-  - agent.OS -equal Linux
+  demands: Linux
 
 variables:
   ansibleFolder: $(System.DefaultWorkingDirectory)/azure/006_wordpress_with_ansible/ansible
