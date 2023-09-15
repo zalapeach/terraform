@@ -15,7 +15,7 @@ stages:
   - job: apply
     steps:
     - bash: |
-        APP_GTW_IP=$(az network public-ip show -n WordPressIP -g resourceGroup066 --query '{ipAddress:ipAddress}' --output tsv)
+        APP_GTW_IP=$(az network public-ip show -n WordPressIP -g resourceGroup006 --query '{ipAddress:ipAddress}' --output tsv)
         echo "##vso[task.setvariable ip=APP_GTW_IP]$APP_GTW_IP"
 
     - task: Ansible@0
