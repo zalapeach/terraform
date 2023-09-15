@@ -3,5 +3,5 @@ include_vm_resource_groups:
 - azdevopsRG
 auth_source: auto
 conditional_groups:
-  dbs: "'db' in tags.env"
-  vms: "'vm' in tags.env"
+  dbs: "'back-db' in tags.env"
+  vms: "'front-vm' in tags.env"
