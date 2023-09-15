@@ -1,6 +1,6 @@
 plugin: azure_rm
 include_vm_resource_groups:
-- azdevopsRG
+- resourceGroup006
 auth_source: auto
 conditional_groups:
   dbs: "'back-db' in tags.env"
