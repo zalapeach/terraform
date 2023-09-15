@@ -1,12 +1,29 @@
 trigger: none
 
 pool:
-  vmImage: ubuntu-latest
+  name: SelfHosted
+  demands:
+  - agent.OS -equal Linux
+
+variables:
+  ansibleFolder: $(System.DefaultWorkingDirectory)/azure/006_wordpress_with_ansible/ansible
+  inventoryFile: $(System.DefaultWorkingDirectory)/azure/006_wordpress_with_ansible/ansible/inventory.yml
 
 stages:
-- stage: demo
+- stage: Ansible
 
   jobs:
-  - job: demo
+  - job: apply
     steps:
-    - checkout: none
+    - bash: |
+        APP_GTW_IP=$(az network public-ip show -n WordPressIP -g resourceGroup066 --query '{ipAddress:ipAddress}' --output tsv)
+        echo "##vso[task.setvariable ip=APP_GTW_IP]$APP_GTW_IP"
+
+    - task: Ansible@0
+      displayName: Update/Upgrade vms
+      inputs:
+        ansibleInterface: agentMachine
+        playbookPathOnAgentMachine: $(ansibleFolder)/playbook_init.yml
+        inventoriesAgentMachine: file
+        inventoryFileOnAgentMachine: $(inventoryFile)
+        sudoEnabled: true
