@@ -7,9 +7,11 @@ SECRET=$4
 TENANT=$5
 apt update
 apt upgrade
-apt install ansible -y
 curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 az login --service-principal -u $APPID -p $SECRET --tenant $TENANT
+apt install python3 -y
+apt install python3-pip -y
+python3 -m pip install ansible
 mkdir /myagent
 cd /myagent
 wget https://vstsagentpackage.azureedge.net/agent/3.225.0/vsts-agent-linux-x64-3.225.0.tar.gz
