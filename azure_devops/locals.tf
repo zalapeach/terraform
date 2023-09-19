@@ -47,71 +47,46 @@ locals {
     {
       name = "Terraform create - update infra",
       path = "pipelines/tf-azure-create.yml",
-      variables = [
-        {
-          name   = "keyVaultName",
-          value  = azurerm_key_vault.kv.name,
-          secret = false
-        }
-      ]
     },
     { name = "Terraform destroy infra",
       path = "pipelines/tf-azure-destroy.yml",
-      variables = [
-        {
-          name   = "keyVaultName",
-          value  = azurerm_key_vault.kv.name,
-          secret = false
-        }
-      ]
     },
     {
       name = "Terraform destroy - Network watchers",
       path = "pipelines/tf-azure-drop-net-watchers.yml",
-      variables = [
-        {
-          name   = "keyVaultName",
-          value  = azurerm_key_vault.kv.name,
-          secret = false
-        }
-      ]
     },
     {
       name = "Drop offline agents",
       path = "pipelines/azdo-drop-agents.yml",
       variables = [
         {
-          name   = "keyVaultName",
-          value  = azurerm_key_vault.kv.name,
-          secret = false
+          name  = "azdoUrl",
+          value = var.env_azdo_url,
         },
         {
-          name   = "azdoUrl",
-          value  = var.env_azdo_url,
-          secret = false
+          name  = "projectName",
+          value = azuredevops_project.project.name,
         },
         {
-          name   = "projectName",
-          value  = azuredevops_project.project.name,
-          secret = false
-        },
-        {
-          name   = "poolName",
-          value  = azuredevops_agent_pool.agentPool.name,
-          secret = false
+          name  = "poolName",
+          value = azuredevops_agent_pool.agentPool.name,
         }
       ]
     },
     { name = "Ansible configure - example 006",
-    path = "pipelines/ansible-configure.yml" }
+      path = "pipelines/ansible-configure.yml"
+    }
   ]
   users = [
     data.azuread_client_config.current.object_id,
     azuread_service_principal.sp.object_id
   ]
   secrets = {
-    tfToken = var.env_tfe_token,
+    tfToken        = var.env_tfe_token,
     subscriptionId = var.env_arm_subscription_id,
-    azdoPat = var.env_azdo_pat
+    azdoPat        = var.env_azdo_pat,
+    appId          = azuread_application.app.application_id,
+    appSecret      = azuread_service_principal_password.pwd.value,
+    appTenant      = var.env_arm_subscription_id
   }
 }

@@ -44,12 +44,17 @@ resource "azuredevops_build_definition" "pipelines" {
     branch_name           = "refs/heads/master"
   }
 
+  variable {
+    name  = "keyVaultName"
+    value = azurerm_key_vault.kv.name
+  }
+
   dynamic "variable" {
     for_each = try(local.pipelines[count.index].variables, [])
     content {
       name           = variable.value["name"]
       value          = variable.value["value"]
-      is_secret      = variable.value["secret"]
+      is_secret      = try(variable.value["secret"], false)
       allow_override = false
     }
   }
