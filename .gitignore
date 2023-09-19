@@ -17,3 +17,5 @@ credentials.sh
 hashicorp.gpg
 
 kubernetes/k8sCluster
+
+ssh_private
