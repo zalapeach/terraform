@@ -87,6 +87,6 @@ locals {
     azdoPat        = var.env_azdo_pat,
     appId          = azuread_application.app.application_id,
     appSecret      = azuread_service_principal_password.pwd.value,
-    appTenant      = var.env_arm_subscription_id
+    appTenant      = var.env_arm_tenant_id
   }
 }
