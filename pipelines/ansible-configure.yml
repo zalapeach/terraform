@@ -23,8 +23,10 @@ stages:
         runAsPreJob: true
 
     - bash: |
+        CREDENTIALS=/home/zala/.azure/credentials
+        whoami
         echo $HOME
-        echo "[default]" > "$HOME/.azure/credentials"
+        echo "[default]" > "$CREDENTIALS"
         echo "subscription_id=$(subscriptionId)" >> "$HOME/.azure/credentials"
         echo "client_id=$(appId)" >> "$HOME/.azure/credentials"
         echo "secret=$(appSecret)" >> "$HOME/.azure/credentials"

@@ -9,6 +9,7 @@ apt update
 apt upgrade
 curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 az login --service-principal -u $APPID -p $SECRET --tenant $TENANT
+apt install plocate
 apt install python3 -y
 apt install python3-pip -y
 python3 -m pip install ansible
