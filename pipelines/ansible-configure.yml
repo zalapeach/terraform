@@ -6,7 +6,7 @@ pool:
 
 variables:
   ansibleFolder: $(System.DefaultWorkingDirectory)/azure/006_wordpress_with_ansible/ansible
-  inventoryFile: $(System.DefaultWorkingDirectory)/azure/006_wordpress_with_ansible/ansible/inventory.yml
+  inventoryFile: $(ansibleFolder)/inventory_azure_rm.yml
 
 stages:
 - stage: Ansible
