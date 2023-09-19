@@ -13,6 +13,7 @@ stages:
 
   jobs:
   - job: apply
+    steps:
     - task: azureKeyVault@2
       displayName: Retrieve secrets
       inputs:
