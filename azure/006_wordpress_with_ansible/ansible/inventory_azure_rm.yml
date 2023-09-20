@@ -1,7 +1,7 @@
 plugin: azure_rm
 include_vm_resource_groups:
 - resourceGroup006
-auth_source: credential_file
+auth_source: env
 conditional_groups:
   dbs: "'back-db' in tags.env"
   vms: "'front-vm' in tags.env"
