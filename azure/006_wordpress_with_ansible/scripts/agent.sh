@@ -13,6 +13,7 @@ apt install plocate
 apt install python3 -y
 apt install python3-pip -y
 python3 -m pip install ansible
+python3 -m pip install -r https://raw.githubusercontent.com/ansible-collections/azure/dev/requirements-azure.txt
 mkdir /myagent
 cd /myagent
 wget https://vstsagentpackage.azureedge.net/agent/3.225.0/vsts-agent-linux-x64-3.225.0.tar.gz
