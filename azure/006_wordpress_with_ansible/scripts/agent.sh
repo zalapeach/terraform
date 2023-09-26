@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 PAT=$1
 ORG=$2
@@ -16,7 +16,7 @@ runuser -l zala -c "python3 -m pip install ansible"
 runuser -l zala -c "python3 -m pip install -r https://raw.githubusercontent.com/ansible-collections/azure/dev/requirements-azure.txt"
 runuser -l zala -c "mkdir /home/zala/myagent"
 runuser -l zala -c "cd /home/zala/myagent"
-runuser -l zala -c "wget -P https://vstsagentpackage.azureedge.net/agent/3.225.0/vsts-agent-linux-x64-3.225.0.tar.gz"
+runuser -l zala -c "wget https://vstsagentpackage.azureedge.net/agent/3.225.0/vsts-agent-linux-x64-3.225.0.tar.gz"
 runuser -l zala -c "tar zxvf ./vsts-agent-linux-x64-3.225.0.tar.gz"
 runuser -l zala -c "./config.sh --unattended --url ${ORG} --auth pat --token ${PAT} --pool SelfHosted"
 runuser -l zala -c "echo /home/zala/.local/bin:$PATH > ./.path"
