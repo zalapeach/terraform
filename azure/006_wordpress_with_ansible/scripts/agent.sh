@@ -19,6 +19,6 @@ runuser -l zala -c "wget -P /home/zala/myagent https://vstsagentpackage.azureedg
 runuser -l zala -c "tar zxvf /home/zala/myagent/vsts-agent-linux-x64-3.225.0.tar.gz -C /home/zala/myagent"
 runuser -l zala -c "/home/zala/myagent/config.sh --unattended --url ${ORG} --auth pat --token ${PAT} --pool SelfHosted"
 runuser -l zala -c "echo /home/zala/.local/bin:$PATH > /home/zala/myagent/.path"
-runuser -l zala -c "sudo /home/zala/myagent/svc.sh install"
-runuser -l zala -c "sudo /home/zala/myagent/svc.sh start"
+runuser -l zala -c "cd myagent/; sudo ./svc.sh install"
+runuser -l zala -c "cd myagent/; sudo ./svc.sh start"
 exit 0
