@@ -45,6 +45,7 @@ stages:
         workingDirectory: $(System.DefaultWorkingDirectory)/azure/006_wordpress_with_ansible
 
     - bash: |
+        cd $(basePath)
         echo "$(terraform output -raw tls_private_key)" > $(ansibleFolder)/ssh_private
         chmod 400 $(ansibleFolder)/ssh_private
         APP_GTW_IP=$(terraform output -raw appgtw_public_ip)
