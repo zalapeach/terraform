@@ -41,7 +41,6 @@ stages:
         workingDirectory: $(System.DefaultWorkingDirectory)/azure/006_wordpress_with_ansible
 
     - bash: |
-        cd $(System.DefaultWorkingDirectory)/azure/${{ parameters.example }}/
         mv $(System.DefaultWorkingDirectory)/pipelines/tfToken.json /home/vsts/.terraform.d/credentials.tfrc.json
       displayName: Terraform login
 
