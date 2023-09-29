@@ -35,7 +35,7 @@ stages:
         tokenPattern: 'azpipelines'
 
     - bash: |
-        mv $(System.DefaultWorkingDirectory)/pipelines/tfToken.json /home/vsts/.terraform.d/credentials.tfrc.json
+        mv $(System.DefaultWorkingDirectory)/pipelines/tfToken.json /home/zala/.terraform.d/credentials.tfrc.json
       displayName: Terraform login
 
     - task: terraformCLI@0
