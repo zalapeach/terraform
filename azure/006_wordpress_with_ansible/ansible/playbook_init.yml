@@ -4,6 +4,7 @@
 
   vars:
     ansible_user: zala
+    ansible_ssh_private_key_file: ./ssh_private
 
   tasks:
   - name: run ping
