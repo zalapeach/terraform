@@ -56,6 +56,12 @@ stages:
     - bash: |
         ansible-inventory -i $(inventoryFile) --graph
         ansible-playbook -i $(inventoryFile) $(ansibleFolder)/playbook_init.yml
+      env:
+        AZURE_SUBSCRIPTION_ID: $(subscriptionId)
+        AZURE_CLIENT_ID: $(appId)
+        AZURE_SECRET: $(appSecret)
+        AZURE_TENANT: $(appTenant)
+        ANSIBLE_HOST_KEY_CHECKING: False
 
     #- task: Ansible@0
       #displayName: Update/Upgrade vms
