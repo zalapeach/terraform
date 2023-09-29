@@ -5,7 +5,7 @@ pool:
   demands: Agent.OS -equals Linux
 
 variables:
-  basePath: $(System.DefaultWorkingDirectory)/azure/006_wordpress_work_ansible/
+  basePath: $(System.DefaultWorkingDirectory)/azure/006_wordpress_with_ansible
   ansibleFolder: $(basePath)/ansible
   inventoryFile: $(ansibleFolder)/inventory_azure_rm.yml
 
