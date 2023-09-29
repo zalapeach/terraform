@@ -20,7 +20,7 @@ stages:
       inputs:
         connectedServiceName: Azure
         keyVaultName: $(keyVaultName)
-        secretsFilter: appId,appSecret,appTenant,subscriptionId
+        secretsFilter: appId,appSecret,appTenant,subscriptionId,tfToken
         runAsPreJob: true
 
     - task: terraformInstaller@0
