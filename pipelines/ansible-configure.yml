@@ -58,7 +58,7 @@ stages:
       # check routes of scripts, this could be the clue
     - bash: |
         pwd
-        cat $(ansibleFolder)/playbook_init
+        cat $(ansibleFolder)/playbook_init.yml
         ansible-inventory -i $(inventoryFile) --graph
         ansible-playbook -i $(inventoryFile) $(ansibleFolder)/playbook_init.yml
       env:
