@@ -75,7 +75,7 @@ stages:
         playbookPathOnAgentMachine: $(ansibleFolder)/playbook_init.yml
         inventoriesAgentMachine: file
         inventoryFileOnAgentMachine: $(inventoryFile)
-        #sudoEnabled: true
+        sudoEnabled: true
       env:
         AZURE_SUBSCRIPTION_ID: $(subscriptionId)
         AZURE_CLIENT_ID: $(appId)
