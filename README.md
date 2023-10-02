@@ -40,5 +40,5 @@ export TF_VAR_org_email="personal1@email.com"
 export TF_VAR_org_email1="personal2@email.com"
 ```
 
-11. export variables from `credentials.sh` with source `./credentials.sh`
+11. export variables from `credentials.sh` with `source ./credentials.sh`
 12. Apply changes with terraform, in case of errors resolve them.
