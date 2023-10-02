@@ -56,29 +56,29 @@ stages:
       displayName: Get AppGtw public IP & private SSH key
 
       # check routes of scripts, this could be the clue
-    - bash: |
-        pwd
-        cat $(ansibleFolder)/playbook_init.yml
-        ansible-inventory -i $(inventoryFile) --graph
-        ansible-playbook -i $(inventoryFile) $(ansibleFolder)/playbook_init.yml
-      env:
-        AZURE_SUBSCRIPTION_ID: $(subscriptionId)
-        AZURE_CLIENT_ID: $(appId)
-        AZURE_SECRET: $(appSecret)
-        AZURE_TENANT: $(appTenant)
-        ANSIBLE_HOST_KEY_CHECKING: False
-
-    #- task: Ansible@0
-      #displayName: Update/Upgrade vms
-      #inputs:
-        #ansibleInterface: agentMachine
-        #playbookPathOnAgentMachine: $(ansibleFolder)/playbook_init.yml
-        #inventoriesAgentMachine: file
-        #inventoryFileOnAgentMachine: $(inventoryFile)
-        #sudoEnabled: true
+    #- bash: |
+        #pwd
+        #cat $(ansibleFolder)/playbook_init.yml
+        #ansible-inventory -i $(inventoryFile) --graph
+        #ansible-playbook -i $(inventoryFile) $(ansibleFolder)/playbook_init.yml
       #env:
         #AZURE_SUBSCRIPTION_ID: $(subscriptionId)
         #AZURE_CLIENT_ID: $(appId)
         #AZURE_SECRET: $(appSecret)
         #AZURE_TENANT: $(appTenant)
         #ANSIBLE_HOST_KEY_CHECKING: False
+
+    - task: Ansible@0
+      displayName: Update/Upgrade vms
+      inputs:
+        ansibleInterface: agentMachine
+        playbookPathOnAgentMachine: $(ansibleFolder)/playbook_init.yml
+        inventoriesAgentMachine: file
+        inventoryFileOnAgentMachine: $(inventoryFile)
+        #sudoEnabled: true
+      env:
+        AZURE_SUBSCRIPTION_ID: $(subscriptionId)
+        AZURE_CLIENT_ID: $(appId)
+        AZURE_SECRET: $(appSecret)
+        AZURE_TENANT: $(appTenant)
+        ANSIBLE_HOST_KEY_CHECKING: False
