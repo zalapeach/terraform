@@ -66,6 +66,7 @@ stages:
         AZURE_CLIENT_ID: $(appId)
         AZURE_SECRET: $(appSecret)
         AZURE_TENANT: $(appTenant)
+        ANSIBLE_HOST_KEY_CHECKING: False
 
     #- task: Ansible@0
       #displayName: Update/Upgrade vms
