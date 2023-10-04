@@ -10,3 +10,13 @@ output "client_id" {
 output "azure_key_vault_name" {
   value = azurerm_key_vault.kv.name
 }
+
+output "database_password" {
+  value     = random_password.password.0.result
+  sensitive = true
+}
+
+output "wordpress_password" {
+  value     = random_password.password.1.result
+  sensitive = true
+}

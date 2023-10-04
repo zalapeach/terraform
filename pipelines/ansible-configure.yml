@@ -55,18 +55,15 @@ stages:
         echo "##vso[task.setvariable variable=APP_GTW_IP]$APP_GTW_IP"
       displayName: Get AppGtw public IP & private SSH key
 
-      # check routes of scripts, this could be the clue
-    #- bash: |
-        #pwd
-        #cat $(ansibleFolder)/playbook_init.yml
-        #ansible-inventory -i $(inventoryFile) --graph
-        #ansible-playbook -i $(inventoryFile) $(ansibleFolder)/playbook_init.yml
-      #env:
-        #AZURE_SUBSCRIPTION_ID: $(subscriptionId)
-        #AZURE_CLIENT_ID: $(appId)
-        #AZURE_SECRET: $(appSecret)
-        #AZURE_TENANT: $(appTenant)
-        #ANSIBLE_HOST_KEY_CHECKING: False
+    - bash: |
+        ansible-inventory -i $(inventoryFile) --graph
+      env:
+        AZURE_SUBSCRIPTION_ID: $(subscriptionId)
+        AZURE_CLIENT_ID: $(appId)
+        AZURE_SECRET: $(appSecret)
+        AZURE_TENANT: $(appTenant)
+        ANSIBLE_HOST_KEY_CHECKING: False
+      displayName: Validate inventory
 
     - task: Ansible@0
       displayName: Update/Upgrade vms
@@ -76,6 +73,22 @@ stages:
         inventoriesAgentMachine: file
         inventoryFileOnAgentMachine: $(inventoryFile)
         sudoEnabled: true
+      env:
+        AZURE_SUBSCRIPTION_ID: $(subscriptionId)
+        AZURE_CLIENT_ID: $(appId)
+        AZURE_SECRET: $(appSecret)
+        AZURE_TENANT: $(appTenant)
+        ANSIBLE_HOST_KEY_CHECKING: False
+
+    - task: Ansible@0
+      displayName: Preparing DB
+      inputs:
+        ansibleInterface: agentMachine
+        playbookPathOnAgentMachine: $(ansibleFolder)/playbook_dbs.yml
+        inventoriesAgentMachine: file
+        inventoryFileOnAgentMachine: $(inventoryFile)
+        sudoEnabled: true
+        args: '--extra-vars "db_pass=$(DB_PASS) db_user=$(DB_USER) db_name=$(DB_NAME)'
       env:
         AZURE_SUBSCRIPTION_ID: $(subscriptionId)
         AZURE_CLIENT_ID: $(appId)

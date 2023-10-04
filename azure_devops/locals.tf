@@ -74,7 +74,29 @@ locals {
       ]
     },
     { name = "Ansible configure - example 006",
-      path = "pipelines/ansible-configure.yml"
+      path = "pipelines/ansible-configure.yml",
+      variables = [
+        {
+          name  = "ansibleDbName",
+          value = "wordpress"
+        },
+        {
+          name  = "ansibleDbUser",
+          value = "zala"
+        },
+        {
+          name  = "ansibleDbPass",
+          value = random_password.password.0.result
+        },
+        {
+          name  = "ansibleWordpressUser",
+          value = "wordpress"
+        },
+        {
+          name  = "ansibleWordpressPass",
+          value = random_password.password.1.result
+        }
+      ]
     }
   ]
   users = [
@@ -87,6 +109,8 @@ locals {
     azdoPat        = var.env_azdo_pat,
     appId          = azuread_application.app.application_id,
     appSecret      = azuread_service_principal_password.pwd.value,
-    appTenant      = var.env_arm_tenant_id
+    appTenant      = var.env_arm_tenant_id,
+    ansibleDbPass  = random_password.password.0.result,
+    ansibleWpPass  = random_password.password.1.result
   }
 }
