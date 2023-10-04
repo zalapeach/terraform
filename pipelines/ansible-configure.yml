@@ -88,7 +88,7 @@ stages:
         inventoriesAgentMachine: file
         inventoryFileOnAgentMachine: $(inventoryFile)
         sudoEnabled: true
-        args: '--extra-vars "db_pass=$(DB_PASS) db_user=$(DB_USER) db_name=$(DB_NAME)'
+        args: '--extra-vars "db_pass=$(ansibleDbPass) db_user=$(ansibleDbUser) db_name=$(ansibleDbName)"'
       env:
         AZURE_SUBSCRIPTION_ID: $(subscriptionId)
         AZURE_CLIENT_ID: $(appId)

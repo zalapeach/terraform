@@ -1,5 +1,6 @@
 output "env" {
-  value = data.external.env.result
+  value     = data.external.env.result
+  sensitive = true
 }
 
 output "tls_private_key" {

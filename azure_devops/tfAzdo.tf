@@ -47,6 +47,7 @@ resource "azuredevops_build_definition" "pipelines" {
   variable {
     name  = "keyVaultName"
     value = azurerm_key_vault.kv.name
+    allow_override = false
   }
 
   dynamic "variable" {
@@ -55,7 +56,7 @@ resource "azuredevops_build_definition" "pipelines" {
       name           = variable.value["name"]
       value          = variable.value["value"]
       is_secret      = try(variable.value["secret"], false)
-      allow_override = false
+      allow_override = try(variable.value["override"], false)
     }
   }
 }
