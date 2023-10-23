@@ -37,6 +37,13 @@
         skip-network=0
         skip-bind-address
 
+  - name: Restart MariaDB
+    become: true
+    systemd:
+      name: mariadb
+      state: restarted
+      daemon_reload: yes
+
   - name: mariaDB root password
     become: true
     mysql_user:
