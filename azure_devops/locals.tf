@@ -83,7 +83,7 @@ locals {
         },
         {
           name     = "ansibleDbUser",
-          value    = "zala"
+          value    = "root"
           override = true
         },
         {

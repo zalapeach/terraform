@@ -34,6 +34,7 @@ stages:
         targetFiles: |
           $(System.DefaultWorkingDirectory)/pipelines/tfToken.json
           $(ansibleFolder)/playbook_init.yml
+          $(ansibleFolder)/playbook_dbs.yml
         tokenPattern: 'azpipelines'
 
     - bash: |
