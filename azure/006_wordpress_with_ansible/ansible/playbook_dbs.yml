@@ -27,6 +27,16 @@
       name: mariadb
       enabled: yes
 
+  - name: Edit /etc/mysql/my.cnf file
+    become: true
+    blockinfile:
+      path: /etc/mysql/.my.cnf
+      block: |
+        [mysqld]
+
+        skip-network=0
+        skip-bind-address
+
   - name: mariaDB root password
     become: true
     mysql_user:
