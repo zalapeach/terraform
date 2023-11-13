@@ -44,7 +44,7 @@
       state: restarted
       daemon_reload: yes
 
-  - name: mariaDB root password
+  - name: mariaDB admin password
     become: true
     mysql_user:
       name: "{{ db_user }}"
@@ -79,9 +79,9 @@
   - name: Allow db user to connect externally
     become: true
     mysql_user:
-      name: "{{ db_user }}"
-      password: "{{ db_pass }}"
-      #login_user: "{{ db_user }}"
+      #name: "{{ db_user }}"
+      #password: "{{ db_pass }}"
+      login_user: "{{ db_user }}"
       login_password: "{{ db_pass }}"
       priv: '*.*:ALL'
       host: '10.0.2.%'
