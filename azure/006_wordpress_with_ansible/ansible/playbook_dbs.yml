@@ -65,6 +65,7 @@
       login_user: "{{ db_user }}"
       login_password: "{{ db_pass }}"
       login_unix_socket: /var/run/mysqld/mysqld.sock
+      column_case_sensitive: true
 
   #- name: Edit /etc/mysql/my.cnf file
     #become: true
