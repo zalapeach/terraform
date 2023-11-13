@@ -79,12 +79,12 @@
   - name: Allow db user to connect externally
     become: true
     mysql_user:
-      name: "{{ db_user }}"
-      password: "{{ db_pass }}"
+      #name: "{{ db_user }}"
+      #password: "{{ db_pass }}"
       login_user: "{{ db_user }}"
       login_password: "{{ db_pass }}"
       priv: '*.*:ALL'
-      host_all: true
+      host: '10.0.2.%'
       column_case_sensitive: true
 
   #- name: Allow db user to connect externally
