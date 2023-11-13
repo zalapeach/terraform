@@ -51,8 +51,8 @@
       password: "{{ db_pass }}"
       host_all: true
       state: present
-      login_user: "{ db_user }"
-      login_password: "{ db_pass }"
+      login_user: "{{ db_user }}"
+      login_password: "{{ db_pass }}"
       login_unix_socket: /var/run/mysqld/mysqld.sock
 
   #- name: Edit /etc/mysql/my.cnf file
