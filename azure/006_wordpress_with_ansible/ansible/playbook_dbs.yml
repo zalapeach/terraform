@@ -56,6 +56,16 @@
       login_unix_socket: /var/run/mysqld/mysqld.sock
       column_case_sensitive: true
 
+  - name: no anonymous users
+    become: true
+    mysql_user:
+      name: ''
+      state: absent
+      host_all: true
+      login_user: "{{ db_user }}"
+      login_password: "{{ db_pass }}"
+      login_unix_socket: /var/run/mysqld/mysqld.sock
+
   #- name: Edit /etc/mysql/my.cnf file
     #become: true
     #blockinfile:
