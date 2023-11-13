@@ -79,7 +79,7 @@
   - name: Allow db user to connect externally
     become: true
     mysql_user:
-      #name: "{{ db_user }}"
+      name: "{{ db_user }}"
       #password: "{{ db_pass }}"
       login_user: "{{ db_user }}"
       login_password: "{{ db_pass }}"
