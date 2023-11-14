@@ -4,4 +4,4 @@ include_vm_resource_groups:
 auth_source: env
 conditional_groups:
   dbs: "'back-db' in tags.env"
-  vms: "'front-vm' in tags.env"
+  nodes: "'front-vm' in tags.env"

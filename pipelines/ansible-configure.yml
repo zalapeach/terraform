@@ -96,3 +96,18 @@ stages:
         AZURE_SECRET: $(appSecret)
         AZURE_TENANT: $(appTenant)
         ANSIBLE_HOST_KEY_CHECKING: False
+
+    - task: Ansible@0
+      displayName: Installing node tools
+      inputs:
+        ansibleInterface: agentMachine
+        playbookPathOnAgentMachine: $(ansibleFolder)/playbook_nodes.yml
+        inventoriesAgentMachine: file
+        inventoryFileOnAgentMachine: $(inventoryFile)
+        sudoEnabled: true
+      env:
+        AZURE_SUBSCRIPTION_ID: $(subscriptionId)
+        AZURE_CLIENT_ID: $(appId)
+        AZURE_SECRET: $(appSecret)
+        AZURE_TENANT: $(appTenant)
+        ANSIBLE_HOST_KEY_CHECKING: False

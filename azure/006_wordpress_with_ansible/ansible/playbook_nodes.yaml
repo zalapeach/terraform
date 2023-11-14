@@ -1,0 +1,38 @@
+---
+- hosts: nodes
+  gather_facts: false
+
+  vars:
+    ansible_user: zala
+    ansible_ssh_private_key_file: $(ansibleFolder)/ssh_private
+
+  tasks:
+  - name: Install required tools
+    become: true
+    apt:
+      pkg:
+      - apache2
+      - php
+      - php-mysql
+      - unzip
+      state: present
+
+  - name: Enable Apache
+    become: true
+    systemd:
+      name: apache2
+      state: started
+      enabled: true
+
+  - name: Restart Apache
+    become: true
+    systemd:
+      name: apache2
+      state: reloaded
+      enabled: true
+
+  - name: Copy php demo file
+    become: true
+    template:
+      src: ./info.php
+      dest: /var/www/html/info.php
