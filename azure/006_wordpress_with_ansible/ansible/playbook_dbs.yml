@@ -25,6 +25,7 @@
     become: true
     systemd:
       name: mariadb
+      state: started
       enabled: yes
 
   - name: Edit /etc/mysql/my.cnf file

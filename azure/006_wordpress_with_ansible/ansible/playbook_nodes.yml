@@ -28,11 +28,38 @@
     become: true
     systemd:
       name: apache2
-      state: reloaded
-      enabled: true
+      state: restarted
+      daemon_reload: yes
 
   - name: Copy php demo file
     become: true
     template:
       src: ./info.php
       dest: /var/www/html/info.php
+
+  - name: Download and unzip Wordpress
+    become: true
+    unarchive:
+      src: https://wordpress.org/latest.zip
+      dest: /var/www/html/
+      remote_src: yes
+
+  - name: Create wp-config.php file
+    become: true
+    command:
+      cmd: cp wp-config-sample.php wp-config.php
+      chdir: /var/www/html/wordpress/
+      creates: wp-config.php
+
+  - name: Configure wp-config.php file
+    no_log: true
+    become: true
+    replace:
+      path: /var/www/html/wordpress/wp-config.php
+      regexp: '{{ item.from }}'
+      replace: '{{ item.to }}'
+    with_items:
+    - { from: 'database_name_here', to: '{{ db_name }}' }
+    - { from: 'username_here', to: '{{ db_user }}' }
+    - { from: 'password_here', to: '{{ db_pass }}' }
+    - { from: 'localhost', to: '{{ db_host }}' }
