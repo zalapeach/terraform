@@ -80,15 +80,10 @@
     become: true
     mysql_user:
       name: "{{ db_user }}"
-      #password: "{{ db_pass }}"
+      password: "{{ db_pass }}"
       login_user: "{{ db_user }}"
       login_password: "{{ db_pass }}"
       priv: '*.*:ALL'
       host: '10.0.2.%'
       column_case_sensitive: true
-
-  #- name: Allow db user to connect externally
-    #become: true
-    #command: 'mysql -u {{ db_user }} -p{{ db_pass }} -ne "{{ item }}"'
-    #with_items:
-      #- GRANT ALL PRIVILEGES ON *.* TO '{{ db_user }}'@'10.0.2.%' IDENTIFIED BY '{{ db_pass }}' WITH GRANT OPTION;
+      login_unix_socket: /var/run/mysqld/mysqld.sock
