@@ -53,9 +53,17 @@ stages:
         echo "$(terraform output -raw tls_private_key)" > $(ansibleFolder)/ssh_private
         chmod 400 $(ansibleFolder)/ssh_private
         APP_GTW_IP=$(terraform output -raw appgtw_public_ip)
-        echo "Public ip is $APP_GTW_IP"
+        echo "================================"
+        echo "Public IP is $APP_GTW_IP"
+        echo "================================"
+        IP=$(terraform output -json private_ips | jq ".\"back-db-02\"")
+        DB_PRIVATE_IP=${IP: 1 : -1}
+        echo "================================"
+        echo "Private IP for DB is $DB_PRIVATE_IP
+        echo "================================"
         echo "##vso[task.setvariable variable=APP_GTW_IP]$APP_GTW_IP"
-      displayName: Get AppGtw public IP & private SSH key
+        echo "##vso[task.setvariable variable=DB_PRIVATE_IP]$DB_PRIVATE_IP"
+      displayName: Get AppGtw public IP, DB Private IP & private SSH key
 
     - bash: |
         ansible-inventory -i $(inventoryFile) --graph
@@ -106,6 +114,7 @@ stages:
         inventoriesAgentMachine: file
         inventoryFileOnAgentMachine: $(inventoryFile)
         sudoEnabled: true
+        args: '--extra-vars "db_pass=$(ansibleDbPass) db_user=$(ansibleDbUser) db_name=$(ansibleDbName) db_host=$(DB_PRIVATE_IP)"'
       env:
         AZURE_SUBSCRIPTION_ID: $(subscriptionId)
         AZURE_CLIENT_ID: $(appId)
