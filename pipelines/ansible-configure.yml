@@ -56,6 +56,7 @@ stages:
         echo "================================"
         echo "Public IP is $APP_GTW_IP"
         echo "================================"
+        echo ""
         IP=$(terraform output -json private_ips | jq ".\"back-db-02\"")
         DB_PRIVATE_IP=${IP: 1 : -1}
         echo "================================"
