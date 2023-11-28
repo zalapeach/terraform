@@ -131,7 +131,7 @@ stages:
         inventoriesAgentMachine: file
         inventoryFileOnAgentMachine: $(inventoryFile)
         sudoEnabled: true
-        args: '--extra-vars "wp_user=$(ansibleWpUser) wp_user_email=$(ansibleWpEmail) wp_pass=$(ansibleWpPass)"'
+        args: '--extra-vars "appGtwIp=$(APP_GTW_IP) wp_user=$(ansibleWpUser) wp_user_email=$(ansibleWpEmail) wp_pass=$(ansibleWpPass)"'
       env:
         AZURE_SUBSCRIPTION_ID: $(subscriptionId)
         AZURE_CLIENT_ID: $(appId)
