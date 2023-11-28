@@ -1,0 +1,22 @@
+---
+- hosts: localhost
+  gather_facts: false
+
+  vars:
+    ansible_user: zala
+    ansible_ssh_private_key_file: $(ansibleFolder)/ssh_private
+
+  tasks:
+  - name: Configure Wordpress Admin
+    uri:
+      method: POST
+      url: 'http://{{ appGtwIp }}/wordpress/wp-admin/install.php?step=2'
+      body_format: form-urlencoded
+      body:
+      - [ weblog_title, 'Nintendomania']
+      - [ user_name, '{{ wp_user }}']
+      - [ admin_email, '{{ wp_user_email }}']
+      - [ admin_password, '{{ wp_pass }}']
+      - [ admin_password2, '{{ wp_pass }}']
+      - [ pw_weak, 1]
+      status_code: [200, 302]

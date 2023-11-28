@@ -102,6 +102,12 @@ locals {
           value    = random_password.password.1.result,
           secret   = true
           override = true
+        },
+        {
+          name     = "ansibleWpEmail"
+          value    = var.org_email
+          secret   = false
+          override = true
         }
       ]
     }
