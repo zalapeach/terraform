@@ -9,11 +9,6 @@ resource "azurerm_resource_group" "rg" {
   location = "eastus2"
 }
 
-resource "random_string" "kvname" {
-  length  = 5
-  special = false
-}
-
 resource "azurerm_key_vault" "kv" {
   name                        = "azdokv-${random_string.kvname.result}"
   location                    = azurerm_resource_group.rg.location
