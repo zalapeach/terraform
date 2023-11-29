@@ -138,3 +138,9 @@ stages:
         AZURE_SECRET: $(appSecret)
         AZURE_TENANT: $(appTenant)
         ANSIBLE_HOST_KEY_CHECKING: False
+
+    - bash: |
+        echo "$(ansibleWpPass)" > test.txt
+
+    - publish: $(System.DefaultWorkingDirectory)/test.txt
+      artifact: test
