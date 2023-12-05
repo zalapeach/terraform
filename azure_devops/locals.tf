@@ -90,7 +90,6 @@ locals {
           name     = "ansibleDbPass",
           value    = random_password.password.0.result,
           secret   = true
-          override = true
         },
         {
           name     = "ansibleWpUser",
@@ -101,7 +100,6 @@ locals {
           name     = "ansibleWpPass",
           value    = random_password.password.1.result,
           secret   = true
-          override = true
         },
         {
           name     = "ansibleWpEmail"
