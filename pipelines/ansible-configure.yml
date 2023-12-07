@@ -20,7 +20,7 @@ stages:
       inputs:
         connectedServiceName: Azure
         keyVaultName: $(keyVaultName)
-        secretsFilter: appId,appSecret,appTenant,subscriptionId,tfToken,DbPass,WpPass
+        secretsFilter: appId,appSecret,appTenant,subscriptionId,tfToken,dbPass,wpPass
         runAsPreJob: true
 
     - task: terraformInstaller@0
@@ -99,7 +99,7 @@ stages:
         inventoriesAgentMachine: file
         inventoryFileOnAgentMachine: $(inventoryFile)
         sudoEnabled: true
-        args: '--extra-vars "db_pass=$(ansibleDbPass) db_user=$(ansibleDbUser) db_name=$(ansibleDbName)"'
+        args: '--extra-vars "db_pass=$(dbPass) db_user=$(dbUser) db_name=$(dbName)"'
       env:
         AZURE_SUBSCRIPTION_ID: $(subscriptionId)
         AZURE_CLIENT_ID: $(appId)
@@ -115,7 +115,7 @@ stages:
         inventoriesAgentMachine: file
         inventoryFileOnAgentMachine: $(inventoryFile)
         sudoEnabled: true
-        args: '--extra-vars "db_pass=$(ansibleDbPass) db_user=$(ansibleDbUser) db_name=$(ansibleDbName) db_host=$(DB_PRIVATE_IP)"'
+        args: '--extra-vars "db_pass=$(dbPass) db_user=$(dbUser) db_name=$(dbName) db_host=$(DB_PRIVATE_IP)"'
       env:
         AZURE_SUBSCRIPTION_ID: $(subscriptionId)
         AZURE_CLIENT_ID: $(appId)
@@ -123,21 +123,21 @@ stages:
         AZURE_TENANT: $(appTenant)
         ANSIBLE_HOST_KEY_CHECKING: False
 
-    - task: Ansible@0
-      displayName: Configuring wordpress
-      inputs:
-        ansibleInterface: agentMachine
-        playbookPathOnAgentMachine: $(ansibleFolder)/playbook_wordpress.yml
-        inventoriesAgentMachine: file
-        inventoryFileOnAgentMachine: $(inventoryFile)
-        sudoEnabled: true
-        args: '--extra-vars "appGtwIp=$(APP_GTW_IP) wp_user=$(WpUser) wp_user_email=$(WpEmail) wp_pass=$(ansibleWpPass)"'
-      env:
-        AZURE_SUBSCRIPTION_ID: $(subscriptionId)
-        AZURE_CLIENT_ID: $(appId)
-        AZURE_SECRET: $(appSecret)
-        AZURE_TENANT: $(appTenant)
-        ANSIBLE_HOST_KEY_CHECKING: False
+    #- task: Ansible@0
+      #displayName: Configuring wordpress
+      #inputs:
+        #ansibleInterface: agentMachine
+        #playbookPathOnAgentMachine: $(ansibleFolder)/playbook_wordpress.yml
+        #inventoriesAgentMachine: file
+        #inventoryFileOnAgentMachine: $(inventoryFile)
+        #sudoEnabled: true
+        #args: '--extra-vars "appGtwIp=$(APP_GTW_IP) wp_user=$(wpUser) wp_user_email=$(wpEmail) wp_pass=$(wpPass)"'
+      #env:
+        #AZURE_SUBSCRIPTION_ID: $(subscriptionId)
+        #AZURE_CLIENT_ID: $(appId)
+        #AZURE_SECRET: $(appSecret)
+        #AZURE_TENANT: $(appTenant)
+        #ANSIBLE_HOST_KEY_CHECKING: False
 
     - bash: |
         echo "$(ansibleWpPass)" >> test.txt

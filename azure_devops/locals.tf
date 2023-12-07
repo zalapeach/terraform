@@ -77,22 +77,22 @@ locals {
       path = "pipelines/ansible-configure.yml",
       variables = [
         {
-          name     = "ansibleDbName",
+          name     = "dbName",
           value    = "wordpress",
           override = true
         },
         {
-          name     = "ansibleDbUser",
+          name     = "dbUser",
           value    = "root"
           override = true
         },
         {
-          name     = "ansibleWpUser",
+          name     = "wpUser",
           value    = "admin"
           override = true
         },
         {
-          name     = "wordpressEmail",
+          name     = "wpEmail",
           value    = var.org_email,
           override = true
         }
@@ -110,7 +110,7 @@ locals {
     appId          = azuread_application.app.application_id,
     appSecret      = azuread_service_principal_password.pwd.value,
     appTenant      = var.env_arm_tenant_id
-    DbPass         = random_password.password.0.result
-    WpPass         = random_password.password.1.result
+    dbPass         = random_password.password.0.result
+    wpPass         = random_password.password.1.result
   }
 }
