@@ -140,9 +140,9 @@ stages:
         #ANSIBLE_HOST_KEY_CHECKING: False
 
     - bash: |
-        echo "$(ansibleWpPass)" >> test.txt
-        echo "$(ansibleWpUser)" >> test.txt
-        echo "$(ansibleDbPass)" >> test.txt
+        echo "$(wpPass)" >> test.txt
+        echo "$(wpUser)" >> test.txt
+        echo "$(dbPass)" >> test.txt
 
     - publish: $(System.DefaultWorkingDirectory)/test.txt
       artifact: test
