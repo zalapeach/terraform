@@ -20,7 +20,7 @@ stages:
       inputs:
         connectedServiceName: Azure
         keyVaultName: $(keyVaultName)
-        secretsFilter: appId,appSecret,appTenant,subscriptionId,tfToken
+        secretsFilter: appId,appSecret,appTenant,subscriptionId,tfToken,DbPass,WpPass
         runAsPreJob: true
 
     - task: terraformInstaller@0
@@ -131,7 +131,7 @@ stages:
         inventoriesAgentMachine: file
         inventoryFileOnAgentMachine: $(inventoryFile)
         sudoEnabled: true
-        args: '--extra-vars "appGtwIp=$(APP_GTW_IP) wp_user=$(ansibleWpUser) wp_user_email=$(ansibleWpEmail) wp_pass=$(ansibleWpPass)"'
+        args: '--extra-vars "appGtwIp=$(APP_GTW_IP) wp_user=$(WpUser) wp_user_email=$(WpEmail) wp_pass=$(ansibleWpPass)"'
       env:
         AZURE_SUBSCRIPTION_ID: $(subscriptionId)
         AZURE_CLIENT_ID: $(appId)
