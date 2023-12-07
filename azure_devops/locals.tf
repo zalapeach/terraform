@@ -87,24 +87,13 @@ locals {
           override = true
         },
         {
-          name     = "ansibleDbPass",
-          value    = random_password.password.0.result,
-          secret   = true
-        },
-        {
           name     = "ansibleWpUser",
-          value    = "wordpress"
+          value    = "admin"
           override = true
         },
         {
-          name     = "ansibleWpPass",
-          value    = random_password.password.1.result,
-          secret   = true
-        },
-        {
-          name     = "ansibleWpEmail"
-          value    = var.org_email
-          secret   = false
+          name     = "wordpressEmail",
+          value    = var.org_email,
           override = true
         }
       ]
@@ -121,5 +110,7 @@ locals {
     appId          = azuread_application.app.application_id,
     appSecret      = azuread_service_principal_password.pwd.value,
     appTenant      = var.env_arm_tenant_id
+    DbPass         = random_password.password.0.result
+    WpPass         = random_password.password.1.result
   }
 }

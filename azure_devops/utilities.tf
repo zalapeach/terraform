@@ -4,7 +4,7 @@ resource "random_string" "kvname" {
 }
 
 resource "random_password" "password" {
-  count            = 2
-  length           = 16
-  special          = false
+  count   = 2
+  length  = 16
+  special = false
 }

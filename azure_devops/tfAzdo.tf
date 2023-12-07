@@ -45,8 +45,8 @@ resource "azuredevops_build_definition" "pipelines" {
   }
 
   variable {
-    name  = "keyVaultName"
-    value = azurerm_key_vault.kv.name
+    name           = "keyVaultName"
+    value          = azurerm_key_vault.kv.name
     allow_override = false
   }
 
