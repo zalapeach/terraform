@@ -123,26 +123,26 @@ stages:
         AZURE_TENANT: $(appTenant)
         ANSIBLE_HOST_KEY_CHECKING: False
 
-    #- task: Ansible@0
-      #displayName: Configuring wordpress
-      #inputs:
-        #ansibleInterface: agentMachine
-        #playbookPathOnAgentMachine: $(ansibleFolder)/playbook_wordpress.yml
-        #inventoriesAgentMachine: file
-        #inventoryFileOnAgentMachine: $(inventoryFile)
-        #sudoEnabled: true
-        #args: '--extra-vars "appGtwIp=$(APP_GTW_IP) wp_user=$(wpUser) wp_user_email=$(wpEmail) wp_pass=$(wpPass)"'
-      #env:
-        #AZURE_SUBSCRIPTION_ID: $(subscriptionId)
-        #AZURE_CLIENT_ID: $(appId)
-        #AZURE_SECRET: $(appSecret)
-        #AZURE_TENANT: $(appTenant)
-        #ANSIBLE_HOST_KEY_CHECKING: False
+    - task: Ansible@0
+      displayName: Configuring wordpress
+      inputs:
+        ansibleInterface: agentMachine
+        playbookPathOnAgentMachine: $(ansibleFolder)/playbook_wordpress.yml
+        inventoriesAgentMachine: file
+        inventoryFileOnAgentMachine: $(inventoryFile)
+        sudoEnabled: true
+        args: '--extra-vars "appGtwIp=$(APP_GTW_IP) wp_user=$(wpUser) wp_user_email=$(wpEmail) wp_pass=$(wpPass)"'
+      env:
+        AZURE_SUBSCRIPTION_ID: $(subscriptionId)
+        AZURE_CLIENT_ID: $(appId)
+        AZURE_SECRET: $(appSecret)
+        AZURE_TENANT: $(appTenant)
+        ANSIBLE_HOST_KEY_CHECKING: False
 
-    - bash: |
-        echo "$(wpPass)" >> test.txt
-        echo "$(wpUser)" >> test.txt
-        echo "$(dbPass)" >> test.txt
+    #- bash: |
+        #echo "$(wpPass)" >> test.txt
+        #echo "$(wpUser)" >> test.txt
+        #echo "$(dbPass)" >> test.txt
 
-    - publish: $(System.DefaultWorkingDirectory)/test.txt
-      artifact: test
+    #- publish: $(System.DefaultWorkingDirectory)/test.txt
+      #artifact: test
