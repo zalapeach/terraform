@@ -28,6 +28,13 @@ stages:
       inputs:
         terraformVersion: 'latest'
 
+    - task: replaceTokens@5
+      displayName: Update token file
+      inputs:
+        targetFiles: |
+          $(System.DefaultWorkingDirectory)/pipelines/tfToken.json
+        tokenPattern: 'azpipelines'
+
     - bash: |
         mv $(System.DefaultWorkingDirectory)/pipelines/tfToken.json /home/zala/.terraform.d/credentials.tfrc.json
       displayName: Terraform login
@@ -64,10 +71,9 @@ stages:
       displayName: Get AppGtw public IP; DB & Node Private IPs, & private SSH key
 
     - task: replaceTokens@5
-      displayName: Update token file
+      displayName: Update playbooks
       inputs:
         targetFiles: |
-          $(System.DefaultWorkingDirectory)/pipelines/tfToken.json
           $(ansibleFolder)/playbook_init.yml
           $(ansibleFolder)/playbook_dbs.yml
           $(ansibleFolder)/playbook_nodes.yml
