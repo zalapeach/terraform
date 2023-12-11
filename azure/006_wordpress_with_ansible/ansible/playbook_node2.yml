@@ -11,7 +11,7 @@
     become: true
     replace:
       path: /var/www/html/index.html
-      regexp: 'Apache2 Ubuntu Default Page'
+      regexp: 'Apache2 Default Page'
       replace: 'Apache Node 01 Page'
 
   - name: Change apache index background color
@@ -25,6 +25,5 @@
     become: true
     replace:
       path: /var/www/html/info.php
-      insertbefore: BOF
-      line: '<h1>Node 01 php version</h1>'
-      state: present
+      regexp: 'Node PHP'
+      replace: 'Node 01 PHP'
