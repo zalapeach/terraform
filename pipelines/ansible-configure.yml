@@ -160,7 +160,7 @@ stages:
         ansibleInterface: agentMachine
         playbookPathOnAgentMachine: $(ansibleFolder)/playbook_node1.yml
         inventoriesAgentMachine: file
-        inventoryFileOnAgentMachine: $(inventoryFile)
+        inventoryFileOnAgentMachine: $(NODE1_PRIVATE_IP)
         sudoEnabled: true
       env:
         AZURE_SUBSCRIPTION_ID: $(subscriptionId)
@@ -175,7 +175,7 @@ stages:
         ansibleInterface: agentMachine
         playbookPathOnAgentMachine: $(ansibleFolder)/playbook_node2.yml
         inventoriesAgentMachine: file
-        inventoryFileOnAgentMachine: $(inventoryFile)
+        inventoryFileOnAgentMachine: $(NODE2_PRIVATE_IP)
         sudoEnabled: true
       env:
         AZURE_SUBSCRIPTION_ID: $(subscriptionId)
