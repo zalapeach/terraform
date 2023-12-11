@@ -27,3 +27,10 @@
       path: /var/www/html/info.php
       regexp: 'Node PHP'
       replace: 'Node 00 PHP'
+
+  - name: Change info.php background color
+    become: true
+    replace:
+      path: /var/www/html/info.php
+      regexp: '#FFF'
+      replace: '#CC0000'
