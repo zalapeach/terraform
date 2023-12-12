@@ -1,3 +1,12 @@
+resources:
+  pipelines:
+  - pipeline: TFcreate
+    source: Terraform create infra
+    project: Terraform
+    trigger:
+      stages:
+      - Terraform_006_wordpress_with_ansible
+
 trigger: none
 
 pool:
