@@ -1,7 +1,7 @@
 resources:
   pipelines:
   - pipeline: TFcreate
-    source: Terraform create infra
+    source: Terraform create - update infra
     project: Terraform
     trigger:
       stages:
