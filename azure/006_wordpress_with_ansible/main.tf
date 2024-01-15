@@ -136,7 +136,6 @@ resource "azurerm_network_interface_application_gateway_backend_address_pool_ass
   network_interface_id    = element(azurerm_network_interface.nic.*.id, count.index)
   ip_configuration_name   = "nicIpConf"
   backend_address_pool_id = tolist(azurerm_application_gateway.gw.backend_address_pool).0.id
-
 }
 
 resource "azurerm_network_security_group" "nsg" {
