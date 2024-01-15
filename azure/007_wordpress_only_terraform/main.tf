@@ -32,7 +32,7 @@ resource "azurerm_virtual_network" "vnet" {
 resource "azurerm_subnet" "front" {
   name                 = "front"
   address_prefixes     = ["10.1.0.0/24"]
-  resource_group_name  = azure_resource_group.rg.name
+  resource_group_name  = azurerm_resource_group.rg.name
   virtual_network_name = azurerm_virtual_network.vnet.name
 }
 
