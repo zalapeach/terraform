@@ -99,7 +99,7 @@ resource "azurerm_application_gateway" "gw" {
     priority                   = 1000
   }
 
-#  depends_on = [azurerm_linux_virtual_machine.vms]
+  # depends_on = [azurerm_linux_virtual_machine.vms]
 }
 
 resource "azurerm_subnet" "backend" {
