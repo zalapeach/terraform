@@ -99,7 +99,7 @@ resource "azurerm_application_gateway" "gw" {
     priority                   = 1000
   }
 
-  # depends_on = [azurerm_linux_virtual_machine.vms]
+  depends_on = [azurerm_linux_virtual_machine.vms]
 }
 
 resource "azurerm_subnet" "backend" {
@@ -134,4 +134,80 @@ resource "azurerm_network_security_group" "nsg" {
   name                = "netSecGrp"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
+}
+
+resource "azurerm_network_security_rule" "allowHttp" {
+  name                   = "allowHttp"
+  priority               = 1001
+  direction              = "Inbound"
+  access                 = "Allow"
+  protocol               = "Tcp"
+  source_port_range      = "*"
+  destination_port_range = "80"
+  source_address_prefix  = "*"
+  destination_address_prefixes = [
+    azurerm_network_interface.nic[0].private_ip_address,
+    azurerm_network_interface.nic[1].private_ip_address
+  ]
+  resource_group_name         = azurerm_resource_group.rg.name
+  network_security_group_name = azurerm_network_security_group.nsg.name
+}
+
+resource "azurerm_network_security_rule" "allowOutboundToDb" {
+  name                   = "allowOutboundToDb"
+  priority               = 1002
+  direction              = "Outbound"
+  access                 = "Allow"
+  protocol               = "Tcp"
+  source_port_range      = "*"
+  destination_port_range = "3306"
+  source_address_prefixes = [
+    azurerm_network_interface.nic[0].private_ip_address,
+    azurerm_network_interface.nic[1].private_ip_address
+  ]
+  destination_address_prefix  = azurerm_network_interface.nic[2].private_ip_address
+  resource_group_name         = azurerm_resource_group.rg.name
+  network_security_group_name = azurerm_network_security_group.nsg.name
+}
+
+resource "azurerm_network_security_rule" "allowInboundToDb" {
+  name                   = "allowInboundToDb"
+  priority               = 1003
+  direction              = "Inbound"
+  access                 = "Allow"
+  protocol               = "Tcp"
+  source_port_range      = "*"
+  destination_port_range = "3306"
+  source_address_prefixes = [
+    azurerm_network_interface.nic[0].private_ip_address,
+    azurerm_network_interface.nic[1].private_ip_address
+  ]
+  destination_address_prefix  = azurerm_network_interface.nic[2].private_ip_address
+  resource_group_name         = azurerm_resource_group.rg.name
+  network_security_group_name = azurerm_network_security_group.nsg.name
+}
+
+resource "azurerm_network_security_rule" "allowSsh" {
+  name                        = "allowSsh"
+  priority                    = 1004
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "22"
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = azurerm_resource_group.rg.name
+  network_security_group_name = azurerm_network_security_group.nsg.name
+}
+
+resource "azurerm_network_interface_security_group_association" "nicNsg" {
+  count                     = 4
+  network_interface_id      = element(azurerm_network_interface.nic.*.id, count.index)
+  network_security_group_id = azurerm_network_security_group.nsg.id
+}
+
+resource "tls_private_key" "sshkey" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
 }
