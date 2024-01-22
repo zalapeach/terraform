@@ -211,3 +211,61 @@ resource "tls_private_key" "sshkey" {
   algorithm = "RSA"
   rsa_bits  = 4096
 }
+
+resource "azurerm_linux_virtual_machine" "vms" {
+  count                 = 4
+  name                  = "${local.names[count.index].name}-0${count.index}"
+  location              = azurerm_resource_group.rg.location
+  resource_group_name   = azurerm_resource_group.rg.name
+  network_interface_ids = [element(azurerm_network_interface.nic.*.id, count.index)]
+  size                  = "Standard_DS1_v2"
+
+  os_disk {
+    name                 = "osDisk-${local.names[count.index].name}-0${count.index}"
+    caching              = "ReadWrite"
+    storage_account_type = "Standard_LRS"
+  }
+
+  source_image_reference {
+    publisher = "Canonical"
+    offer     = "0001-com-ubuntu-server-jammy"
+    sku       = "22_04-lts-gen2"
+    version   = "latest"
+  }
+
+  computer_name                   = "${local.names[count.index].name}-0${count.index}"
+  admin_username                  = "zala"
+  disable_password_authentication = true
+
+  admin_ssh_key {
+    username   = "zala"
+    public_key = tls_private_key.sshkey.public_key_openssh
+  }
+}
+
+resource "azurerm_subnet" "bastion" {
+  name                 = "AzureBastionSubnet"
+  address_prefixes     = ["10.1.2.0/24"]
+  resource_group_name  = azurerm_resource_group.rg.name
+  virtual_network_name = azurerm_virtual_network.vnet.name
+}
+
+resource "azurerm_public_ip" "bastionIp" {
+  name                = "bastionIp"
+  location            = azurerm_resource_group.rg.location
+  allocation_method   = "Static"
+  sku                 = "Standard"
+  resource_group_name = azurerm_resource_group.rg.name
+}
+
+resource "azurerm_bastion_host" "bastion" {
+  name                = "bastion"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+
+  ip_configuration {
+    name                 = "ipConfigs"
+    subnet_id            = azurerm_subnet.bastion.id
+    public_ip_address_id = azurerm_public_ip.bastionIp.id
+  }
+}
