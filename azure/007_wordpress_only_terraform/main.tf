@@ -287,4 +287,8 @@ resource "azurerm_virtual_machine_extension" "db" {
       "commandToExecute": "sh mariadb.sh"
     }
 SETTINGS
+
+  depends_on = [
+    azurerm_linux_virtual_machine.vms
+  ]
 }
