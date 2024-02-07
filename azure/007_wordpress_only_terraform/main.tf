@@ -96,7 +96,7 @@ resource "azurerm_application_gateway" "gw" {
     http_listener_name         = "listener"
     backend_address_pool_name  = "backendPool"
     backend_http_settings_name = "httpSettings"
-    priority                   = 1000
+    priority                   = 100
   }
 
   depends_on = [azurerm_linux_virtual_machine.vms]
@@ -116,7 +116,7 @@ resource "azurerm_network_interface" "nic" {
   resource_group_name = azurerm_resource_group.rg.name
 
   ip_configuration {
-    name                          = "nicIpConf"
+    name                          = "nicIpConfig"
     subnet_id                     = azurerm_subnet.backend.id
     private_ip_address_allocation = "Static"
     private_ip_address            = "10.1.1.${count.index + 4}"
@@ -126,7 +126,7 @@ resource "azurerm_network_interface" "nic" {
 resource "azurerm_network_interface_application_gateway_backend_address_pool_association" "nicGw" {
   count                   = 2
   network_interface_id    = element(azurerm_network_interface.nic.*.id, count.index)
-  ip_configuration_name   = "nicIpConf"
+  ip_configuration_name   = "nicIpConfig"
   backend_address_pool_id = tolist(azurerm_application_gateway.gw.backend_address_pool).0.id
 }
 
@@ -202,7 +202,7 @@ resource "azurerm_network_security_rule" "allowSsh" {
 }
 
 resource "azurerm_network_interface_security_group_association" "nicNsg" {
-  count                     = 4
+  count                     = 3
   network_interface_id      = element(azurerm_network_interface.nic.*.id, count.index)
   network_security_group_id = azurerm_network_security_group.nsg.id
 }
