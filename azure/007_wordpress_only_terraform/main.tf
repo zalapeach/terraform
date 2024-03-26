@@ -307,7 +307,7 @@ resource "azurerm_virtual_machine_extension" "node1" {
       "fileUris": [
         "https://raw.githubusercontent.com/zalapeach/terraform/master/azure/007_wordpress_only_terraform/scripts/node1.sh"
       ],
-      "commandToExecute": "sh node1.sh"
+      "commandToExecute": "sh nodes.sh"
     }
 SETTINGS
 
