@@ -1,6 +1,6 @@
 resource "azurerm_resource_group" "rg" {
   name     = "resourceGroup011"
-  location = "westus"
+  location = "westus2"
 }
 
 resource "azurerm_kubernetes_cluster" "aks" {
