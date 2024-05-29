@@ -1,5 +1,5 @@
 resource "azurerm_resource_group" "rg" {
-  name     = "backstageCluster"
+  name     = "resourceGroup011"
   location = "westus2"
 }
 

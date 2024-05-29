@@ -20,3 +20,10 @@ terraform {
 provider "azurerm" {
   features {}
 }
+
+provider "kubernetes" {
+  host                   = azurerm_kubernetes_cluster.aks.kube_config.host
+  client_certificate     = azurerm_kubernetes_cluster.aks.kube_config.client_certificate
+  client_key             = azurerm_kubernetes_cluster.aks.kube_config.client_key
+  cluster_ca_certificate = azurerm_kubernetes_cluster.aks.kube_config.cluster_ca_certificate
+}
