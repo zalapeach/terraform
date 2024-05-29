@@ -14,6 +14,7 @@ parameters:
   - 007_wordpress_only_terraform
   - 008_db_migrations
   - 009_databricks
+  - 011_backstage
   - 100_k8s_base
   - 101_k8s_prometheus
   - 102_k8s_thanos
