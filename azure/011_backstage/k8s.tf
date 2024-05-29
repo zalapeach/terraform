@@ -14,7 +14,7 @@ resource "kubernetes_secret" "postgres" {
     namespace = kubernetes_namespace.backstage.metadata[0].name
   }
 
-  data {
+  data = {
     POSTGRES_USER     = "TEST"
     POSTGRES_PASSWORD = "TEST"
   }
