@@ -34,5 +34,6 @@ output "cluster_kube_config" {
 }
 
 output "postgres_password" {
-  value = random_password.pass.result
+  value     = random_password.pass.result
+  sensitive = true
 }
