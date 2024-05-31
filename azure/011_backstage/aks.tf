@@ -10,9 +10,10 @@ resource "azurerm_kubernetes_cluster" "aks" {
   dns_prefix          = "backstage"
 
   default_node_pool {
-    name       = "nodepool2"
-    node_count = 3
-    vm_size    = "Standard_B2s"
+    name                        = "nodepool2"
+    node_count                  = 2
+    vm_size                     = "Standard_D8s_v3"
+    temporary_name_for_rotation = "temporal"
   }
 
   identity {
