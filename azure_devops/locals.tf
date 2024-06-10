@@ -3,7 +3,7 @@ locals {
   "Az008", "Az009", "Az010", "Az011", "Az012", "Az013", "Az100", "Az101", "Az102", "Az103"]
   variables = {
     ARM_CLIENT_ID = {
-      value       = azuread_application.app.application_id,
+      value       = azuread_application.app.client_id,
       description = "Azure - Client Id"
     },
     ARM_CLIENT_SECRET = {
@@ -107,7 +107,7 @@ locals {
     tfToken        = var.env_tfe_token,
     subscriptionId = var.env_arm_subscription_id,
     azdoPat        = var.env_azdo_pat,
-    appId          = azuread_application.app.application_id,
+    appId          = azuread_application.app.client_id,
     appSecret      = azuread_service_principal_password.pwd.value,
     appTenant      = var.env_arm_tenant_id
     dbPass         = random_password.password.0.result

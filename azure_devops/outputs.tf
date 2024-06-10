@@ -4,7 +4,7 @@ output "client_secret" {
 }
 
 output "client_id" {
-  value = azuread_application.app.application_id
+  value = azuread_application.app.client_id
 }
 
 output "azure_key_vault_name" {

@@ -6,7 +6,7 @@ resource "azuread_application" "app" {
 }
 
 resource "azuread_service_principal" "sp" {
-  application_id               = azuread_application.app.application_id
+  client_id                    = azuread_application.app.client_id
   app_role_assignment_required = false
   owners                       = [data.azuread_client_config.current.object_id]
 }

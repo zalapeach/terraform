@@ -17,7 +17,7 @@ resource "azuredevops_serviceendpoint_azurerm" "azure" {
   service_endpoint_name = "Azure"
 
   credentials {
-    serviceprincipalid  = azuread_application.app.application_id
+    serviceprincipalid  = azuread_application.app.client_id
     serviceprincipalkey = azuread_service_principal_password.pwd.value
   }
 
