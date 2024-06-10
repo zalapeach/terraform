@@ -19,11 +19,18 @@ resource "azurerm_postgresql_flexible_server" "server" {
   sku_name               = "B_Standard_B1ms"
 }
 
+# not needed - created by backstage
 resource "azurerm_postgresql_flexible_server_database" "db" {
-  name      = "backstage"
+  name      = "backstage_plugin_catalog"
   server_id = azurerm_postgresql_flexible_server.server.id
   collation = "es_MX.utf8"
   charset   = "UTF8"
+}
+
+resource "azurerm_postgresql_flexible_server_configuration" "example" {
+  name      = "require_secure_transport"
+  server_id = azurerm_postgresql_flexible_server.server.id
+  value     = "off"
 }
 
 resource "azurerm_postgresql_flexible_server_firewall_rule" "rule" {

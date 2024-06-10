@@ -13,6 +13,7 @@
 id_rsa.pub
 
 credentials.sh
+credentials-alt.sh
 
 hashicorp.gpg
 

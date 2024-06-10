@@ -1,6 +1,6 @@
 locals {
   workspaces = ["azdo", "netWatch", "Az001", "Az002", "Az003", "Az004", "Az005", "Az006", "Az007",
-  "Az008", "Az009", "Az010", "Az011", "Az100", "Az101", "Az102", "Az103"]
+  "Az008", "Az009", "Az010", "Az011", "Az012", "Az013", "Az100", "Az101", "Az102", "Az103"]
   variables = {
     ARM_CLIENT_ID = {
       value       = azuread_application.app.application_id,

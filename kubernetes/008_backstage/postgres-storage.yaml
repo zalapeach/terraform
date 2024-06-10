@@ -2,7 +2,7 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: postgres-storage
-  namespace: backstage-yaml
+  namespace: backstage
   labels:
     type: local
 spec:
@@ -13,17 +13,17 @@ spec:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
   hostPath:
-    path: '/var/lib/postgresql'
+    path: '/mnt/data'
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: postgres-storage-claim
-  namespace: backstage-yaml
+  namespace: backstage
 spec:
-  storageClassName: manual
   accessModes:
     - ReadWriteOnce
+  storageClassName: managed-csi
   resources:
     requests:
       storage: 0.5G
