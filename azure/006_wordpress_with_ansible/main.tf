@@ -306,3 +306,10 @@ SETTINGS
     azurerm_linux_virtual_machine.vms
   ]
 }
+
+# Keep private certs on keyvault
+
+data "azurerm_key_vault" "kv" {
+  name                =
+  resource_group_name =
+}

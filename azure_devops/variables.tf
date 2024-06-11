@@ -44,3 +44,9 @@ variable "org_email1" {
   type        = string
   sensitive   = true
 }
+
+variable "local_state" {
+  description = "Define if state is stored locally or not"
+  type        = bool
+  default     = false
+}

@@ -17,6 +17,12 @@ terraform {
       version = ">=0.55.0"
     }
   }
+  cloud {
+    organization = "zalapeach"
+    workspaces {
+      name = "azdo"
+    }
+  }
 }
 
 provider "azuread" {}
