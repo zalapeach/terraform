@@ -122,9 +122,10 @@ resource "azurerm_availability_set" "as" {
   platform_update_domain_count = 2
 }
 
-resource "tls_private_key" "ssh_key" {
-  algorithm = "RSA"
-  rsa_bits  = 4096
+resource "random_password" "password" {
+  length           = 12
+  special          = true
+  override_special = "?#@&%<>"
 }
 
 resource "azurerm_network_interface_security_group_association" "nsga" {
@@ -157,10 +158,6 @@ resource "azurerm_linux_virtual_machine" "vm" {
 
   computer_name                   = "ubuntu-0${count.index}"
   admin_username                  = "zala"
-  disable_password_authentication = true
-
-  admin_ssh_key {
-    username   = "zala"
-    public_key = tls_private_key.ssh_key.public_key_openssh
-  }
+  admin_password                  = random_password.password.result
+  disable_password_authentication = false
 }
