@@ -1,3 +1,10 @@
 data "terraform_remote_state" "azdo" {
-  backend = "local"
+  backend = "remote"
+
+  config = {
+    organization = "zalapeach"
+    workspaces = {
+      name = "azdo"
+    }
+  }
 }

@@ -310,6 +310,6 @@ SETTINGS
 # Keep private certs on keyvault
 
 data "azurerm_key_vault" "kv" {
-  name                =
-  resource_group_name =
+  name                = data.terraform_remote_state.azdo.outputs.azure_key_vault_name
+  resource_group_name = data.terraform_remote_state.azdo.outputs.resource_group_name
 }

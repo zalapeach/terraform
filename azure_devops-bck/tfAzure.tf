@@ -27,6 +27,10 @@ resource "azurerm_key_vault_access_policy" "access" {
   secret_permissions = [
     "Delete", "Get", "List", "Purge", "Set"
   ]
+
+  certificate_permissions = [
+    "Create", "Delete", "Get", "Import", "List", "Update"
+  ]
 }
 
 resource "azurerm_key_vault_secret" "secrets" {
