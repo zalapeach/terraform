@@ -10,6 +10,10 @@ locals {
       value       = azuread_service_principal_password.pwd.value
       description = "Azure - Client Secret"
     },
+    ARM_CLIENT_OBJECT_ID = {
+      value       = azuread_service_principal.sp.object_id
+      description = "Azure - Object Id"
+    },
     ARM_TENANT_ID = {
       value       = var.env_arm_tenant_id
       description = "Azure - Tenant Id"
@@ -17,6 +21,10 @@ locals {
     ARM_SUBSCRIPTION_ID = {
       value       = var.env_arm_subscription_id,
       description = "Azure - Subscription Id"
+    },
+    AAD_PERSONAL_OBJECT_ID = {
+      value       = var.env_aad_personal_object_id,
+      description = "Azure Active Directory - Personal Object ID (mine)"
     },
     AZDO_GITHUB_SERVICE_CONNECTION_PAT = {
       value       = var.env_azdo_github_pat,

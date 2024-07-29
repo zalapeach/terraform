@@ -40,5 +40,17 @@ export TF_VAR_org_email="personal1@email.com"
 export TF_VAR_org_email1="personal2@email.com"
 ```
 
-11. export variables from `credentials.sh` with `source ./credentials.sh`
-12. Apply changes with terraform, in case of errors resolve them.
+11. Export variables from `credentials.sh` with `source ./credentials.sh`
+12. Execute the following commands inside `tf_cloud` folder to initialize terraform
+and create HCL cloud infrastructure (note that this will use local as backend)
+
+```
+terraform init
+terraform fmt
+terraform validate
+terraform plan
+terraform apply
+```
+
+13. Execute previous list of commands now inside `azure_devops` dolder to initialize
+azure devops infrastructure (note that this will use HCL cloud as backend)

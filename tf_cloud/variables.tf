@@ -10,6 +10,12 @@ variable "env_arm_subscription_id" {
   sensitive   = true
 }
 
+variable "env_aad_personal_object_id" {
+  description = "Azure Active Directory Personal Object ID (mine)"
+  type        = string
+  sensitive   = true
+}
+
 variable "env_azdo_github_pat" {
   description = "Azure DevOps GitHub PAT"
   type        = string
