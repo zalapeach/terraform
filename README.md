@@ -52,5 +52,5 @@ terraform plan
 terraform apply
 ```
 
-13. Execute previous list of commands now inside `azure_devops` dolder to initialize
+13. Execute previous list of commands now inside `azure_devops` folder to initialize
 azure devops infrastructure (note that this will use HCL cloud as backend)
