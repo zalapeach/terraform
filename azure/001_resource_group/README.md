@@ -35,9 +35,13 @@ Creation of a resource group in azure using terraform.
 * In the repo, navigate to `azure/001_resource_group` folder
 * Execute `terraform destroy`, wait for completion
 
+# How to test
+
+* Open azure portal and check that all resources are created.
+
 # Outputs
 
-* Resource group id
+* Resource group id (resource_group_id)
 
 # Diagram
 

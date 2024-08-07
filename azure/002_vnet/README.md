@@ -1,4 +1,4 @@
-# Example 1
+# Example 2
 
 Creation of a virtual network in azure using terraform.
 
@@ -38,7 +38,12 @@ Creation of a virtual network in azure using terraform.
 
 # Outputs
 
-* Resource group id
+* Resource group id (`resource_group_id`)
+* Virtual network id (`vnet_id`)
+
+# How to test
+
+* Open azure portal and check that all resources are created.
 
 # Diagram
 
