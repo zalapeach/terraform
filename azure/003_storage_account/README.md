@@ -44,6 +44,12 @@ Creation of a storage account in azure using terraform
 
 * Resource group id
 
+# How to test
+
+* Open azure portal and check that all resources are created.
+* For blob, need to navigate to the created storage account, then to the
+  container, and check if blob is created.
+
 # Diagram
 
-![Diagrama Exercise 3](/images/Exercise_003.svg)
+![Diagram Exercise 3](/images/Exercise_003.svg)

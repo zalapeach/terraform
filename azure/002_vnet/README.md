@@ -47,4 +47,4 @@ Creation of a virtual network in azure using terraform.
 
 # Diagram
 
-![Diagrama Exercise 2](/images/Exercise_002.svg)
+![Diagram Exercise 2](/images/Exercise_002.svg)
