@@ -2,7 +2,7 @@
 
 Creation of a storage account in azure using terraform
 
-# List of resource created
+# List of resources created
 
 * A resource group called `resourceGroup003`.
 * A random string of 8 characters.
@@ -42,7 +42,7 @@ Creation of a storage account in azure using terraform
 
 # Outputs
 
-* Resource group id
+* Resource group id (`resource_group_id`)
 
 # How to test
 

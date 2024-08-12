@@ -41,7 +41,7 @@ Creation of a resource group in azure using terraform.
 
 # Outputs
 
-* Resource group id (resource_group_id)
+* Resource group id (`resource_group_id`)
 
 # Diagram
 
