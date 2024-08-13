@@ -33,11 +33,11 @@ Creation of a storage account in azure using terraform
 ## Option 1
 
 * Run pipeline **Terraform destroy infra**.
-* In the **Terraform Example** option, select **002_storage_account**.
+* In the **Terraform Example** option, select **003_storage_account**.
 
 ## Option 2
 
-* In the repo, navigate to `azure/002_storage_account` folder
+* In the repo, navigate to `azure/003_storage_account` folder
 * Execute `terraform destroy`, wait for completion
 
 # Outputs

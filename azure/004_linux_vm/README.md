@@ -23,11 +23,11 @@ Creation of an ubuntu, internet public-facing vm in azure using terraform
 ## Option 1
 
 * Run pipeline **Terraform create - update infra**.
-* In the **Terraform Example** option, select **003_storage_account**.
+* In the **Terraform Example** option, select **004_linux_vm**.
 
 ## Option 2
 
-* In the repo, navigate to `azure/003_storage_account*` folder.
+* In the repo, navigate to `azure/004_linux_vm*` folder.
 * If it is the first time:
   * perform a `terraform init` to initialize.
   * then `terraform fmt` to check for format error.
@@ -40,11 +40,11 @@ Creation of an ubuntu, internet public-facing vm in azure using terraform
 ## Option 1
 
 * Run pipeline **Terraform destroy infra**.
-* In the **Terraform Example** option, select **002_storage_account**.
+* In the **Terraform Example** option, select **004_linux_vm**.
 
 ## Option 2
 
-* In the repo, navigate to `azure/002_storage_account` folder
+* In the repo, navigate to `azure/004_linux_vm` folder
 * Execute `terraform destroy`, wait for completion
 
 # Outputs
