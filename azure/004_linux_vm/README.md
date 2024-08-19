@@ -27,7 +27,7 @@ Creation of an ubuntu, internet public-facing vm in azure using terraform
 
 ## Option 2
 
-* In the repo, navigate to `azure/004_linux_vm*` folder.
+* In the repo, navigate to `azure/004_linux_vm` folder.
 * If it is the first time:
   * perform a `terraform init` to initialize.
   * then `terraform fmt` to check for format error.

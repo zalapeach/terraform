@@ -1,11 +1,12 @@
-# Example 5
+# Example 6
 
-Creation of a public-facing load balancer with 2 VMs as backend pool in azure
-using terraform
+Create all infrastructure required to run wordpress on premises using a public
+facing load balancer, which will distribute requestes that tries to connect to
+the application to the proper VM.
 
 # List of resources created
 
-* A resource group (`resourceGroup005`)
+* A resource group (`resourceGroup006`)
 * A virtual network (`vnet01`)
 * A subnet (`subnet01`)
 * A public IP with static allocation (`lb_ip`)

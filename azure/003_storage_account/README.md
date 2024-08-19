@@ -20,7 +20,7 @@ Creation of a storage account in azure using terraform
 
 ## Option 2
 
-* In the repo, navigate to `azure/003_storage_account*` folder.
+* In the repo, navigate to `azure/003_storage_account` folder.
 * If it is the first time:
   * perform a `terraform init` to initialize.
   * then `terraform fmt` to check for format error.

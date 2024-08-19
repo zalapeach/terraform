@@ -4,11 +4,18 @@ resource "tfe_organization" "org" {
   allow_force_delete_workspaces = true
 }
 
-resource "tfe_workspace" "workspaces" {
-  count        = length(local.workspaces)
-  name         = local.workspaces[count.index]
+resource "tfe_workspace" "azdo" {
+  name         = "azdo"
   organization = tfe_organization.org.name
   force_delete = true
+}
+
+resource "tfe_workspace" "workspaces" {
+  for_each                  = local.workspaces
+  name                      = each.key
+  organization              = tfe_organization.org.name
+  force_delete              = true
+  remote_state_consumer_ids = try(each.value.workspace_ids, [])
 }
 
 resource "tfe_variable_set" "varset" {
@@ -17,10 +24,15 @@ resource "tfe_variable_set" "varset" {
   organization = tfe_organization.org.name
 }
 
-resource "tfe_workspace_variable_set" "wsvarset" {
-  count           = length(local.workspaces)
+resource "tfe_workspace_variable_set" "azdo" {
   variable_set_id = tfe_variable_set.varset.id
-  workspace_id    = tfe_workspace.workspaces[count.index].id
+  workspace_id    = tfe_workspace.azdo.id
+}
+
+resource "tfe_workspace_variable_set" "wsvarset" {
+  for_each        = local.workspaces
+  variable_set_id = tfe_variable_set.varset.id
+  workspace_id    = tfe_workspace.workspaces[each.key].id
 }
 
 resource "tfe_variable" "vars" {
