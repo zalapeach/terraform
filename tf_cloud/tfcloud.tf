@@ -5,9 +5,10 @@ resource "tfe_organization" "org" {
 }
 
 resource "tfe_workspace" "azdo" {
-  name         = "azdo"
-  organization = tfe_organization.org.name
-  force_delete = true
+  name                      = "azdo"
+  organization              = tfe_organization.org.name
+  force_delete              = true
+  remote_state_consumer_ids = [tfe_workspace.workspaces["Az006"].id]
 }
 
 resource "tfe_workspace" "workspaces" {
@@ -15,7 +16,6 @@ resource "tfe_workspace" "workspaces" {
   name                      = each.key
   organization              = tfe_organization.org.name
   force_delete              = true
-  remote_state_consumer_ids = try(each.value.workspace_ids, [])
 }
 
 resource "tfe_variable_set" "varset" {

@@ -6,9 +6,7 @@ locals {
     Az003 = {},
     Az004 = {},
     Az005 = {},
-    Az006 = {
-      workspace_ids = [tfe_workspace.azdo.id]
-    },
+    Az006 = {},
     Az007 = {},
     Az008 = {},
     Az009 = {},
