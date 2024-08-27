@@ -315,7 +315,7 @@ data "azurerm_key_vault" "kv" {
 }
 
 resource "azurerm_key_vault_certificate" "cert" {
-  name = "exercice_006_cert"
+  name         = "exercice_006_cert"
   key_vault_id = data.azurerm_key_vault.kv.id
 
   certificate {
