@@ -319,6 +319,6 @@ resource "azurerm_key_vault_certificate" "cert" {
   key_vault_id = data.azurerm_key_vault.kv.id
 
   certificate {
-    contents = tls_private_key.sshkey.private_key_pem
+    contents = "${tls_private_key.sshkey.private_key_pem}"
   }
 }
