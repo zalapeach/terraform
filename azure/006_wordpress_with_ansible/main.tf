@@ -313,3 +313,12 @@ data "azurerm_key_vault" "kv" {
   name                = data.terraform_remote_state.azdo.outputs.azure_key_vault_name
   resource_group_name = data.terraform_remote_state.azdo.outputs.resource_group_name
 }
+
+resource "azurerm_key_vault_certificate" "cert" {
+  name = "exercice_006_cert"
+  key_vault_id = data.azurerm_key_vault.kv.id
+
+  certificate {
+    contents = tls_private_key.sshkey.private_key_pem
+  }
+}
