@@ -315,7 +315,7 @@ data "azurerm_key_vault" "kv" {
 }
 
 resource "azurerm_key_vault_secret" "secret" {
-  name         = "VM exercise 006 certificate"
+  name         = "vms-certificate-exercise-006"
   key_vault_id = data.azurerm_key_vault.kv.id
   value        = tls_private_key.sshkey.private_key_pem
 }
