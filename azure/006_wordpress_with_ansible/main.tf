@@ -314,13 +314,8 @@ data "azurerm_key_vault" "kv" {
   resource_group_name = data.terraform_remote_state.azdo.outputs.resource_group_name
 }
 
-resource "azurerm_key_vault_certificate" "cert" {
-  name         = "exercice-006-cert"
+resource "azurerm_key_vault_secret" "secret" {
+  name         = "VM exercise 006 certificate"
   key_vault_id = data.azurerm_key_vault.kv.id
-
-  certificate {
-    contents = regexall("(?s)<<EOT.*?EOT", tls_private_key.sshkey.private_key_pem)
-  }
+  value        = tls_private_key.sshkey.private_key_pem
 }
-
-# NEED A KEY... NOT A CERTIFICATE
