@@ -1,4 +1,4 @@
-#!/bish/bash
+#!/bin/bash
 
 cat <<EOF
 {
