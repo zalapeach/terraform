@@ -59,6 +59,10 @@ stages:
         command: init
         workingDirectory: $(System.DefaultWorkingDirectory)/azure/${{ parameters.example }}/
 
+    - bash: |
+        echo $TF_VAR_org_email
+        echo $TF_VAR_org_email1
+
     - task: terraformCLI@0
       displayName: Terraform fmt
       inputs:
