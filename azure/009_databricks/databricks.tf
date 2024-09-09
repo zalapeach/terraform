@@ -65,7 +65,7 @@ resource "databricks_job" "job" {
   }
 
   email_notifications {
-    on_success = [data.external.env.result["org_email"], data.external.env.result["org_email1"]]
-    on_failure = [data.external.env.result["org_email"], data.external.env.result["org_email1"]]
+    on_success = [var.org_email, var.org_email1]
+    on_failure = [var.org_email, var.org_email1]
   }
 }
