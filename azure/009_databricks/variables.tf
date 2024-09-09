@@ -1,11 +1,11 @@
-variable "org_email" {
+variable "test_org_email" {
   description = "Terraform Cloud organization email"
   type        = string
-  #sensitive   = true
+  sensitive   = true
 }
 
-variable "org_email1" {
+variable "test_org_email1" {
   description = "another email"
   type        = string
-  #sensitive   = true
+  sensitive   = true
 }
