@@ -8,7 +8,7 @@ terraform {
   cloud {
     organization = "zalapeach"
     workspaces {
-      name = "netWatch"
+      name "databricksRAg"
     }
   }
 }
@@ -23,10 +23,10 @@ provider "azurerm" {
 
 import {
   to = azurerm_resource_group.rg
-  id = "/subscriptions/$(subscriptionId)/resourceGroups/NetworkWatcherRG"
+  id = "/subscriptions/$(subscriptionId)/resourceGroups/zalabricks-rg"
 }
 
 resource "azurerm_resource_group" "rg" {
-  name     = "NetworkWatcherRG"
+  name     = "zalabricks-rg"
   location = "eastus2"
 }

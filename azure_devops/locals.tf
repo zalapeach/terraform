@@ -55,7 +55,11 @@ locals {
           override = true
         }
       ]
-    }
+    },
+    {
+      name = "Terraform destroy - Databricks RGs",
+      path = "pipelines/tf-azure-drop-db-rgs.yml"
+    },
   ]
   users = [
     data.external.env.result.azure_ad_personal_object_id,

@@ -1,0 +1,80 @@
+resources:
+  pipelines:
+  - pipeline: TFdestroy
+    source: Terraform destroy infra
+    project: Terraform
+    trigger:
+      stages:
+      - Terraform_009_databricks
+
+trigger: none
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+- stage: Terraform
+
+  jobs:
+  - job:
+    steps:
+    - task: azureKeyVault@2
+      displayName: Retrieve secrets
+      inputs:
+        connectedServiceName: Azure
+        keyVaultName: $(keyVaultName)
+        secretFilter: tfToken,subscriptionId,
+        runAsPreJob: true
+
+    - task: terraformInstaller@0
+      displayName: Terraform install
+      inputs:
+        terraformVersion: latest
+
+    - task: replaceTokens@5
+      displayName: Update token file
+      inputs:
+        targetFiles: $(System.DefaultWorkingDirectory)/pipelines/tfToken.json
+        tokenPattern: azpipelines
+
+    - task: replaceTokens@5
+      displayName: Update subscription id
+      inputs:
+        targetFiles: $(System.DefaultWorkingDirectory)/azure/destroy_databricks_rgs/main.tf
+        tokenPattern: azpipelines
+
+    - bash: |
+        cd $(System.DefaultWorkingDirectory)/azure/destroy_databricks_rgs/
+        mv $(System.DefaultWorkingDirectory)/pipelines/tfToken.json /home/vsts/.terraform.d/credentials.tfrc.json
+      displayName: Terraform login
+
+    - task: terraformCLI@0
+      displayName: Terraform init
+      inputs:
+        command: init
+        workingDirectory: $(System.DefaultWorkingDirectory)/azure/destroy_databricks_rgs
+
+    - task: terraformCLI@0
+      displayName: Terraform fmt
+      inputs:
+        command: fmt
+        workingDirectory: $(System.DefaultWorkingDirectory)/azure/destroy_databricks_rgs
+
+    - task: terraformCLI@0
+      displayName: Terraform validate
+      inputs:
+        command: validate
+        workingDirectory: $(System.DefaultWorkingDirectory)/azure/destroy_databricks_rgs
+
+    - task: terraformCLI@0
+      displayName: Terraform apply
+      inputs:
+        command: apply
+        commandOptions: '-auto-approve'
+        workingDirectory: $(System.DefaultWorkingDirectory)/azure/destroy_databricks_rgs
+
+    - task: terraformCLI@0
+      displayName: Terraform destroy
+      inputs:
+        command: destroy
+        workingDirectory: $(System.DefaultWorkingDirectory)/azure/destroy_databricks_rgs
