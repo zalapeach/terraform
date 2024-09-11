@@ -71,19 +71,19 @@ resource "databricks_job" "job" {
 }
 
 #data "databricks_group" "admin" {
-  #display_name = "admins"
-  #provider     = databricks
+#display_name = "admins"
+#provider     = databricks
 #}
 
 #resource "databricks_service_principal" "sp" {
-  #application_id             = var.sp_client_id
-  #display_name               = "Terraform SP"
-  #allow_cluster_create       = false
-  #allow_instance_pool_create = false
-  #databricks_sql_access      = false
-  #workspace_access           = true
-  #active                     = true
-  #provider                   = databricks
+#application_id             = var.sp_client_id
+#display_name               = "Terraform SP"
+#allow_cluster_create       = false
+#allow_instance_pool_create = false
+#databricks_sql_access      = false
+#workspace_access           = true
+#active                     = true
+#provider                   = databricks
 #}
 
 #resource "databricks_group_member" "user_admin" {
@@ -92,7 +92,7 @@ resource "databricks_job" "job" {
 #}
 
 #resource "databricks_group_member" "sp_admin" {
-  #group_id  = data.databricks_group.admin.id
-  #member_id = databricks_service_principal.sp.id
-  #provider  = databricks
+#group_id  = data.databricks_group.admin.id
+#member_id = databricks_service_principal.sp.id
+#provider  = databricks
 #}
