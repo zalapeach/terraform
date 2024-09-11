@@ -69,3 +69,8 @@ resource "databricks_job" "job" {
     on_failure = [var.org_email, var.org_email1]
   }
 }
+
+data "databricks_group" "admin_databricks" {
+  display_name = "admins"
+  provider     = databricks
+}
