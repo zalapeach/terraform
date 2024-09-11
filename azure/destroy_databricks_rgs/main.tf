@@ -8,7 +8,7 @@ terraform {
   cloud {
     organization = "zalapeach"
     workspaces {
-      name "databricksRAg"
+      name = "databricksRg"
     }
   }
 }

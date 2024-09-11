@@ -1,16 +1,17 @@
 locals {
   workspaces = {
-    netWatch = {},
-    Az001    = {},
-    Az002    = {},
-    Az003    = {},
-    Az004    = {},
-    Az005    = {},
-    Az006    = {},
-    Az007    = {},
-    Az008    = {},
-    Az009    = {},
-    Az010    = {}
+    netWatch   = {},
+    databricks = {}
+    Az001      = {},
+    Az002      = {},
+    Az003      = {},
+    Az004      = {},
+    Az005      = {},
+    Az006      = {},
+    Az007      = {},
+    Az008      = {},
+    Az009      = {},
+    Az010      = {}
   }
   variables = {
     ARM_CLIENT_ID = {
