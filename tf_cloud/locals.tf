@@ -1,16 +1,16 @@
 locals {
   workspaces = {
     netWatch = {},
-    Az001 = {},
-    Az002 = {},
-    Az003 = {},
-    Az004 = {},
-    Az005 = {},
-    Az006 = {},
-    Az007 = {},
-    Az008 = {},
-    Az009 = {},
-    Az010 = {}
+    Az001    = {},
+    Az002    = {},
+    Az003    = {},
+    Az004    = {},
+    Az005    = {},
+    Az006    = {},
+    Az007    = {},
+    Az008    = {},
+    Az009    = {},
+    Az010    = {}
   }
   variables = {
     ARM_CLIENT_ID = {
@@ -60,6 +60,10 @@ locals {
     TF_VAR_org_email1 = {
       value       = var.org_email1
       description = "Personal email 2"
+    },
+    TF_VAR_sp_client_id = {
+      value       = azuread_service_principal.sp.client_id
+      description = "Terraform Service Principal client ID"
     }
   }
 }

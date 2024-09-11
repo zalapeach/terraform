@@ -12,10 +12,10 @@ resource "tfe_workspace" "azdo" {
 }
 
 resource "tfe_workspace" "workspaces" {
-  for_each                  = local.workspaces
-  name                      = each.key
-  organization              = tfe_organization.org.name
-  force_delete              = true
+  for_each     = local.workspaces
+  name         = each.key
+  organization = tfe_organization.org.name
+  force_delete = true
 }
 
 resource "tfe_variable_set" "varset" {

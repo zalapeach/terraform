@@ -70,17 +70,13 @@ resource "databricks_job" "job" {
   }
 }
 
-data "azuread_service_principal" "sp" {
-  display_name = "Terraform"
-}
-
 data "databricks_group" "admin" {
   display_name = "admins"
   provider     = databricks
 }
 
 resource "databricks_service_principal" "sp" {
-  application_id             = data.azuread_service_principal.sp.client_id
+  application_id             = var.sp_client_id
   display_name               = "Terraform SP"
   allow_cluster_create       = false
   allow_instance_pool_create = false

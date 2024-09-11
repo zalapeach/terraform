@@ -9,3 +9,9 @@ variable "org_email1" {
   type        = string
   sensitive   = true
 }
+
+variable "sp_client_id" {
+  description = "Terraform service principal client ID"
+  type        = string
+  sensitive   = true
+}
