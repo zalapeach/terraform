@@ -86,7 +86,12 @@ resource "databricks_service_principal" "sp" {
   provider                   = databricks
 }
 
-resource "databricks_group_member" "admins" {
+#resource "databricks_group_member" "user_admin" {
+#group_id =
+#member_id
+#}
+
+resource "databricks_group_member" "sp_admin" {
   group_id  = data.databricks_group.admin.id
   member_id = databricks_service_principal.sp.id
   provider  = databricks
