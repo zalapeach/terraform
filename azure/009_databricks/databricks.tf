@@ -74,17 +74,17 @@ resource "databricks_job" "job" {
   }
 }
 
-# this section needs refinement
+# this section needs refinement 1 START
 data "databricks_group" "admin" {
   display_name = "admins"
 }
 
 data "databricks_service_principal" "sp" {
-  application_id  = var.sp_client_id
+  application_id = var.sp_client_id
 }
 
 resource "databricks_group_member" "sp_admin" {
   group_id  = data.databricks_group.admin.id
   member_id = data.databricks_service_principal.sp.id
 }
-# this section needs refinement
+# this section needs refinement 1 END
