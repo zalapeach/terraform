@@ -28,5 +28,5 @@ import {
 
 resource "azurerm_resource_group" "rg" {
   name     = "zalabricks-rg"
-  location = "eastus2"
+  location = "westus2"
 }

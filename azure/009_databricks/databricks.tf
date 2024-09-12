@@ -19,6 +19,8 @@ resource "databricks_cluster" "cluster" {
 }
 
 resource "databricks_notebook" "get" {
+  # need to add a timeout on notebook
+  # because api is not ready after cluster creation
   source = "${path.module}/scripts/getData.py"
   path   = "/Shared/Demo/getData"
 
@@ -26,6 +28,8 @@ resource "databricks_notebook" "get" {
 }
 
 resource "databricks_notebook" "query" {
+  # need to add a timeout on notebook
+  # because api is not ready after cluster creation
   source = "${path.module}/scripts/queryData.py"
   path   = "/Shared/Demo/queryData"
 
