@@ -81,6 +81,7 @@ data "databricks_group" "admin" {
 
 data "databricks_service_principal" "sp" {
   application_id = var.sp_client_id
+  depends_on     = [azurerm_databricks_workspace.databricks]
 }
 
 resource "databricks_group_member" "sp_admin" {
