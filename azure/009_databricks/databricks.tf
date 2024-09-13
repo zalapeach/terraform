@@ -77,6 +77,7 @@ resource "databricks_job" "job" {
 # this section needs refinement 1 START
 data "databricks_group" "admin" {
   display_name = "admins"
+  depends_on   = [azurerm_databricks_workspace.databricks]
 }
 
 data "databricks_service_principal" "sp" {
