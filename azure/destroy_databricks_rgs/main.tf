@@ -27,6 +27,7 @@ import {
 }
 
 resource "azurerm_resource_group" "rg" {
-  name     = "zalabricks-rg"
-  location = "westus2"
+  name       = "zalabricks-rg"
+  location   = "westus2"
+  managed_by = "/subscriptions/$(subscriptionId)/resourceGroups/resourceGroup009/providers/Microsoft.Databricks/workspaces/zalabricks"
 }
