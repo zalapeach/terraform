@@ -18,22 +18,28 @@ resource "databricks_cluster" "cluster" {
   num_workers             = 1
 }
 
-resource "databricks_notebook" "get" {
-  # need to add a timeout on notebook
-  # because api is not ready after cluster creation
-  source = "${path.module}/scripts/getData.py"
-  path   = "/Shared/Demo/getData"
-
+resource "null_resource" "wait" {
+  provisioner "local-exec" {
+    interpreter = ["bash", "-c"]
+    command     = "sleep 5"
+  }
   depends_on = [azurerm_databricks_workspace.databricks]
 }
 
-resource "databricks_notebook" "query" {
-  # need to add a timeout on notebook
+resource "databricks_notebook" "get" {
+  source = "${path.module}/scripts/getData.py"
+  path   = "/Shared/Demo/getData"
+  # need to add a delay on notebook creation
   # because api is not ready after cluster creation
+  depends_on = [null_resource.wait]
+}
+
+resource "databricks_notebook" "query" {
   source = "${path.module}/scripts/queryData.py"
   path   = "/Shared/Demo/queryData"
-
-  depends_on = [azurerm_databricks_workspace.databricks]
+  # need to add a delay on notebook creation
+  # because api is not ready after cluster creation
+  depends_on = [null_resource.wait]
 }
 
 resource "databricks_job" "job" {
@@ -74,19 +80,19 @@ resource "databricks_job" "job" {
   }
 }
 
-# this section needs refinement 1 START
 data "databricks_group" "admin" {
   display_name = "admins"
-  depends_on   = [azurerm_databricks_workspace.databricks]
+  # added to allow lazy auth on terraform plan
+  depends_on = [azurerm_databricks_workspace.databricks]
 }
 
 data "databricks_service_principal" "sp" {
   application_id = var.sp_client_id
-  depends_on     = [azurerm_databricks_workspace.databricks]
+  # added to allow lazy auth on terraform plan
+  depends_on = [azurerm_databricks_workspace.databricks]
 }
 
 resource "databricks_group_member" "sp_admin" {
   group_id  = data.databricks_group.admin.id
   member_id = data.databricks_service_principal.sp.id
 }
-# this section needs refinement 1 END
