@@ -80,4 +80,4 @@ Repeat many times until you got connection from both VMs.
 
 # Diagram
 
-![Diagram Exercise 5](/images/Exercise_005.svg)
+![Diagram Exercise 6](/images/Exercise_006.svg)
