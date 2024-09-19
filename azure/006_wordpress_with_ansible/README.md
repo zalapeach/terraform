@@ -8,9 +8,10 @@ the application to the proper VM.
 
 * A resource group (`resourceGroup006`)
 * A virtual network (`vnet01`)
-* A subnet (`subnet01`)
-* A public IP with static allocation (`lb_ip`)
-* A network security group that allows traffic from any point to the port 22
+* Three subnets (`frontent`, `backend`, `AzureBastionSubnet`)
+* A public IP with static allocation (`WordPressIP`)
+* A network security group that allows the following rules:
+  * Traffic from any point to the port 22
 * A load balancer (`lb`)
 * A backend address pool for the load balancer
 * A health probe for the load balancer
