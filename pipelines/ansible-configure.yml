@@ -99,7 +99,6 @@ stages:
         tokenPattern: 'azpipelines'
 
     - bash: |
-        echo $AZURE_SUBSCRIPTION_ID
         ansible-inventory -i $(inventoryFile) --graph
       env:
         AZURE_SUBSCRIPTION_ID: $(subscriptionId)
