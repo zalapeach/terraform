@@ -132,6 +132,7 @@ stages:
         inventoriesAgentMachine: file
         inventoryFileOnAgentMachine: $(inventoryFile)
         sudoEnabled: true
+        failOnStdErr: false
         args: '--extra-vars "db_pass=$(dbPass) db_user=$(dbUser) db_name=$(dbName)"'
       env:
         AZURE_SUBSCRIPTION_ID: $(subscriptionId)
