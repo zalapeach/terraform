@@ -116,7 +116,7 @@ stages:
         inventoriesAgentMachine: file
         inventoryFileOnAgentMachine: $(inventoryFile)
         sudoEnabled: true
-        #failOnStdErr: false
+        failOnStdErr: false
       env:
         AZURE_SUBSCRIPTION_ID: $(subscriptionId)
         AZURE_CLIENT_ID: $(appId)
@@ -132,7 +132,7 @@ stages:
         inventoriesAgentMachine: file
         inventoryFileOnAgentMachine: $(inventoryFile)
         sudoEnabled: true
-        #failOnStdErr: false
+        failOnStdErr: false
         args: '--extra-vars "db_pass=$(dbPass) db_user=$(dbUser) db_name=$(dbName)"'
       env:
         AZURE_SUBSCRIPTION_ID: $(subscriptionId)
@@ -149,6 +149,7 @@ stages:
         inventoriesAgentMachine: file
         inventoryFileOnAgentMachine: $(inventoryFile)
         sudoEnabled: true
+        failOnStdErr: false
         args: '--extra-vars "db_pass=$(dbPass) db_user=$(dbUser) db_name=$(dbName) db_host=$(DB_PRIVATE_IP)"'
       env:
         AZURE_SUBSCRIPTION_ID: $(subscriptionId)
@@ -165,6 +166,7 @@ stages:
         inventoriesAgentMachine: hostList
         inventoryHostListAgentMachine: $(NODE1_PRIVATE_IP)
         sudoEnabled: true
+        failOnStdErr: false
       env:
         AZURE_SUBSCRIPTION_ID: $(subscriptionId)
         AZURE_CLIENT_ID: $(appId)
@@ -180,6 +182,7 @@ stages:
         inventoriesAgentMachine: hostList
         inventoryHostListAgentMachine: $(NODE2_PRIVATE_IP)
         sudoEnabled: true
+        failOnStdErr: false
       env:
         AZURE_SUBSCRIPTION_ID: $(subscriptionId)
         AZURE_CLIENT_ID: $(appId)
@@ -195,6 +198,7 @@ stages:
         inventoriesAgentMachine: file
         inventoryFileOnAgentMachine: $(inventoryFile)
         sudoEnabled: true
+        failOnStdErr: false
         args: '--extra-vars "appGtwIp=$(APP_GTW_IP) wp_user=$(wpUser) wp_user_email=$(wpEmail) wp_pass=$(wpPass)"'
       env:
         AZURE_SUBSCRIPTION_ID: $(subscriptionId)
