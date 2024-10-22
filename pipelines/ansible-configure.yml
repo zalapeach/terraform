@@ -116,6 +116,7 @@ stages:
         inventoriesAgentMachine: file
         inventoryFileOnAgentMachine: $(inventoryFile)
         sudoEnabled: true
+        failOnStdErr: false
       env:
         AZURE_SUBSCRIPTION_ID: $(subscriptionId)
         AZURE_CLIENT_ID: $(appId)

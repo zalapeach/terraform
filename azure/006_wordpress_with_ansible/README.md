@@ -26,11 +26,11 @@ the application to the proper VM.
 ## Option 1
 
 * Run pipeline **Terraform create - update infra**.
-* In the **Terraform Example** option, select **005_load_balancer**.
+* In the **Terraform Example** option, select **006_wordpress_with_ansible**.
 
 ## Option 2
 
-* In the repo, navigate to `azure/005_load_balancer` folder.
+* In the repo, navigate to `azure/006_wordpress_with_ansible` folder.
 * If it is the first time:
   * perform a `terraform init` to initialize.
   * then `terraform fmt` to check for format error.
@@ -43,11 +43,11 @@ the application to the proper VM.
 ## Option 1
 
 * Run pipeline **Terraform destroy infra**.
-* In the **Terraform Example** option, select **005_load_balancer**.
+* In the **Terraform Example** option, select **006_wordpress_with_ansible**.
 
 ## Option 2
 
-* In the repo, navigate to `azure/005_load_balancer` folder
+* In the repo, navigate to `azure/006_wordpress_with_ansible` folder
 * Execute `terraform destroy`, wait for completion
 
 # Outputs
