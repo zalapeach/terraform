@@ -2,24 +2,35 @@
 
 Create all infrastructure required to run wordpress on premises using a public
 facing load balancer, which will distribute requestes that tries to connect to
-the application to the proper VM.
+the application to the proper VM (will be 2 nodes).
+
+The VMs will connect to a Maria DB instance installed on another VM.
+
+In order to configure everything, a four VM will be created where an Azure
+DevOps agent will be installed and using a pipeline will run Ansible playbooks
+that will configure everything needed.
 
 # List of resources created
 
 * A resource group (`resourceGroup006`)
 * A virtual network (`vnet01`)
 * Three subnets (`frontent`, `backend`, `AzureBastionSubnet`)
-* A public IP with static allocation (`WordPressIP`)
+* Two public IPs with static allocation (`WordPressIP` and `bastionIP`)
 * A network security group that allows the following rules:
-  * Traffic from any point to the port 22
+  * Traffic from any point to the port 80 of the VM nodes
+  * Traffic from VM nodes to the port 3306 of the DB VM
+  * Traffic from DB VM in the port 3306 of the VM nodes
+  * Traffic from any point to the port 22 of all VMs
 * A load balancer (`lb`)
 * A backend address pool for the load balancer
 * A health probe for the load balancer
 * A load balancer rule
-* 2 nic cards that will be linked to 2 VMs and the load balancer though the
-  backend pool (called `nic00` and `nic01`)
-* An availability set (`availabilitySet`)
-* Two VMs (called `ubuntu00` and `ubuntu01`)
+* 4 nic cards that will be linked to all VMs, 2 of them will be linked with the
+  load balancer though the backend pool (called `nic00`, `nic01`, `nic02` and
+  `nic03`)
+* Four VMs (called `front-vm-00`, `front-vm-01`, `back-db-02` and `agent-vm-03`)
+* An Azure Bastion to connect securely to all VMs
+* An Azure VM extension to install all software required to the agent VM
 
 # How to create
 
