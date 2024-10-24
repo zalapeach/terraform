@@ -26,7 +26,7 @@ stages:
         secretFilter: tfToken,subscriptionId,
         runAsPreJob: true
 
-    - task: terraformInstaller@0
+    - task: terraformInstaller@1
       displayName: Terraform install
       inputs:
         terraformVersion: latest
@@ -48,32 +48,32 @@ stages:
         mv $(System.DefaultWorkingDirectory)/pipelines/tfToken.json /home/vsts/.terraform.d/credentials.tfrc.json
       displayName: Terraform login
 
-    - task: terraformCLI@0
+    - task: terraformCLI@1
       displayName: Terraform init
       inputs:
         command: init
         workingDirectory: $(System.DefaultWorkingDirectory)/azure/destroy_databricks_rgs
 
-    - task: terraformCLI@0
+    - task: terraformCLI@1
       displayName: Terraform fmt
       inputs:
         command: fmt
         workingDirectory: $(System.DefaultWorkingDirectory)/azure/destroy_databricks_rgs
 
-    - task: terraformCLI@0
+    - task: terraformCLI@1
       displayName: Terraform validate
       inputs:
         command: validate
         workingDirectory: $(System.DefaultWorkingDirectory)/azure/destroy_databricks_rgs
 
-    - task: terraformCLI@0
+    - task: terraformCLI@1
       displayName: Terraform apply
       inputs:
         command: apply
         commandOptions: '-auto-approve'
         workingDirectory: $(System.DefaultWorkingDirectory)/azure/destroy_databricks_rgs
 
-    - task: terraformCLI@0
+    - task: terraformCLI@1
       displayName: Terraform destroy
       inputs:
         command: destroy
