@@ -1,0 +1,16 @@
+site_name: Sample Docs
+docs_dir: docs
+plugins:
+- techdocs-core
+
+#sidebar navigation
+nav:
+- Overview:
+  - What is Backstage?: 'index.md'
+- Installation and Configuration:
+  - Getting Started: 'getting-started.md'
+  - App configuration:
+    - Configuring App with plugins: 'configure-app-with-plugins.md'
+- Local Development:
+  - CLI:
+    - Overview: 'cli-overview.md'
