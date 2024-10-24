@@ -1,1 +1,56 @@
+---
+name: $(SourceBranchName)-$(Date:yyyyMMdd)-$(Rev:rrr)
+trigger:
+  branches:
+    include:
+    - main
 
+pool:
+  vmImage: ubuntu-22.04
+
+resources:
+  repositories:
+  - repository: self
+
+stages:
+- stage: documentation
+  jobs:
+  - job: prepare
+    steps:
+    - checkout: self
+
+    - task: NodeTool@0
+      displayName: Install Node 20
+      inputs:
+        versionSpec: 20.x
+
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: 3.x
+
+    - task: AzureCLI@2
+      displayName: "generate and publish docs"
+      inputs:
+        azureSubscription: Azure
+        scriptType: bash
+        scriptLocation: inlineScript
+        inlineScript: |
+          npm install @techdocs/cli
+          pip3 install "mkdocs-techdocs-core==1.*" "mkdocs-exclude"
+          npx techdocs-cli generate --no-docker --verbose
+          npx techdocs-cli publish --publisher-type azureBlobStorage \
+            --storage-name container --entity "default/Component/TBD" \
+            --azureAccountName storage08702463af2d0fb5
+
+
+    #- task: bash@3
+      #displayName: script
+      #inputs:
+        #targetType: inline
+        #script: |
+          #npm install @techdocs/cli
+          #pip3 install "mkdocs-techdocs-core==1.*" "mkdocs-exclude"
+          #npx techdocs-cli generate --no-docker --verbose
+          #npx techdocs-cli publish --publisher-type azureBlobStorage \
+            #--storage-name container --entity "default/Component/TBD" \
+            #--azureAccountName storage08702463af2d0fb5
