@@ -63,32 +63,30 @@ that will configure everything needed.
 
 # Outputs
 
-* The resource group id (`resource_group_id`)
-* The virtual network id (`vnet_id`)
-* The public IP (`public_ip`)
+* A map of some environment variables needed (`env`)
 * The TLS private key (`tls_private_key`)
-* The private IP for the first VM (`private_ip_linux_01`)
-* The private IP for the second VM (`private_ip_linux_02`)
+* The public IP of the Application Gateway (`appgtw_public_ip`)
+* A map of all private IPs of all VMs (`private_ips`)
 
 # How to test
 
 * Open azure portal and check that all resources are created
 
-**How to connect to one of the VMs**
+**How to validate**
 
 Follow these steps:
 
-* Get the private ssh key from ouputs and store it in a file (you can use
-  `terraform output --raw tls_private_key > private.txt`).
-* Reduce permissions of the file as follows(`chmod 600 private.txt`).
-* Use the following command to log in (`ssh -o UserKnownHostsFile=/dev/null -i
-  private.txt zala@$(terraform --raw output public_ip)`)
-
-With that your `known_host` file will not be overwrited and avoid the ssh warning
-message **REMOTE HOST IDENTIFICATION HAS CHANGED - IT IS POSSIBLE THAT SOMEONE
-IS DOING SOMETHING NASTY**
-
-Repeat many times until you got connection from both VMs.
+* Get the public IP from Wordpress IP resource
+* On a web browser, navigate to the following URLs:
+  * To validate apache on both nodes, go to http://WORDPRESS_IP, refresh
+    multiple times to see different apache pages.
+  * To validate PHP on both nodes, go to http://WORDPRESS_IP/info.php, refresh
+    multiple times to see different PHP information pages.
+  * To validate wordpress, navigate to http://WORDPRESS_IP/wordpress/, a demo
+    wordpress page should appear.
+  * To validate wordpress admin, navigate to
+    http://WORDPRESS_IP/wordpress/wp-admin, use the credentials (username:
+    **admin**, password: **check your keyvault**)
 
 # Diagram
 
