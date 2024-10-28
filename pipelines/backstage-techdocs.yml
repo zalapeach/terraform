@@ -41,16 +41,3 @@ stages:
           npx techdocs-cli publish --publisher-type azureBlobStorage \
             --storage-name container --entity "default/Component/super-techdocs" \
             --azureAccountName storage08702463af2d0fb5
-
-
-    #- task: bash@3
-      #displayName: script
-      #inputs:
-        #targetType: inline
-        #script: |
-          #npm install @techdocs/cli
-          #pip3 install "mkdocs-techdocs-core==1.*" "mkdocs-exclude"
-          #npx techdocs-cli generate --no-docker --verbose
-          #npx techdocs-cli publish --publisher-type azureBlobStorage \
-            #--storage-name container --entity "default/Component/TBD" \
-            #--azureAccountName storage08702463af2d0fb5

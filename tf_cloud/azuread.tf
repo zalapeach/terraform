@@ -1,7 +1,7 @@
 data "azuread_client_config" "current" {}
 
 resource "azuread_application" "app" {
-  display_name = "Terraform"
+  display_name = "Terraform JCAR"
   owners       = [data.azuread_client_config.current.object_id]
 }
 
