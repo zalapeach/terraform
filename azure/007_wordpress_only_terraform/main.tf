@@ -272,46 +272,46 @@ resource "azurerm_bastion_host" "bastion" {
 
 # configure db
 
-resource "azurerm_virtual_machine_extension" "db" {
-  name                 = "db"
-  virtual_machine_id   = azurerm_linux_virtual_machine.vms[0].id
-  publisher            = "Microsoft.Azure.Extensions"
-  type                 = "CustomScript"
-  type_handler_version = "2.0"
+#resource "azurerm_virtual_machine_extension" "db" {
+  #name                 = "db"
+  #virtual_machine_id   = azurerm_linux_virtual_machine.vms[0].id
+  #publisher            = "Microsoft.Azure.Extensions"
+  #type                 = "CustomScript"
+  #type_handler_version = "2.0"
 
-  settings = <<SETTINGS
-    {
-      "fileUris": [
-        "https://raw.githubusercontent.com/zalapeach/terraform/master/azure/007_wordpress_only_terraform/scripts/mariadb.sh"
-      ],
-      "commandToExecute": "sh mariadb.sh"
-    }
-SETTINGS
+  #settings = <<SETTINGS
+    #{
+      #"fileUris": [
+        #"https://raw.githubusercontent.com/zalapeach/terraform/master/azure/007_wordpress_only_terraform/scripts/mariadb.sh"
+      #],
+      #"commandToExecute": "sh mariadb.sh"
+    #}
+#SETTINGS
 
-  depends_on = [
-    azurerm_linux_virtual_machine.vms
-  ]
-}
+  #depends_on = [
+    #azurerm_linux_virtual_machine.vms
+  #]
+#}
 
 # configure node1
 
-resource "azurerm_virtual_machine_extension" "node1" {
-  name                 = "node1"
-  virtual_machine_id   = azurerm_linux_virtual_machine.vms[1].id
-  publisher            = "Microsoft.Azure.Extensions"
-  type                 = "CustomScript"
-  type_handler_version = "2.0"
+#resource "azurerm_virtual_machine_extension" "node1" {
+  #name                 = "node1"
+  #virtual_machine_id   = azurerm_linux_virtual_machine.vms[1].id
+  #publisher            = "Microsoft.Azure.Extensions"
+  #type                 = "CustomScript"
+  #type_handler_version = "2.0"
 
-  settings = <<SETTINGS
-    {
-      "fileUris": [
-        "https://raw.githubusercontent.com/zalapeach/terraform/master/azure/007_wordpress_only_terraform/scripts/node1.sh"
-      ],
-      "commandToExecute": "sh nodes.sh"
-    }
-SETTINGS
+  #settings = <<SETTINGS
+    #{
+      #"fileUris": [
+        #"https://raw.githubusercontent.com/zalapeach/terraform/master/azure/007_wordpress_only_terraform/scripts/node1.sh"
+      #],
+      #"commandToExecute": "sh nodes.sh"
+    #}
+#SETTINGS
 
-  depends_on = [
-    azurerm_linux_virtual_machine.vms
-  ]
-}
+  #depends_on = [
+    #azurerm_linux_virtual_machine.vms
+  #]
+#}
