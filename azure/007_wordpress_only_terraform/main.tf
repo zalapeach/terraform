@@ -325,6 +325,6 @@ data "azurerm_key_vault" "kv" {
 
 resource "azurerm_key_vault_secret" "secret" {
   name         = "vms-certificate-exercise-007"
-  key_vault_id = data.azure_key_vault.kv.id
+  key_vault_id = data.azurerm_key_vault.kv.id
   value        = tls_private_key.sshkey.private_key_pem
 }
