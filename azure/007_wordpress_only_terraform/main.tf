@@ -315,3 +315,16 @@ resource "azurerm_bastion_host" "bastion" {
 #azurerm_linux_virtual_machine.vms
 #]
 #}
+
+# Keep private certs on keyvault
+
+data "azurerm_key_vault" "kv" {
+  name                = data.terraform_remote_state.azdo.outputs.azure_key_vault_name
+  resource_group_name = data.terraform_remote_state.azdo.outputs.resource_group_name
+}
+
+resource "azurerm_key_vault_secret" "secret" {
+  name         = "vms-certificate-exercise-007"
+  key_vault_id = data.azure_key_vault.kv.id
+  value        = tls_private_key.sshkey.private_key_pem
+}
