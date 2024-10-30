@@ -10,7 +10,7 @@ runuser -l zala -c "sudo systemctl restart mariadb"
 runuser -l zala -c "sudo apt install python3-pip -y"
 runuser -l zala -c "python3 -m pip install PyMySQL"
 runuser -l zala -c "sudo mysql -u root <<-EOF
-  SET PASSWORD FOR 'root'@localhost = PASSWORD("tamarindo");
+  SET PASSWORD FOR 'root'@localhost = PASSWORD('tamarindo');
   DELETE FROM mysql.user WHERE User='';
   DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
   DELETE FROM mysql.db WHERE db='test' OR Db='test\_%';
