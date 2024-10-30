@@ -40,4 +40,4 @@ stages:
           npx techdocs-cli generate --no-docker --verbose
           npx techdocs-cli publish --publisher-type azureBlobStorage \
             --storage-name container --entity "default/Component/super-techdocs" \
-            --azureAccountName storage08702463af2d0fb5
+            --azureAccountName storage7cadffe6b0560823
