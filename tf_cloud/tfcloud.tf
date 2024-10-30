@@ -5,10 +5,13 @@ resource "tfe_organization" "org" {
 }
 
 resource "tfe_workspace" "azdo" {
-  name                      = "azdo"
-  organization              = tfe_organization.org.name
-  force_delete              = true
-  remote_state_consumer_ids = [tfe_workspace.workspaces["Az006"].id]
+  name         = "azdo"
+  organization = tfe_organization.org.name
+  force_delete = true
+  remote_state_consumer_ids = [
+    tfe_workspace.workspaces["Az006"].id,
+    tfe_workspace.workspaces["Az007"].id
+  ]
 }
 
 resource "tfe_workspace" "workspaces" {
