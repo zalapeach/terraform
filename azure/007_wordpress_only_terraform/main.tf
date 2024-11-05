@@ -293,28 +293,29 @@ resource "azurerm_virtual_machine_extension" "db" {
   ]
 }
 
-# configure node1
+# configure nodes
 
-#resource "azurerm_virtual_machine_extension" "node1" {
-#name                 = "node1"
-#virtual_machine_id   = azurerm_linux_virtual_machine.vms[1].id
-#publisher            = "Microsoft.Azure.Extensions"
-#type                 = "CustomScript"
-#type_handler_version = "2.0"
+resource "azurerm_virtual_machine_extension" "nodes" {
+  count                = 2
+  name                 = "nodes"
+  virtual_machine_id   = azurerm_linux_virtual_machine.vms[count.index].id
+  publisher            = "Microsoft.Azure.Extensions"
+  type                 = "CustomScript"
+  type_handler_version = "2.0"
 
-#settings = <<SETTINGS
-#{
-#"fileUris": [
-#"https://raw.githubusercontent.com/zalapeach/terraform/master/azure/007_wordpress_only_terraform/scripts/node1.sh"
-#],
-#"commandToExecute": "sh nodes.sh"
-#}
-#SETTINGS
+  settings = <<SETTINGS
+  {
+    "fileUris": [
+      "https://raw.githubusercontent.com/zalapeach/terraform/master/azure/007_wordpress_only_terraform/scripts/nodes.sh"
+    ],
+    "commandToExecute": "sh nodes.sh"
+  }
+  SETTINGS
 
-#depends_on = [
-#azurerm_linux_virtual_machine.vms
-#]
-#}
+  depends_on = [
+    azurerm_linux_virtual_machine.vms
+  ]
+}
 
 # Keep private certs on keyvault
 
