@@ -36,7 +36,7 @@ stages:
         secretsFilter: tfToken
         runAsPreJob: true
 
-    - task: terraformInstaller@1
+    - task: terraformInstaller@2
       displayName: Terraform install
       inputs:
         terraformVersion: 'latest'
@@ -52,25 +52,25 @@ stages:
         mv $(System.DefaultWorkingDirectory)/pipelines/tfToken.json /home/vsts/.terraform.d/credentials.tfrc.json
       displayName: Terraform login
 
-    - task: terraformCLI@1
+    - task: terraformCLI@2
       displayName: Terraform init
       inputs:
         command: init
         workingDirectory: $(System.DefaultWorkingDirectory)/azure/${{ parameters.example }}
 
-    - task: terraformCLI@1
+    - task: terraformCLI@2
       displayName: Terraform fmt
       inputs:
         command: fmt
         workingDirectory: $(System.DefaultWorkingDirectory)/azure/${{ parameters.example }}/
 
-    - task: terraformCLI@1
+    - task: terraformCLI@2
       displayName: Terraform validate
       inputs:
         command: validate
         workingDirectory: $(System.DefaultWorkingDirectory)/azure/${{ parameters.example }}/
 
-    - task: terraformCLI@1
+    - task: terraformCLI@2
       displayName: Terraform destroy
       inputs:
         command: destroy
