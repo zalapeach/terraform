@@ -308,7 +308,7 @@ resource "azurerm_virtual_machine_extension" "nodes" {
     "fileUris": [
       "https://raw.githubusercontent.com/zalapeach/terraform/master/azure/007_wordpress_only_terraform/scripts/nodes.sh"
     ],
-    "commandToExecute": "sh nodes.sh"
+    "commandToExecute": "sh nodes.sh ${data.azurerm_key_vault_secret.password[0].content_type} ${azurerm_network_interface.nic[2].private_ip_address}"
   }
   SETTINGS
 
@@ -328,4 +328,10 @@ resource "azurerm_key_vault_secret" "secret" {
   name         = "vms-certificate-exercise-007"
   key_vault_id = data.azurerm_key_vault.kv.id
   value        = tls_private_key.sshkey.private_key_pem
+}
+
+data "azurerm_key_vault_secret" "passwords" {
+  for_each     = toset(["dbPass", "wpPass"])
+  name         = each.key
+  key_vault_id = data.azurerm_key_vault.kv.id
 }
