@@ -308,12 +308,13 @@ resource "azurerm_virtual_machine_extension" "nodes" {
     "fileUris": [
       "https://raw.githubusercontent.com/zalapeach/terraform/master/azure/007_wordpress_only_terraform/scripts/nodes.sh"
     ],
-    "commandToExecute": "sh nodes.sh ${data.azurerm_key_vault_secret.passwords["dbPass"].content_type} ${azurerm_network_interface.nic[2].private_ip_address}"
+    "commandToExecute": "sh nodes.sh ${data.azurerm_key_vault_secret.passwords["dbPass"].value} ${azurerm_network_interface.nic[2].private_ip_address}"
   }
   SETTINGS
 
   depends_on = [
-    azurerm_linux_virtual_machine.vms
+    azurerm_linux_virtual_machine.vms,
+    data.azurerm_key_vault_secret.passwords
   ]
 }
 
