@@ -308,7 +308,7 @@ resource "azurerm_virtual_machine_extension" "nodes" {
     "fileUris": [
       "https://raw.githubusercontent.com/zalapeach/terraform/master/azure/007_wordpress_only_terraform/scripts/nodes.sh"
     ],
-    "commandToExecute": "echo '${data.azurerm_key_vault_secret.passwords["dbPass"].value}' >> /home/zala/info.txt && echo '${azurerm_network_interface.nic[2].private_ip_address}' >> /home/zala/info.txt"
+    "commandToExecute": "sh nodes.sh '${data.azurerm_key_vault_secret.passwords["dbPass"].value}' '${azurerm_network_interface.nic[2].private_ip_address}'"
   }
   SETTINGS
 
@@ -318,7 +318,7 @@ resource "azurerm_virtual_machine_extension" "nodes" {
   ]
 }
 
-#"commandToExecute": "sh nodes.sh ${data.azurerm_key_vault_secret.passwords["dbPass"].value} ${azurerm_network_interface.nic[2].private_ip_address}"
+#"commandToExecute": "echo '${data.azurerm_key_vault_secret.passwords["dbPass"].value}' >> /home/zala/info.txt && echo '${azurerm_network_interface.nic[2].private_ip_address}' >> /home/zala/info.txt"
 # Keep private certs on keyvault
 
 data "azurerm_key_vault" "kv" {
