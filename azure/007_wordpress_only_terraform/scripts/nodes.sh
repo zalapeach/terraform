@@ -2,6 +2,7 @@
 
 $DB_PASSWORD=$1
 $DB_HOST=$2
+runuser -l zala -c "echo $DB_PASSWORD >> /home/zala/info.txt && echo $DB_HOST >> /home/zala/info.txt"
 runuser -l zala -c "sudo apt update -y"
 runuser -l zala -c "sudo apt install apache2 php php-mysql unzip -y"
 runuser -l zala -c "sudo systemctl enable apache2.service"
