@@ -313,7 +313,7 @@ resource "azurerm_virtual_machine_extension" "nodes" {
   SETTINGS
 
   depends_on = [
-    azurerm_linux_virtual_machine.vms,
+    azurerm_network_interface.nic,
     data.azurerm_key_vault_secret.passwords
   ]
 }

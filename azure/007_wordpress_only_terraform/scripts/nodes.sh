@@ -21,3 +21,4 @@ runuser -l zala -c "sudo sed -i -e \"s/database_name_here/wordpress/g\" /var/www
 runuser -l zala -c "sudo sed -i -e \"s/username_here/root/g\" /var/www/html/wordpress/wp-config.php"
 runuser -l zala -c "sudo sed -i -e \"s/password_here/$DB_PASSWORD/g\" /var/www/html/wordpress/wp-config.php"
 runuser -l zala -c "sudo sed -i -e \"s/localhost/$DB_HOST/g\" /var/www/html/wordpress/wp-config.php"
+exit 0
