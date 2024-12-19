@@ -51,3 +51,9 @@ resource "azurerm_storage_blob" "example" {
   type                   = "Block"
   source                 = var.blob_path
 }
+
+resource "azurerm_role_assignment" "test" {
+  scope                = azurerm_storage_account.storageaccount.id
+  role_definition_name = "Storage_Blob_Data_Reader"
+  principal_id         = "860b52d9-325e-481e-b5d6-aaab2699da15"
+}
