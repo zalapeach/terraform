@@ -8,6 +8,11 @@ resource "tfe_workspace" "azdo" {
   name         = "azdo"
   organization = tfe_organization.org.name
   force_delete = true
+}
+
+resource "tfe_workspace_settings" "settings" {
+  workspace_id              = tfe_workspace.azdo.id
+  global_remote_state       = false
   remote_state_consumer_ids = [
     tfe_workspace.workspaces["Az006"].id,
     tfe_workspace.workspaces["Az007"].id
