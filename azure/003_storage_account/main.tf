@@ -40,7 +40,7 @@ resource "azurerm_storage_account" "storageaccount" {
 
 resource "azurerm_storage_container" "storagecontainer" {
   name                  = "container"
-  storage_account_name  = azurerm_storage_account.storageaccount.name
+  storage_account_id    = azurerm_storage_account.storageaccount.id
   container_access_type = "private"
 }
 
@@ -54,6 +54,6 @@ resource "azurerm_storage_blob" "example" {
 
 resource "azurerm_role_assignment" "test" {
   scope                = azurerm_storage_account.storageaccount.id
-  role_definition_name = "Storage_Blob_Data_Reader"
+  role_definition_name = "Storage Blob Data Reader"
   principal_id         = "860b52d9-325e-481e-b5d6-aaab2699da15"
 }
