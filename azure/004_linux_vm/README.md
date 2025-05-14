@@ -60,11 +60,12 @@ Creation of an ubuntu, internet public-facing vm in azure using terraform
 
 **How to test connectivity**
 
-* Get the public IP of the VM (you can use `terraform output public_ip`)
+* Get the public IP of the VM (you can use `terraform output --raw public_ip`).
 * Get the private TLS and store it in a file (you can use the following command
-  to accomplish that: `terraform output --raw tls_private_key > private.txt`)
+  to accomplish that: `terraform output --raw tls_private_key > private.txt`).
+* Reduce permissions of the `private.txt` with the command `chmod 600 private.txt`.
 * Connect to the VM (you can use `ssh -i private.txt zala@$PUBLIC_IP` where
-  `$PUBLIC_IP` needs to be replaced by the public ip retrieved in the first step)
+  `$PUBLIC_IP` needs to be replaced by the public ip retrieved in the first step).
 
 # Diagram
 
