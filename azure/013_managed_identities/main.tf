@@ -15,5 +15,4 @@ data "azuredevops_project" "terraform" {
 
 resource "azuredevops_service_principal_entitlement" "identity" {
   origin_id            = azurerm_user_assigned_identity.identity.client_id
-  account_license_type = "basic"
 }
