@@ -11,7 +11,10 @@ locals {
     Az007        = {},
     Az008        = {},
     Az009        = {},
-    Az010        = {}
+    Az010        = {},
+    Az011        = {},
+    Az012        = {},
+    Az013        = {}
   }
   variables = {
     ARM_CLIENT_ID = {
