@@ -13,7 +13,7 @@ data "azuredevops_project" "terraform" {
   name = "Terraform"
 }
 
-resource "azuredevops_user_entitlement" "identity" {
-  origin_id = azurerm_user_assigned_identity.identity.client_id
-  origin    = "aad"
+resource "azuredevops_service_principal_entitlement" "identity" {
+  origin_id            = azurerm_user_assigned_identity.identity.client_id
+  account_license_type = "basic"
 }
