@@ -15,5 +15,4 @@ data "azuredevops_project" "terraform" {
 
 resource "azuredevops_user_entitlement" "identity" {
   origin_id = azurerm_user_assigned_identity.identity.principal_id
-  origin    = "aad"
 }
