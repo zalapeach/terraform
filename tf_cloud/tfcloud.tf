@@ -15,7 +15,8 @@ resource "tfe_workspace_settings" "settings" {
   global_remote_state = false
   remote_state_consumer_ids = [
     tfe_workspace.workspaces["Az006"].id,
-    tfe_workspace.workspaces["Az007"].id
+    tfe_workspace.workspaces["Az007"].id,
+    tfe_workspace.workspaces["Az013"].id
   ]
 }
 
