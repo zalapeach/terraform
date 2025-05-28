@@ -50,8 +50,10 @@ resource "azurerm_linux_virtual_machine" "vm" {
   }
 
   identity {
-    type         = "UserAssigned"
-    identity_ids = azurerm_user_assigned_identity.identity.principal_id
+    type = "UserAssigned"
+    identity_ids = [
+      azurerm_user_assigned_identity.identity.id
+    ]
   }
 
   computer_name                   = "exercise013"
