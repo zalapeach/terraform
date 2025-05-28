@@ -26,6 +26,14 @@ resource "azuredevops_group" "automation" {
   ]
 }
 
+resource "azuredevops_project_permissions" "access" {
+  project_id = data.azuredevops_project.terraform.id
+  principal  = azuredevops_group.automation.id
+  permissions = {
+    GENERIC_READ = "Allow"
+  }
+}
+
 resource "azuredevops_git_permissions" "access" {
   project_id = data.azuredevops_project.terraform.id
   principal  = azuredevops_group.automation.id
