@@ -17,7 +17,7 @@ resource "azuredevops_service_principal_entitlement" "identity" {
   origin_id = azurerm_user_assigned_identity.identity.principal_id
 }
 
-resource "azuredevops_group" "atlas_automation" {
+resource "azuredevops_group" "automation" {
   scope        = data.azuredevops_project.terraform.id
   display_name = "Terraform Automation"
   description  = "Terraform Automation group to access repos and pipelines"
@@ -26,9 +26,9 @@ resource "azuredevops_group" "atlas_automation" {
   ]
 }
 
-resource "azuredevops_git_permissions" "atlas_access" {
-  project_id = data.azuredevops_project.atlas.id
-  principal  = azuredevops_group.atlas_automation.id
+resource "azuredevops_git_permissions" "access" {
+  project_id = data.azuredevops_project.terraform.id
+  principal  = azuredevops_group.automation.id
   permissions = {
     CreateRepository      = "Deny"
     DeleteRepository      = "Deny"
@@ -39,10 +39,10 @@ resource "azuredevops_git_permissions" "atlas_access" {
   }
 }
 
-resource "azuredevops_build_folder_permissions" "atlas_access" {
-  project_id = data.azuredevops_project.atlas.id
+resource "azuredevops_build_folder_permissions" "access" {
+  project_id = data.azuredevops_project.terraform.id
   path       = "\\"
-  principal  = azuredevops_group.atlas_automation.id
+  principal  = azuredevops_group.automation.id
   permissions = {
     "ViewBuilds" : "Allow",
     "QueueBuilds" : "Allow",
