@@ -49,6 +49,11 @@ resource "azurerm_linux_virtual_machine" "vm" {
     version   = "latest"
   }
 
+  identity {
+    type         = "UserAssigned"
+    identity_ids = azurerm_user_assigned_identity.identity.principal_id
+  }
+
   computer_name                   = "exercise013"
   admin_username                  = "zala"
   disable_password_authentication = true
