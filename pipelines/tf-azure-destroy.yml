@@ -32,6 +32,11 @@ stages:
   jobs:
   - job: destroy
     steps:
+    - bash: |
+        newRunName="${{ parameters.example }}"
+        echo "##vso[build.updatebuildnumber]$newRunName"
+      displayName: Set run name
+
     - task: azurekeyVault@2
       displayName: Retrieve secrets
       inputs:
@@ -79,8 +84,3 @@ stages:
       inputs:
         command: destroy
         workingDirectory: $(System.DefaultWorkingDirectory)/azure/${{ parameters.example }}/
-
-    - bash: |
-        newRunName="${{ parameters.example }}"
-        echo "##vso[build.updatebuildnumber]$newRunName"
-      displayName: Set run name
