@@ -18,6 +18,7 @@ parameters:
   - 011_backstage
   - 012_container_registry
   - 013_managed_identities
+  - 014_aks_managed_identity
   - 100_k8s_base
   - 101_k8s_prometheus
   - 102_k8s_thanos
