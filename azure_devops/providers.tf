@@ -2,15 +2,15 @@ terraform {
   required_providers {
     azuredevops = {
       source  = "microsoft/azuredevops"
-      version = "~> 1.10.0"
+      version = "~> 1.16.0"
     }
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~> 4.32.0"
+      version = "~> 5.2.0"
     }
   }
   cloud {
-    organization = "zalapeach"
+    organization = "zalapeach1"
     workspaces {
       name = "azdo"
     }

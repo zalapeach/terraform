@@ -1,5 +1,5 @@
 resource "tfe_organization" "org" {
-  name                          = "zalapeach"
+  name                          = "zalapeach1"
   email                         = var.org_email
   allow_force_delete_workspaces = true
 }

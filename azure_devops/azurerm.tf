@@ -8,6 +8,7 @@ resource "azurerm_key_vault" "kv" {
   location                    = azurerm_resource_group.rg.location
   resource_group_name         = azurerm_resource_group.rg.name
   enabled_for_disk_encryption = false
+  rbac_authorization_enabled  = false
   tenant_id                   = data.external.env.result.azure_tenant_id
   sku_name                    = "standard"
 }
